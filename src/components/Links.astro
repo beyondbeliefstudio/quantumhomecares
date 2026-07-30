@@ -109,7 +109,17 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
       font-size: var(--qhc-size-label);
       font-weight: 500;
       white-space: nowrap;
-      /* Underline draws left to right rather than popping in */
+      /*
+        Underline draws left to right rather than popping in.
+
+        Pace and curve are both deliberate. The shared --qhc-ease-out is a hard
+        expo (0.16, 1, 0.3, 1) — it dumps most of the travel in the first few
+        frames, which on a 220ms default read as a snap rather than a draw. This
+        runs at the slower wipe duration on an ease-out cubic instead, so the
+        line moves evenly across the word and settles.
+      */
+      --btn-wipe: var(--qhc-duration-enter);
+      --btn-wipe-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
       background-image: linear-gradient(var(--qhc-ember-600), var(--qhc-ember-600));
       background-repeat: no-repeat;
       background-position: 0 100%;

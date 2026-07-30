@@ -1,26 +1,45 @@
-<script is:inline>
+---
+/**
+ * Userback feedback widget.
+ *
+ * The token has to reach the browser, so it is a PUBLIC_ var — but it still
+ * lives in .env rather than in source, which means Netlify needs
+ * PUBLIC_USERBACK_TOKEN set in its build environment or the widget silently
+ * no-ops on deploy.
+ *
+ * define:vars is what makes this work. The previous version was `is:inline`,
+ * and Vite does not process inline scripts, so `PUBLIC_USERBACK_TOKEN_PLACEHOLDER`
+ * was shipping to the browser as a literal string and the widget could never
+ * authenticate. define:vars serialises the real value in at build time.
+ */
+const USERBACK_TOKEN = import.meta.env.PUBLIC_USERBACK_TOKEN ?? "";
+---
+
+<script is:inline define:vars={{ USERBACK_TOKEN }}>
   // @ts-nocheck
-  // Lazy-loads Userback after 3s or first user interaction
-  let userbackLoaded = false;
+  // Lazy: loads 3s after paint, or on the first interaction, whichever lands
+  // first. Never on the critical path.
+  (function () {
+    if (!USERBACK_TOKEN) return;
 
-  function loadUserback() {
-    if (userbackLoaded) return;
-    userbackLoaded = true;
+    var loaded = false;
 
-    const token = "PUBLIC_USERBACK_TOKEN_PLACEHOLDER"; // replaced at build via env
-    window.Userback = window.Userback || {};
-    Userback.access_token = token;
+    function loadUserback() {
+      if (loaded) return;
+      loaded = true;
 
-    (function (d) {
-      const s = d.createElement("script");
+      window.Userback = window.Userback || {};
+      window.Userback.access_token = USERBACK_TOKEN;
+
+      var s = document.createElement("script");
       s.async = true;
       s.src = "https://static.userback.io/widget/v1.js";
-      (d.head || d.body).appendChild(s);
-    })(document);
-  }
+      (document.head || document.body).appendChild(s);
+    }
 
-  setTimeout(loadUserback, 3000);
-  ["click", "scroll", "touchstart"].forEach(event => {
-    document.addEventListener(event, loadUserback, { once: true });
-  });
+    setTimeout(loadUserback, 3000);
+    ["click", "scroll", "touchstart"].forEach(function (event) {
+      document.addEventListener(event, loadUserback, { once: true, passive: true });
+    });
+  })();
 </script>

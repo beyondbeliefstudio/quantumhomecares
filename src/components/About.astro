@@ -31,7 +31,7 @@ import portrait from "@/assets/photos/marvalyn_1.jpeg";
         She still owns and runs the company herself. Marvalyn handles the intake call, the in-home
         assessment, the care plan, and the scheduling, then matches a vetted care provider to the
         home. National agencies route you through a call center. Here, the person who plans your
-        parent's care is the person who answers the phone.
+        loved one's care is the person who answers the phone.
       </p>
       <p class="lead">
         Every care provider is selected the way she would select someone to care for her own mother.
@@ -68,6 +68,16 @@ import portrait from "@/assets/photos/marvalyn_1.jpeg";
 
     &__plate {
       aspect-ratio: 4 / 5;
+
+      /* .split stacks at 980px. Source order puts the copy first because that
+         is the desktop left column, but stacked it buries the portrait under
+         four paragraphs — lead with Marvalyn's face, then her story. Only the
+         visual order moves; the DOM order (and so the reading order) is
+         unchanged, which is safe here because the plate holds no focusable
+         content. */
+      @media (max-width: 980px) {
+        order: -1;
+      }
     }
   }
 </style>

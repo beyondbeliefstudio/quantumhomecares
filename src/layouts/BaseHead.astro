@@ -13,7 +13,7 @@ const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const AHREFS_DATA_KEY = import.meta.env.PUBLIC_AHREFS_DATA_KEY;
 
 // Open Graph
-const ogImage = new URL("/og-image.jpg", Astro.site).toString();
+const ogImage = new URL("/og-image.png", Astro.site).toString();
 const ogUrl = Astro.url.toString();
 
 const schema = {
@@ -47,6 +47,11 @@ const schema = {
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <!-- Declared so scrapers can lay out the card before fetching the file -->
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={`${baseData.title} — ${baseData.serviceArea.summary}`} />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />

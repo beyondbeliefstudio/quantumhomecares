@@ -462,7 +462,10 @@ summary:focus-visible,
   border: 1px solid transparent;
   border-radius: var(--qhc-radius-pill);
   background: var(--qhc-navy-100);
-  color: var(--qhc-ember-700);
+  /* Navy on the blue pill, everywhere. The --info chip was already doing this
+     and the base was ember, so two identical-looking pills read in two
+     different colours depending on which one a section happened to use. */
+  color: var(--qhc-navy-800);
   font-size: var(--qhc-size-eyebrow);
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -475,11 +478,10 @@ summary:focus-visible,
     border-color: var(--qhc-navy-300);
   }
 
-  /* Neutral blue label — the news source chip */
+  /* Neutral blue label — the news source chip. Colour now comes from the base. */
   &--info {
     min-height: 30px;
     padding: 0 12px;
-    color: var(--qhc-navy-800);
     letter-spacing: 0.06em;
   }
 }
@@ -591,10 +593,12 @@ summary:focus-visible,
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  /* The wipe pace is per-variant: pills run slow, the nav underline stays brisk */
+  /* The wipe is per-variant in both pace and curve: --btn-wipe sets the
+     duration, --btn-wipe-ease the curve. Both fall back to the shared tokens. */
   transition:
     background-color var(--qhc-duration-fast) var(--qhc-ease-out),
-    background-size var(--btn-wipe, var(--qhc-duration-base)) var(--qhc-ease-out),
+    background-size var(--btn-wipe, var(--qhc-duration-base))
+      var(--btn-wipe-ease, var(--qhc-ease-out)),
     border-color var(--qhc-duration-fast) var(--qhc-ease-out),
     color var(--qhc-duration-fast) var(--qhc-ease-out),
     transform var(--qhc-duration-fast) var(--qhc-ease-out);
@@ -652,6 +656,12 @@ summary:focus-visible,
   gap: 7px;
 }
 
+/* Pulls up against the eyebrow it explains, rather than floating at the
+   panel's full 1.125rem gap between two unrelated blocks. */
+.form-legend {
+  margin-top: -0.5rem;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -667,9 +677,13 @@ label {
   font-weight: 600;
   color: var(--qhc-ink-900);
 
-  .optional {
-    font-weight: 500;
-    color: var(--qhc-slate-600);
+  /* Required marker. aria-hidden in the markup — `required` already tells
+     assistive tech, and a spoken "star" on every field is just noise. The
+     legend at the top of the panel is what decodes it for sighted users. */
+  .required {
+    margin-left: 2px;
+    color: var(--qhc-ember-600);
+    font-weight: 600;
   }
 }
 

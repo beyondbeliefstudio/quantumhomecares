@@ -35,10 +35,9 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
     </div>
 
     <div class="news__body">
-      <div class="news__meta">
-        <span class="eyebrow eyebrow--info">{press.source}</span>
-        <span class="meta">{press.kind}</span>
-      </div>
+      <!-- .eyebrow is width: fit-content, so it does not stretch in this
+           flex column without a wrapper around it. -->
+      <span class="eyebrow eyebrow--info">{press.source}</span>
 
       <Heading
         tag="h3"
@@ -112,13 +111,6 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
       @media (max-width: 560px) {
         padding: 28px 24px;
       }
-    }
-
-    &__meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
     }
 
     &__dek {

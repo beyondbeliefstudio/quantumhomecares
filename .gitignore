@@ -21,3 +21,6 @@ pnpm-debug.log*
 
 # Astro
 .astro/
+
+# Affinity editor lock files
+*~lock~

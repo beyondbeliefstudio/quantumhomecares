@@ -76,6 +76,16 @@ import inset from "@/assets/photos/hero-small.jpg";
       pointer-events: none;
     }
 
+    /*
+      The glow is navy-100 — the same value as the pill's own fill. On desktop
+      it sits top-right and the pill is over paper, but as the layout narrows
+      the glow slides in behind it and the shape disappears into the backdrop.
+      A hairline keeps the edge readable on either surface.
+    */
+    .eyebrow {
+      border-color: var(--qhc-navy-300);
+    }
+
     /* The hero animates on load rather than on scroll */
     &__copy {
       --gap: 1.5rem;
@@ -100,9 +110,16 @@ import inset from "@/assets/photos/hero-small.jpg";
       aspect-ratio: 1 / 1;
       border: 8px solid var(--qhc-paper);
 
-      /* Source is a tall portrait; bias the square crop up so his face isn't cut */
+      /*
+        Source is a 2:3 portrait in a 1:1 plate, so only the middle ~67% of the
+        image height is ever visible and this picks which band. His eyes sit at
+        roughly 49% down the source; at the old 15% that put them ~66% down the
+        square, which read as the head sinking to the bottom. 72% lifts the
+        window so they land near the upper third and the pill organiser on the
+        table still makes the crop.
+      */
       img {
-        object-position: center 15%;
+        object-position: center 72%;
       }
     }
 
@@ -120,9 +137,14 @@ import inset from "@/assets/photos/hero-small.jpg";
       }
     }
 
+    /* Narrow phones: the inset stays, but 34% of a 350px column is a ~120px
+       thumbnail, so it gains width and gives back some of its overhang and
+       border to stay legible against the portrait behind it. */
     @media (max-width: 560px) {
       &__inset {
-        display: none;
+        width: 44%;
+        bottom: -24px;
+        border-width: 6px;
       }
     }
   }

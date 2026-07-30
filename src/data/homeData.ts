@@ -102,7 +102,7 @@ export const services: Service[] = [
   {
     icon: "overnight",
     title: "Overnight and Live-In Care",
-    copy: "For families worried about the hours nobody is watching. Awake overnight shifts and live-in arrangements, scheduled around how your parent actually sleeps.",
+    copy: "For families worried about the hours nobody is watching. Awake overnight shifts and live-in arrangements, scheduled around how the person actually sleeps.",
   },
 ];
 
@@ -113,7 +113,7 @@ export const comparison: ComparisonRow[] = [
   {
     topic: "Who shows up",
     them: "Whoever is available that day",
-    us: "A caregiver matched to your parent, kept consistent",
+    us: "A caregiver matched to your loved one, kept consistent",
   },
   {
     topic: "The care plan",
@@ -138,7 +138,7 @@ export const comparison: ComparisonRow[] = [
 export const whoWeHelp: NumberedCard[] = [
   {
     title: "After a hospital stay",
-    copy: "Discharge paperwork, new medications, and follow-up appointments arriving all at once. We take over the coordination and get the home ready before your parent walks back in.",
+    copy: "Discharge paperwork, new medications, and follow-up appointments arriving all at once. We take over the coordination and get the home ready before they walk back in.",
     icon: "after-hospital-stay",
   },
   {
@@ -148,7 +148,7 @@ export const whoWeHelp: NumberedCard[] = [
   },
   {
     title: "When the family caregiver is worn down",
-    copy: "Respite coverage by the shift, the week, or ongoing, so the adult child holding everything together can sleep, travel, and be a family member again.",
+    copy: "Respite coverage by the shift, the week, or ongoing, so whoever is holding everything together can sleep, travel, and be a family member again.",
     icon: "caregiver-worn-down",
   },
   {
@@ -167,7 +167,7 @@ export const steps: NumberedCard[] = [
     copy: "Send the form and we respond within one business day. We listen, ask a few questions, and tell you what would help, even if that is less care than you expected. The conversation is free.",
   },
   {
-    title: "We build a plan for your parent",
+    title: "We build a plan for your loved one",
     copy: "A visit to the home, an assessment of the real needs and routines, and a written care plan you approve before anything begins.",
   },
   {
@@ -224,7 +224,6 @@ export const standards: Standard[] = [
 // ==========================================
 export const press = {
   source: "HomeCare Magazine",
-  kind: "Industry press",
   headline: "Quantum Home Cares Opens New Jersey Location",
   dek: "HomeCare Magazine covers our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.",
   url: "https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location",
@@ -237,7 +236,7 @@ export const faqs: Faq[] = [
   {
     question: "What is the minimum commitment?",
     answer:
-      "There is no long contract. We start with the schedule your parent needs and adjust month to month.",
+      "There is no long contract. We start with the schedule your loved one needs and adjust month to month.",
   },
   {
     question: "How quickly can care start?",
@@ -245,7 +244,7 @@ export const faqs: Faq[] = [
       "In most cases within a few days of the assessment, and faster for hospital discharges.",
   },
   {
-    question: "What if my parent refuses help?",
+    question: "What if my loved one refuses help?",
     answer:
       "Common, and expected. We start small, often with companionship or errands, and let trust build before adding personal care.",
   },

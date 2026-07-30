@@ -45,12 +45,16 @@ import mark from "@/assets/brand/quantum-mark.png";
 
     {
       comparison.map(row => (
-        <>
+        <div class="approach__group">
+          {/* Card header on mobile only — on desktop the topic sits inside each cell */}
+          <span class="approach__group-topic">{row.topic}</span>
+
           <div class="approach__cell approach__cell--them">
             <div class="approach__row">
               <Icon name="cross" class="approach__glyph approach__glyph--them" aria-hidden="true" />
               <div>
-                <span class="topic">{row.topic}</span>
+                <span class="topic approach__scope">{row.topic}</span>
+                <span class="topic approach__side">Most agencies</span>
                 <p class="approach__line">{row.them}</p>
               </div>
             </div>
@@ -59,12 +63,13 @@ import mark from "@/assets/brand/quantum-mark.png";
             <div class="approach__row">
               <Icon name="check" class="approach__glyph approach__glyph--us" aria-hidden="true" />
               <div>
-                <span class="topic topic--warm">{row.topic}</span>
+                <span class="topic topic--warm approach__scope">{row.topic}</span>
+                <span class="topic topic--warm approach__side">{baseData.title}</span>
                 <p class="approach__line approach__line--us">{row.us}</p>
               </div>
             </div>
           </div>
-        </>
+        </div>
       ))
     }
   </div>
@@ -85,6 +90,27 @@ import mark from "@/assets/brand/quantum-mark.png";
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: stretch;
+    }
+
+    /* The pair wrapper exists for the mobile card. On desktop it dissolves so
+       its two cells become direct items of the table grid — without this the
+       columns would nest and stop aligning across rows. */
+    &__group {
+      display: contents;
+    }
+
+    &__group-topic {
+      display: none;
+    }
+
+    /* Inside each cell: the topic on desktop, the side it belongs to on
+       mobile (where the card header already carries the topic). */
+    &__scope {
+      display: block;
+    }
+
+    &__side {
+      display: none;
     }
 
     &__cell {
@@ -110,22 +136,6 @@ import mark from "@/assets/brand/quantum-mark.png";
         padding: 30px 32px 24px;
       }
 
-      /* Corners close the table, whatever the row count */
-      &:nth-child(1) {
-        border-top-left-radius: var(--qhc-radius-lg);
-      }
-      &:nth-child(2) {
-        border-top-right-radius: var(--qhc-radius-lg);
-      }
-      &:nth-last-child(2) {
-        border-bottom: 1px solid var(--line);
-        border-bottom-left-radius: var(--qhc-radius-lg);
-      }
-      &:last-child {
-        border-bottom: 1px solid var(--line);
-        border-bottom-right-radius: var(--qhc-radius-lg);
-      }
-
       @media (max-width: 560px) {
         padding: 20px 22px;
 
@@ -133,6 +143,34 @@ import mark from "@/assets/brand/quantum-mark.png";
           padding: 26px 22px 20px;
         }
       }
+    }
+
+    /*
+      Corners close the table, whatever the row count. These are addressed by
+      which cell they are rather than by :nth-child — the group wrapper is
+      display: contents, so the cells are grid items but their DOM parent is
+      the group, and any position-based selector would resolve inside it.
+      Clipping with overflow: hidden is not an option either: it cuts the
+      cells' own 1px borders, leaving the corners with no stroke.
+    */
+    &__cell--head#{&}__cell--them {
+      border-top-left-radius: var(--qhc-radius-lg);
+    }
+
+    &__cell--head#{&}__cell--us {
+      border-top-right-radius: var(--qhc-radius-lg);
+    }
+
+    &__group:last-child &__cell {
+      border-bottom: 1px solid var(--line);
+    }
+
+    &__group:last-child &__cell--them {
+      border-bottom-left-radius: var(--qhc-radius-lg);
+    }
+
+    &__group:last-child &__cell--us {
+      border-bottom-right-radius: var(--qhc-radius-lg);
     }
 
     &__label {
@@ -195,31 +233,64 @@ import mark from "@/assets/brand/quantum-mark.png";
       text-align: center;
     }
 
-    /* Stacked, each cell still reads on its own — the glyph, topic label,
-       and fill colour carry the comparison without the column headers. */
+    /*
+      Stacked, the table stops being a table. Two column headers at the top
+      with eight alternating cells below them means the reader has to hold
+      "which side am I looking at" in their head while scrolling, and the
+      topic appears twice in a row with nothing saying who each one belongs
+      to. So on mobile it becomes one card per topic: the topic names itself
+      once in the header, and the two rows inside it are labelled by side.
+      Same content, no cross-referencing.
+    */
     @media (max-width: 760px) {
       &__table {
         grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
       }
 
-      /* Stacked full-width, so the them-cells need their right edge back */
-      &__cell--them {
-        border-right: 1px solid var(--line);
+      /* Each card names both sides, so the shared headers are dead weight */
+      &__cell--head {
+        display: none;
       }
 
-      &__cell:nth-child(1),
-      &__cell:nth-child(2),
-      &__cell:nth-last-child(2) {
-        border-bottom: 0;
+      &__group {
+        display: block;
+        border: 1px solid var(--qhc-hairline);
+        border-radius: var(--qhc-radius-lg);
+        overflow: hidden;
+      }
+
+      &__group-topic {
+        display: block;
+        padding: 14px 22px;
+        background: var(--qhc-shell);
+        border-bottom: 1px solid var(--qhc-hairline);
+        color: var(--qhc-navy-900);
+        font-size: var(--qhc-size-label);
+        font-weight: 600;
+      }
+
+      /* The card owns the frame now — cells only need the seam between them */
+      &__cell {
+        border: 0;
         border-radius: 0;
       }
 
-      &__cell:nth-child(1) {
-        border-radius: var(--qhc-radius-lg) var(--qhc-radius-lg) 0 0;
+      &__cell--us {
+        border-top: 1px solid var(--qhc-navy-300);
       }
 
-      &__cell:last-child {
-        border-radius: 0 0 var(--qhc-radius-lg) var(--qhc-radius-lg);
+      &__group:last-child &__cell {
+        border-bottom: 0;
+      }
+
+      /* Swap the small label from topic to side */
+      &__scope {
+        display: none;
+      }
+
+      &__side {
+        display: block;
       }
     }
   }

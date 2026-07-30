@@ -52,6 +52,15 @@ import mark from "@/assets/brand/quantum-mark.png";
   </div>
 </header>
 
+<!--
+  Scrim. Deliberately a sibling of the header, not a child: .nav carries a
+  backdrop-filter, which makes it the containing block for position: fixed
+  descendants, so nested here it would size itself to the header instead of
+  the viewport. data-nav-close is all the JS it needs — the existing handler
+  closes the drawer on click.
+-->
+<div class="nav__scrim" data-nav-close aria-hidden="true"></div>
+
 <style lang="scss">
   .nav {
     position: sticky;
@@ -99,7 +108,11 @@ import mark from "@/assets/brand/quantum-mark.png";
       height: 56px;
       transition: width var(--qhc-duration-slow) var(--qhc-ease-out);
 
-      @media (max-width: 420px) {
+      /* The logo is flex: 0 0 auto, so it never gives ground — the right
+         cluster is what gets pushed out of the bar. It has to step down
+         before the bar runs out of room, not after. 222px stops fitting
+         alongside the CTA at ~490px, so the step happens at 560. */
+      @media (max-width: 560px) {
         width: 180px;
       }
     }
@@ -118,7 +131,7 @@ import mark from "@/assets/brand/quantum-mark.png";
       transform: translateY(-50%);
       opacity: 1;
 
-      @media (max-width: 420px) {
+      @media (max-width: 560px) {
         height: 44px;
       }
     }
@@ -149,6 +162,19 @@ import mark from "@/assets/brand/quantum-mark.png";
       align-items: center;
       gap: 12px;
       margin-left: auto;
+
+      /*
+        Below this the three pieces genuinely cannot coexist: at 320px the CTA
+        and the toggle alone take 223px of a 280px content box, which would
+        leave 57px for the wordmark — illegible at any height. The drawer
+        already carries a full-width Request Care button and the phone link,
+        so the header CTA is the piece to drop rather than the logo.
+      */
+      @media (max-width: 480px) {
+        :global(.btn.primary) {
+          display: none;
+        }
+      }
     }
 
     &__links {
@@ -209,6 +235,33 @@ import mark from "@/assets/brand/quantum-mark.png";
       }
     }
 
+    /* --- Scrim behind the drawer ---
+       z-index sits under .nav (40) so the header and drawer stay legible on
+       top of it, and over everything else on the page. Fades rather than
+       snapping; visibility is in the transition so it is not a click target
+       while hidden. */
+    &__scrim {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: var(--qhc-glass-light);
+      backdrop-filter: var(--qhc-glass-blur);
+      -webkit-backdrop-filter: var(--qhc-glass-blur);
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity var(--qhc-duration-base) var(--qhc-ease-out),
+        visibility var(--qhc-duration-base) var(--qhc-ease-out);
+    }
+
+    /* Only below the drawer breakpoint — the drawer itself cannot open above it */
+    &.is-open + &__scrim {
+      @media (max-width: 1020px) {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
     &__drawer-inner {
       display: flex;
       flex-direction: column;
@@ -227,16 +280,21 @@ import mark from "@/assets/brand/quantum-mark.png";
       }
     }
 
+    /* Mirrors .drawer-link in Links.astro — same height, rule, size, weight
+       and hover, so the phone number reads as the last row of the list
+       rather than a differently-styled outlier. */
     &__drawer-phone {
       display: flex;
       align-items: center;
-      min-height: 56px;
-      color: var(--qhc-navy-900);
-      font-size: 1.25rem;
-      font-weight: 600;
+      min-height: 52px;
+      border-bottom: 1px solid var(--qhc-hairline);
+      color: var(--qhc-ink-900);
+      font-size: var(--qhc-size-body-m);
+      font-weight: 500;
       text-decoration: none;
 
-      &:hover {
+      &:hover,
+      &:focus-visible {
         color: var(--qhc-ember-700);
       }
     }

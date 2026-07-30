@@ -82,6 +82,14 @@ const year = new Date().getFullYear();
       --gap: 1.5rem;
       flex: 0 1 380px;
       max-width: 34ch;
+
+      /* 380px is a width — it only means that while .footer__grid is a row.
+         Once the grid flips to column the main axis is vertical, so that same
+         basis pins this block to 380px TALL and strands ~155px of empty space
+         under the tagline. Release it when the axis flips. */
+      @media (max-width: 900px) {
+        flex-basis: auto;
+      }
     }
 
     &__lockup {

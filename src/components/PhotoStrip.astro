@@ -3,15 +3,18 @@
 import { Image } from "astro:assets";
 
 // IMAGES
-import chess from "@/assets/photos/strip-chess.jpg";
-import walking from "@/assets/photos/strip-walking.jpg";
-import hands from "@/assets/photos/strip-hands.jpg";
+import man from "@/assets/photos/strip-man.jpg";
+import love from "@/assets/photos/strip-love.jpg";
+import hug from "@/assets/photos/strip-hug.jpg";
 import outdoors from "@/assets/photos/strip-outdoors.jpg";
 
 const photos = [
-  { src: chess, alt: "Two men playing chess" },
-  { src: walking, alt: "Senior couple walking outdoors" },
-  { src: hands, alt: "Hands of a senior client and caregiver" },
+  { src: man, alt: "Senior man seated in a bright room with others nearby" },
+  {
+    src: love,
+    alt: "Senior woman resting her hands on her partner's shoulder as they smile at each other",
+  },
+  { src: hug, alt: "Two older adults embracing, one smiling over the other's shoulder" },
   { src: outdoors, alt: "Older couple outdoors together" },
 ];
 ---
@@ -21,7 +24,12 @@ const photos = [
     {
       photos.map(p => (
         <div class="plate strip__plate">
-          <Image src={p.src} alt={p.alt} widths={[400, 800, 1200]} sizes="(max-width: 560px) 50vw, 25vw" />
+          <Image
+            src={p.src}
+            alt={p.alt}
+            widths={[400, 800, 1200]}
+            sizes="(max-width: 560px) 50vw, 25vw"
+          />
         </div>
       ))
     }
