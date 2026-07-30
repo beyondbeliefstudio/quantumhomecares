@@ -1,0 +1,129 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// IMAGES
+import primary from "@/assets/photos/hero-help.jpg";
+import inset from "@/assets/photos/hero-small.jpg";
+---
+
+<section id="top" class="section hero">
+  <!-- Blue glow bleeding off the top-right corner, behind the imagery -->
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <div class="split split--gap-sm">
+    <div class="stack hero__copy">
+      <span class="eyebrow">In-Home Senior Care Across New Jersey</span>
+
+      <Heading tag="h1" size="display" fontFamily="primary" weight="fw400" marginBottom="none">
+        Home is where they want to be. We help them stay there.
+      </Heading>
+
+      <p class="lead lead--hero">
+        Quantum Home Cares pairs everyday in-home support with hands-on medical advocacy, so aging
+        at home stays safe and dignified and your family is not managing it alone.
+      </p>
+
+      <div class="btn-wrapper">
+        <Links variant="primary" href="#contact" classes="lg">Request A Free Consultation</Links>
+        <Links variant="outline" href="#how">See How It Works</Links>
+      </div>
+    </div>
+
+    <div class="hero__media">
+      <div class="plate plate--lg hero__portrait">
+        <Image
+          src={primary}
+          alt="A caregiver walking arm in arm with a smiling senior woman"
+          widths={[600, 1200]}
+          sizes="(max-width: 980px) 92vw, 40vw"
+        />
+      </div>
+      <!-- Paper-coloured border cuts the square out of the page -->
+      <div class="plate plate--lg hero__inset">
+        <Image
+          src={inset}
+          alt="Senior man sorting his medication at home"
+          widths={[400, 800]}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .hero {
+    padding-top: 84px;
+    padding-bottom: 40px;
+
+    &__glow {
+      position: absolute;
+      top: -140px;
+      right: -180px;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 50%,
+        var(--qhc-navy-100) 0%,
+        rgba(214, 231, 246, 0.45) 46%,
+        rgba(214, 231, 246, 0) 72%
+      );
+      pointer-events: none;
+    }
+
+    /* The hero animates on load rather than on scroll */
+    &__copy {
+      --gap: 1.5rem;
+      animation: qhc-rise 700ms var(--qhc-ease-out) both;
+    }
+
+    &__media {
+      position: relative;
+      animation: qhc-rise 900ms var(--qhc-ease-out) 120ms both;
+    }
+
+    &__portrait {
+      aspect-ratio: 4 / 5;
+      margin-left: 12%;
+    }
+
+    &__inset {
+      position: absolute;
+      left: -12%;
+      bottom: -40px;
+      width: 42%;
+      aspect-ratio: 1 / 1;
+      border: 8px solid var(--qhc-paper);
+
+      /* Source is a tall portrait; bias the square crop up so his face isn't cut */
+      img {
+        object-position: center 15%;
+      }
+    }
+
+    /* Stacked: pull the portrait back to full width and re-seat the inset */
+    @media (max-width: 980px) {
+      &__portrait {
+        margin-left: 0;
+      }
+
+      &__inset {
+        left: auto;
+        right: 0;
+        bottom: -32px;
+        width: 34%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      &__inset {
+        display: none;
+      }
+    }
+  }
+</style>

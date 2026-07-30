@@ -1,0 +1,103 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// IMAGES
+import mark from "@/assets/brand/quantum-mark.png";
+import caregiver from "@/assets/photos/families-reach-out.jpg";
+import senior from "@/assets/photos/why-senior.jpg";
+---
+
+<section class="section" data-reveal>
+  <div class="split split--5-6">
+    <!-- Staggered pair — the second plate drops to break the grid -->
+    <div class="why__plates">
+      <div class="plate">
+        <Image
+          src={caregiver}
+          alt="Caregiver pushing a senior client in a wheelchair across a sunlit field"
+          widths={[400, 800]}
+        />
+      </div>
+      <div class="plate why__plate-offset">
+        <Image src={senior} alt="Senior woman smiling" widths={[350, 700]} />
+      </div>
+    </div>
+
+    <div class="stack why__copy">
+      <span class="eyebrow">Why Families Reach Out</span>
+
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Caring for a parent becomes a second full-time job.
+      </Heading>
+
+      <p class="lead">
+        The appointments. The medications. The insurance calls that go nowhere. The phone ringing at
+        two in the morning and the drive over to check on them.
+      </p>
+      <p class="lead">
+        Most families are holding all of it while working and raising children of their own, with
+        the constant sense that something is being missed. That is not a personal failure. It is
+        what happens when one person is asked to be a nurse, a scheduler, a driver, and an advocate
+        at once.
+      </p>
+
+      <div class="why__statement">
+        <Image src={mark} alt="" aria-hidden="true" height={116} class="why__mark" />
+        <Heading tag="p" size="statement" fontFamily="primary" weight="fw400" marginBottom="none">
+          Quantum Home Cares takes that weight off your family.
+        </Heading>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .why {
+    &__plates {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+
+      .plate {
+        aspect-ratio: 3 / 4;
+      }
+    }
+
+    &__plate-offset {
+      margin-top: 48px;
+    }
+
+    &__copy {
+      --gap: 1.25rem;
+      max-width: 58ch;
+    }
+
+    &__statement {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-top: 12px;
+      padding: 26px 30px;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline);
+      border-radius: var(--qhc-radius);
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px;
+      }
+    }
+
+    &__mark {
+      flex: 0 0 auto;
+      height: 58px;
+      width: auto;
+    }
+  }
+</style>

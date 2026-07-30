@@ -1,0 +1,146 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { faqs } from "@/data/homeData";
+---
+
+<section class="section" data-reveal>
+  <div class="split split--4-7 split--top">
+    <div class="stack faq__intro">
+      <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+        Questions families ask first
+      </Heading>
+      <p class="lead faq__lead">
+        Don't see your question here? Send it with the form and we will get back to you within one
+        business day.
+      </p>
+      <Links variant="inline" href="#contact">
+        Ask us directly
+        <Icon name="arrow-right" aria-hidden="true" />
+      </Links>
+    </div>
+
+    <!-- Native <details> — no JS. All closed by default; multiple can be open at once -->
+    <div class="stack faq__list">
+      {
+        faqs.map(faq => (
+          <details class="faq__item">
+            <summary class="faq__question">
+              {faq.question}
+              <span class="faq__glyph" aria-hidden="true" />
+            </summary>
+            <p class="faq__answer">{faq.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .faq {
+    &__intro {
+      --gap: 1.25rem;
+    }
+
+    &__lead {
+      --w: 40ch;
+    }
+
+    &__list {
+      --gap: 0.75rem;
+    }
+
+    &__item {
+      padding: 4px 24px;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline);
+      border-radius: var(--qhc-radius);
+    }
+
+    &__question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+      color: var(--qhc-navy-900);
+      font-size: var(--qhc-size-body-m);
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &:hover {
+        color: var(--qhc-navy-700);
+      }
+    }
+
+    /*
+      Drawn with two bars rather than a "+" character — a glyph's own metrics
+      (baseline, side bearings) never sit dead-centre in its box, so text-based
+      centering always reads slightly off. Bars centred with translate(-50%,
+      -50%) are centred by construction. Rotating the pair 45° turns + into ✕.
+    */
+    &__glyph {
+      position: relative;
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--qhc-radius-circle);
+      background: var(--qhc-navy-100);
+      transition:
+        transform 220ms var(--qhc-ease-out),
+        background 220ms ease;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: var(--qhc-navy-800);
+        transition: background 220ms ease;
+      }
+
+      &::before {
+        width: 12px;
+        height: 2px;
+        transform: translate(-50%, -50%);
+      }
+
+      &::after {
+        width: 2px;
+        height: 12px;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &__item[open] &__glyph {
+      background: var(--qhc-navy-700);
+      transform: rotate(45deg);
+
+      &::before,
+      &::after {
+        background: var(--qhc-white);
+      }
+    }
+
+    &__answer {
+      max-width: 62ch;
+      padding-bottom: 20px;
+      color: var(--qhc-ink-700);
+      font-size: var(--qhc-size-label);
+      line-height: 1.6;
+    }
+  }
+</style>

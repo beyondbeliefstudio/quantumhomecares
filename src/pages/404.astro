@@ -1,0 +1,42 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// DATA
+import { baseData, telHref } from "@/data/siteData";
+---
+
+<Layout
+  pageTitle={`Page Not Found | ${baseData.title}`}
+  description="That page does not exist. Head back to the homepage to find in-home senior care across New Jersey."
+>
+  <section class="section notice" aria-label="Page not found">
+    <div class="section-header">
+      <span class="eyebrow">Error 404</span>
+
+      <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+        We could not find that page.
+      </Heading>
+
+      <p class="lead">
+        The link may be out of date. Head back to the homepage, or call us at
+        <a href={telHref}>{baseData.phone}</a> and we will point you in the right direction.
+      </p>
+
+      <Links variant="primary" href="/">Back To The Homepage</Links>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .notice {
+    display: flex;
+    align-items: center;
+    min-height: 60vh;
+    padding-bottom: var(--qhc-section-gap);
+  }
+</style>

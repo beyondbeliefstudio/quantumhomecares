@@ -1,0 +1,175 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+export interface Props extends HTMLAttributes<"a"> {
+  href: string;
+  variant?:
+    | "primary" // ember pill — the conversion action
+    | "secondary" // navy pill — referral action
+    | "outline" // quiet outlined pill
+    | "nav-link" // desktop header link
+    | "drawer-link" // mobile drawer link
+    | "footer-link" // footer anchor row
+    | "inline"; // text link with a trailing arrow
+  classes?: string;
+}
+
+const { href, variant = "primary", classes, ...rest } = Astro.props;
+---
+
+<a href={href} class:list={["btn", variant, classes]} {...rest}>
+  <slot />
+</a>
+
+<style lang="scss" is:global>
+  /* Base geometry lives in global.scss — these are the skins. */
+  .btn {
+    /*
+      Pill variants share one motion: the hover colour slides in from the left
+      (a gradient layer growing from 0 to full width), then a slight squeeze on
+      press. The button itself stays put. Each variant only supplies its three
+      colours.
+    */
+    &.primary,
+    &.secondary,
+    &.outline {
+      --btn-wipe: var(--qhc-duration-enter);
+      background-color: var(--btn-fill);
+      background-image: linear-gradient(var(--btn-ink), var(--btn-ink));
+      background-repeat: no-repeat;
+      background-position: 0 50%;
+      background-size: 0% 100%;
+
+      &:hover,
+      &:focus-visible {
+        background-size: 100% 100%;
+      }
+
+      &:active {
+        background-image: linear-gradient(var(--btn-pressed), var(--btn-pressed));
+        transform: scale(0.98);
+      }
+    }
+
+    &.primary {
+      --btn-fill: var(--qhc-ember-600);
+      --btn-ink: var(--qhc-ember-700);
+      --btn-pressed: var(--qhc-ember-800);
+      color: var(--qhc-white);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-white);
+      }
+    }
+
+    &.secondary {
+      --btn-fill: var(--qhc-navy-700);
+      --btn-ink: var(--qhc-navy-800);
+      /* navy-900 is text-only, never a plane — pressed leans on the squeeze */
+      --btn-pressed: var(--qhc-navy-800);
+      color: var(--qhc-white);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-white);
+      }
+    }
+
+    &.outline {
+      --btn-fill: transparent;
+      --btn-ink: var(--qhc-navy-050);
+      --btn-pressed: var(--qhc-navy-100);
+      border-color: var(--qhc-navy-200);
+      color: var(--qhc-navy-800);
+
+      &:hover,
+      &:focus-visible {
+        border-color: var(--qhc-navy-700);
+        color: var(--qhc-navy-800);
+      }
+    }
+
+    /* --- Bare text links: strip the pill, keep the transition --- */
+    &.nav-link,
+    &.drawer-link,
+    &.footer-link,
+    &.inline {
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      white-space: normal;
+    }
+
+    &.nav-link {
+      padding: 10px 0;
+      color: var(--qhc-ink-900);
+      font-size: var(--qhc-size-label);
+      font-weight: 500;
+      white-space: nowrap;
+      /* Underline draws left to right rather than popping in */
+      background-image: linear-gradient(var(--qhc-ember-600), var(--qhc-ember-600));
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      background-size: 0% 1px;
+
+      &:hover,
+      &:focus-visible {
+        background-size: 100% 1px;
+        color: var(--qhc-ink-900);
+      }
+    }
+
+    &.drawer-link {
+      justify-content: flex-start;
+      align-self: stretch;
+      width: 100%;
+      min-height: 52px;
+      border-bottom: 1px solid var(--qhc-hairline);
+      color: var(--qhc-ink-900);
+      font-size: var(--qhc-size-body-m);
+      font-weight: 500;
+      text-align: left;
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-ember-700);
+      }
+    }
+
+    &.footer-link {
+      color: var(--qhc-slate-600);
+      font-size: var(--qhc-size-label);
+      font-weight: 400;
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-ember-700);
+      }
+    }
+
+    &.inline {
+      gap: 0.5rem;
+      color: var(--qhc-ember-700);
+      font-size: var(--qhc-size-label);
+      font-weight: 600;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        transition: transform var(--qhc-duration-fast) var(--qhc-ease-out);
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-ember-800);
+
+        svg {
+          transform: translateX(4px);
+        }
+      }
+    }
+  }
+</style>

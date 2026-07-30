@@ -1,0 +1,106 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// DATA
+import { steps } from "@/data/homeData";
+---
+
+<!--
+  A process, drawn as one: three markers on a connecting line, read left to
+  right. Markers follow the tinted-band chip rule — white with a navy-300
+  edge — so they hold against the wash.
+-->
+<section id="how" class="band band--up" data-reveal>
+  <div class="band__inner">
+    <div class="section-header how__header">
+      <span class="eyebrow eyebrow--band">Getting Started</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        From first message to first day of care.
+      </Heading>
+    </div>
+
+    <ol class="how__steps">
+      {
+        steps.map((step, i) => (
+          <li class="how__step">
+            <span class="how__marker" aria-hidden="true">{i + 1}</span>
+            <div class="stack how__body">
+              <Heading tag="h3" size="xs" fontFamily="secondary" weight="fw600" marginBottom="none">
+                {step.title}
+              </Heading>
+              <p>{step.copy}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style lang="scss">
+  .how {
+    &__header {
+      --mb: 3.5rem;
+    }
+
+    &__steps {
+      --gap: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap);
+      list-style: none;
+    }
+
+    &__step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+
+      /* Connector — this marker's edge to the next, across the gap.
+         42px = marker radius (28) + clearance (14). */
+      &:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        top: 28px;
+        left: calc(50% + 42px);
+        right: calc(-50% - var(--gap) + 42px);
+        height: 1px;
+        background: var(--qhc-navy-300);
+      }
+    }
+
+    &__marker {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius-circle);
+      color: var(--qhc-navy-800);
+      font-family: var(--qhc-font-display);
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    &__body {
+      --gap: 0.5rem;
+    }
+
+    @media (max-width: 900px) {
+      &__steps {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 36px;
+      }
+
+      /* Stacked — same centred column, connectors off */
+      &__step:not(:last-child)::before {
+        content: none;
+      }
+    }
+  }
+</style>

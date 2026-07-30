@@ -1,0 +1,226 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { comparison } from "@/data/homeData";
+import { baseData } from "@/data/siteData";
+
+// IMAGES
+import mark from "@/assets/brand/quantum-mark.png";
+---
+
+<section id="approach" class="section" data-reveal>
+  <div class="section-header approach__header">
+    <span class="eyebrow">Our Approach</span>
+    <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+      Most agencies send help. We <span class="underscore">show up and follow through</span>.
+    </Heading>
+    <p class="lead">
+      Large agencies run on clinical quotas and insurance billing. An aide arrives, hours get
+      logged, and your family is still the one on hold with the insurance company at four in the
+      afternoon. Here is the difference, line by line.
+    </p>
+  </div>
+
+  <!--
+    One grid with alternating left/right cells — NOT two columns. Independent
+    columns drift out of alignment as soon as a line wraps.
+    This is the one place the unified card style deliberately does not apply.
+  -->
+  <div class="approach__table">
+    <div class="approach__cell approach__cell--them approach__cell--head">
+      <span class="approach__label">Most agencies</span>
+    </div>
+    <div class="approach__cell approach__cell--us approach__cell--head">
+      <span class="approach__label approach__label--brand">
+        <Image src={mark} alt="" aria-hidden="true" height={68} class="approach__mark" />
+        {baseData.title}
+      </span>
+    </div>
+
+    {
+      comparison.map(row => (
+        <>
+          <div class="approach__cell approach__cell--them">
+            <div class="approach__row">
+              <Icon name="cross" class="approach__glyph approach__glyph--them" aria-hidden="true" />
+              <div>
+                <span class="topic">{row.topic}</span>
+                <p class="approach__line">{row.them}</p>
+              </div>
+            </div>
+          </div>
+          <div class="approach__cell approach__cell--us">
+            <div class="approach__row">
+              <Icon name="check" class="approach__glyph approach__glyph--us" aria-hidden="true" />
+              <div>
+                <span class="topic topic--warm">{row.topic}</span>
+                <p class="approach__line approach__line--us">{row.us}</p>
+              </div>
+            </div>
+          </div>
+        </>
+      ))
+    }
+  </div>
+
+  <p class="approach__closer">
+    Advocacy is not an add-on service here. It is the reason this company exists.
+  </p>
+</section>
+
+<style lang="scss">
+  .approach {
+    &__header {
+      --gap: 1.125rem;
+      --mb: 3.5rem;
+    }
+
+    &__table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    &__cell {
+      background: var(--fill);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 22px 32px;
+
+      &--them {
+        --line: var(--qhc-hairline);
+        --fill: var(--qhc-paper);
+        /* The us-panel's navy edge owns the centre seam — no double line */
+        border-right: 0;
+      }
+
+      &--us {
+        --line: var(--qhc-navy-300);
+        --fill: var(--qhc-navy-050);
+      }
+
+      &--head {
+        padding: 30px 32px 24px;
+      }
+
+      /* Corners close the table, whatever the row count */
+      &:nth-child(1) {
+        border-top-left-radius: var(--qhc-radius-lg);
+      }
+      &:nth-child(2) {
+        border-top-right-radius: var(--qhc-radius-lg);
+      }
+      &:nth-last-child(2) {
+        border-bottom: 1px solid var(--line);
+        border-bottom-left-radius: var(--qhc-radius-lg);
+      }
+      &:last-child {
+        border-bottom: 1px solid var(--line);
+        border-bottom-right-radius: var(--qhc-radius-lg);
+      }
+
+      @media (max-width: 560px) {
+        padding: 20px 22px;
+
+        &--head {
+          padding: 26px 22px 20px;
+        }
+      }
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--qhc-slate-600);
+      font-size: 1.25rem;
+      font-weight: 600;
+
+      &--brand {
+        color: var(--qhc-navy-900);
+      }
+    }
+
+    &__mark {
+      height: 34px;
+      width: auto;
+    }
+
+    &__row {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    &__glyph {
+      width: 20px;
+      height: 20px;
+      margin-top: 3px;
+
+      &--them {
+        color: var(--qhc-slate-600);
+        opacity: 0.8;
+      }
+
+      &--us {
+        color: var(--qhc-ember-600);
+      }
+    }
+
+    &__line {
+      line-height: 1.5;
+      color: var(--qhc-slate-600);
+
+      &--us {
+        color: var(--qhc-navy-900);
+        font-weight: 600;
+      }
+    }
+
+    &__closer {
+      max-width: 52ch;
+      margin: 40px auto 0;
+      color: var(--qhc-navy-900);
+      font-size: var(--qhc-size-body-m);
+      font-weight: 600;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Stacked, each cell still reads on its own — the glyph, topic label,
+       and fill colour carry the comparison without the column headers. */
+    @media (max-width: 760px) {
+      &__table {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      /* Stacked full-width, so the them-cells need their right edge back */
+      &__cell--them {
+        border-right: 1px solid var(--line);
+      }
+
+      &__cell:nth-child(1),
+      &__cell:nth-child(2),
+      &__cell:nth-last-child(2) {
+        border-bottom: 0;
+        border-radius: 0;
+      }
+
+      &__cell:nth-child(1) {
+        border-radius: var(--qhc-radius-lg) var(--qhc-radius-lg) 0 0;
+      }
+
+      &__cell:last-child {
+        border-radius: 0 0 var(--qhc-radius-lg) var(--qhc-radius-lg);
+      }
+    }
+  }
+</style>

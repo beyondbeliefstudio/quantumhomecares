@@ -1,0 +1,129 @@
+---
+// COMPONENTS
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// DATA
+import { footerNav } from "@/data/navData";
+import { baseData, telHref, mailHref } from "@/data/siteData";
+
+// IMAGES
+import lockup from "@/assets/brand/quantum-logo-full-lockup.png";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" aria-label="Site footer">
+  <div class="footer__inner">
+    <div class="footer__grid">
+      <!-- Brand — the full lockup anchors the footer -->
+      <div class="stack footer__brand">
+        <a href="#top" aria-label={`${baseData.title} — back to top`}>
+          <Image src={lockup} alt={baseData.title} widths={[200, 400]} class="footer__lockup" />
+        </a>
+        <p class="meta--lg">Advocacy-led in-home senior care, serving all of New Jersey.</p>
+      </div>
+
+      <!-- Explore + Contact — grouped as one unit on the right, opposite the brand -->
+      <div class="footer__links-group">
+        <nav class="stack footer__col" aria-label="Footer navigation">
+          <span class="topic">Explore</span>
+          {footerNav.map(i => <Links variant="footer-link" href={i.href}>{i.title}</Links>)}
+          <Links variant="footer-link" href="#contact">Request Care</Links>
+        </nav>
+
+        <!-- Contact — same footer-link treatment as Explore, so nothing here drifts -->
+        <address class="stack footer__col footer__address">
+          <span class="topic">Contact</span>
+          <Links variant="footer-link" href={telHref}>{baseData.phone}</Links>
+          <Links variant="footer-link" href={mailHref}>{baseData.email}</Links>
+        </address>
+      </div>
+    </div>
+
+    <!-- Legal. Privacy/Accessibility links land when those pages ship. -->
+    <div class="footer__legal">
+      <span>© {year} {baseData.legalName} · {baseData.serviceArea.summary}</span>
+      <span>{baseData.credentials.license} · {baseData.credentials.insurance}</span>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  .footer {
+    border-top: 1px solid var(--qhc-hairline);
+    background: var(--qhc-paper);
+
+    &__inner {
+      max-width: var(--qhc-page-max);
+      margin-inline: auto;
+      padding: 72px var(--qhc-gutter) 40px;
+    }
+
+    /* Two sides, not three even columns: brand pinned left, nav + contact
+       grouped as one unit on the right. space-between puts all the slack
+       in the gap between the two sides rather than spreading it evenly. */
+    &__grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: start;
+      gap: 40px 64px;
+      padding-bottom: 56px;
+
+      @media (max-width: 900px) {
+        flex-direction: column;
+      }
+    }
+
+    &__brand {
+      --gap: 1.5rem;
+      flex: 0 1 380px;
+      max-width: 34ch;
+    }
+
+    &__lockup {
+      width: auto;
+      height: 150px;
+    }
+
+    /* The related pair — kept close together as they move as one block */
+    &__links-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px 64px;
+
+      /* Full stack below 900, same breakpoint as .footer__grid — Explore and
+         Contact each get their own row rather than pairing up mid-width. */
+      @media (max-width: 900px) {
+        flex-direction: column;
+      }
+    }
+
+    &__col {
+      --gap: 0.75rem;
+
+      .topic {
+        margin-bottom: 0.375rem;
+      }
+    }
+
+    &__address {
+      font-style: normal;
+    }
+
+    &__legal {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--qhc-hairline);
+      color: var(--qhc-slate-600);
+      font-size: var(--qhc-size-meta);
+      line-height: 1.6;
+    }
+  }
+</style>

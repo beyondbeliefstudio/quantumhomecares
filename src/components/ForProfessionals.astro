@@ -1,0 +1,129 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// DATA
+import { referralPoints } from "@/data/homeData";
+---
+
+<!--
+  The one B2B moment on the page, so it gets its own plane: the navy-050 /
+  navy-300 "Quantum" surface from the comparison table, framed as a module.
+-->
+<section id="professionals" class="section" data-reveal>
+  <div class="pro">
+    <div class="pro__intro">
+      <div class="stack pro__heading">
+        <span class="eyebrow eyebrow--band">For Care Professionals</span>
+        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+          A referral partner who closes the loop.
+        </Heading>
+      </div>
+
+      <div class="stack pro__action">
+        <p class="lead">
+          Hospitals, rehab facilities, discharge planners, case managers, and social workers across
+          New Jersey use us to place patients safely at home — and to hear back about what happened
+          next.
+        </p>
+        <Links variant="secondary" href="#contact">Send A Referral</Links>
+      </div>
+    </div>
+
+    <!-- Ruled columns, credential-band rhythm: dividers between items, never stranded on a wrap -->
+    <div class="pro__points">
+      {
+        referralPoints.map(point => (
+          <div class="stack pro__point">
+            <Heading tag="h3" size="xxs" fontFamily="secondary" weight="fw600" marginBottom="none">
+              {point.title}
+            </Heading>
+            <p>{point.copy}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .pro {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    padding: 56px;
+    background: var(--qhc-navy-050);
+    border: 1px solid var(--qhc-navy-300);
+    border-radius: var(--qhc-radius-lg);
+
+    /* Editorial header: headline left, lead and action right */
+    &__intro {
+      display: grid;
+      grid-template-columns: 6fr 5fr;
+      gap: 28px 72px;
+      align-items: start;
+    }
+
+    &__heading {
+      --gap: 1.25rem;
+    }
+
+    &__action {
+      --gap: 1.5rem;
+      max-width: 46ch;
+    }
+
+    &__points {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px 0;
+      padding-top: 40px;
+      border-top: 1px solid var(--qhc-hairline-cool);
+    }
+
+    &__point {
+      --gap: 0.5rem;
+      padding: 0 26px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      & + & {
+        border-left: 1px solid var(--qhc-hairline-cool);
+      }
+    }
+
+    @media (max-width: 1180px) {
+      &__points {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px 44px;
+      }
+
+      &__point {
+        padding: 0;
+
+        & + & {
+          border-left: 0;
+        }
+      }
+    }
+
+    @media (max-width: 900px) {
+      padding: 40px 32px;
+
+      &__intro {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      padding: 32px 24px;
+
+      &__points {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+</style>

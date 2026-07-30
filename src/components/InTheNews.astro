@@ -1,0 +1,160 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { press } from "@/data/homeData";
+
+// IMAGES
+import coverImg from "@/assets/photos/news-caregiver.jpg";
+---
+
+<section id="news" class="section" data-reveal>
+  <div class="section-header news__header">
+    <span class="eyebrow">In the News</span>
+    <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+      Coverage of our New Jersey launch
+    </Heading>
+  </div>
+
+  <!-- The whole card is the link. Hover reads through the photo and headline
+       rather than the card shell — see the note above the styles below. -->
+  <a
+    href={press.url}
+    target="_blank"
+    rel="noopener"
+    class="card news__card"
+    aria-label={`${press.headline} — read on ${press.source}`}
+  >
+    <div class="news__media">
+      <Image src={coverImg} alt="Caregiver walking with a senior client" widths={[450, 900]} />
+    </div>
+
+    <div class="news__body">
+      <div class="news__meta">
+        <span class="eyebrow eyebrow--info">{press.source}</span>
+        <span class="meta">{press.kind}</span>
+      </div>
+
+      <Heading
+        tag="h3"
+        size="m"
+        fontFamily="primary"
+        weight="fw400"
+        marginBottom="none"
+        class="news__headline"
+      >
+        {press.headline}
+      </Heading>
+
+      <p class="news__dek">{press.dek}</p>
+
+      <span class="btn inline news__cue">
+        Read the article
+        <Icon name="arrow-right" aria-hidden="true" />
+      </span>
+    </div>
+  </a>
+</section>
+
+<style lang="scss">
+  .news {
+    &__header {
+      --w: 62ch;
+      --mb: 2.75rem;
+    }
+
+    /* Reuses .card for the chrome, then overrides the flow to a 5/7 split */
+    &__card {
+      --pad: 0;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      align-items: stretch;
+      overflow: hidden;
+      border-radius: var(--qhc-radius-lg);
+      text-decoration: none;
+
+      @media (max-width: 760px) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    &__media {
+      position: relative;
+      /* Clips its own image zoom without touching the card's rounded corners */
+      overflow: hidden;
+      min-height: 340px;
+
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--qhc-duration-enter) var(--qhc-ease-out);
+      }
+
+      @media (max-width: 760px) {
+        min-height: 260px;
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 44px 48px;
+
+      @media (max-width: 560px) {
+        padding: 28px 24px;
+      }
+    }
+
+    &__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &__dek {
+      max-width: 52ch;
+      line-height: 1.6;
+    }
+
+    /* Pinned to the bottom of the panel however tall the dek runs */
+    &__cue {
+      margin-top: auto;
+    }
+
+    /*
+      The whole card is the link, so hover reads through the photo and the
+      headline rather than the card shell: the cover image eases into a slow,
+      contained zoom and the headline warms to ember — the arrow was already
+      doing this same job in miniature. No lift, no border change, and
+      nothing shifts position.
+    */
+    &__card :global(.news__headline) {
+      transition: color var(--qhc-duration-base) var(--qhc-ease-out);
+    }
+
+    &__card:hover &__media :global(img),
+    &__card:focus-visible &__media :global(img) {
+      transform: scale(1.05);
+    }
+
+    &__card:hover :global(.news__headline),
+    &__card:focus-visible :global(.news__headline) {
+      color: var(--qhc-ember-700);
+    }
+
+    &__card:hover &__cue :global(svg),
+    &__card:focus-visible &__cue :global(svg) {
+      transform: translateX(4px);
+    }
+  }
+</style>

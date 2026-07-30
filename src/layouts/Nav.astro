@@ -1,0 +1,244 @@
+---
+// COMPONENTS
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { navData, desktopNav } from "@/data/navData";
+import { baseData, telHref } from "@/data/siteData";
+
+// IMAGES
+import wordmark from "@/assets/brand/quantum-wordmark.png";
+import mark from "@/assets/brand/quantum-mark.png";
+---
+
+<header class="nav" data-nav>
+  <div class="nav__bar">
+    <!-- Wordmark at rest, heart mark once scrolled. Both live in the same box. -->
+    <a href="#top" class="nav__logo" aria-label={`${baseData.title} — back to top`}>
+      <Image src={wordmark} alt={baseData.title} height={104} class="nav__wordmark" />
+      <Image src={mark} alt="" aria-hidden="true" height={108} class="nav__mark" />
+    </a>
+
+    <div class="nav__actions">
+      <nav class="nav__links" aria-label="Main navigation">
+        {desktopNav.map(i => <Links variant="nav-link" href={i.href}>{i.title}</Links>)}
+      </nav>
+
+      <Links variant="primary" href="#contact" classes="sm">Request Care</Links>
+
+      <button
+        type="button"
+        class="nav__toggle"
+        data-nav-toggle
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-drawer"
+      >
+        <Icon name="menu" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__drawer" id="nav-drawer" data-nav-drawer>
+    <div class="nav__drawer-inner">
+      {navData.map(i => <Links variant="drawer-link" href={i.href} data-nav-close>{i.title}</Links>)}
+      <a href={telHref} class="nav__drawer-phone" data-nav-close>Call {baseData.phone}</a>
+      <Links variant="primary" href="#contact" classes="full" data-nav-close>Request Care</Links>
+    </div>
+  </div>
+</header>
+
+<style lang="scss">
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(249, 246, 241, 0.86);
+    backdrop-filter: saturate(1.4) blur(18px);
+    -webkit-backdrop-filter: saturate(1.4) blur(18px);
+    border-bottom: 1px solid transparent;
+    transition:
+      background var(--qhc-duration-slow) var(--qhc-ease-out),
+      box-shadow var(--qhc-duration-slow) var(--qhc-ease-out),
+      border-color var(--qhc-duration-slow) var(--qhc-ease-out);
+
+    /* Past the 40px sentinel — thinner glass, a hairline, and a soft lift */
+    &[data-scrolled] {
+      background: rgba(249, 246, 241, 0.55);
+      backdrop-filter: saturate(1.6) blur(24px);
+      -webkit-backdrop-filter: saturate(1.6) blur(24px);
+      border-bottom-color: rgba(10, 44, 76, 0.1);
+      box-shadow: 0 18px 40px -30px rgba(10, 44, 76, 0.55);
+    }
+
+    &__bar {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      max-width: var(--qhc-page-max);
+      min-height: var(--qhc-header-h);
+      margin-inline: auto;
+      padding: 12px 40px;
+
+      @media (max-width: 640px) {
+        gap: 16px;
+        padding: 12px var(--qhc-gutter);
+      }
+    }
+
+    /* --- Logo cross-fade --- */
+    &__logo {
+      position: relative;
+      display: block;
+      flex: 0 0 auto;
+      width: 222px;
+      height: 56px;
+      transition: width var(--qhc-duration-slow) var(--qhc-ease-out);
+
+      @media (max-width: 420px) {
+        width: 180px;
+      }
+    }
+
+    &__wordmark,
+    &__mark {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: auto;
+      transition: opacity 260ms var(--qhc-ease-out);
+    }
+
+    &__wordmark {
+      height: 52px;
+      transform: translateY(-50%);
+      opacity: 1;
+
+      @media (max-width: 420px) {
+        height: 44px;
+      }
+    }
+
+    &__mark {
+      height: 54px;
+      transform: translateY(-50%) scale(0.9);
+      opacity: 0;
+      transition:
+        opacity 260ms var(--qhc-ease-out),
+        transform 320ms var(--qhc-ease-out);
+    }
+
+    &[data-scrolled] &__logo {
+      width: 68px;
+    }
+    &[data-scrolled] &__wordmark {
+      opacity: 0;
+    }
+    &[data-scrolled] &__mark {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
+
+    /* --- Right cluster --- */
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-right: 16px;
+
+      @media (max-width: 1200px) {
+        gap: 18px;
+      }
+
+      @media (max-width: 1020px) {
+        display: none;
+      }
+    }
+
+    &__toggle {
+      display: none;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 1px solid var(--qhc-navy-200);
+      border-radius: var(--qhc-radius-circle);
+      background: var(--qhc-navy-100);
+      color: var(--qhc-navy-800);
+      cursor: pointer;
+      transition: background var(--qhc-duration-fast) var(--qhc-ease-out);
+
+      &:hover {
+        background: var(--qhc-navy-200);
+      }
+
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      @media (max-width: 1020px) {
+        display: grid;
+      }
+    }
+
+    /* --- Mobile drawer --- */
+    &__drawer {
+      display: none;
+      border-top: 1px solid var(--qhc-hairline);
+      background: rgba(249, 246, 241, 0.98);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    &.is-open &__drawer {
+      @media (max-width: 1020px) {
+        display: block;
+      }
+    }
+
+    &__drawer-inner {
+      display: flex;
+      flex-direction: column;
+      max-width: var(--qhc-page-max);
+      margin-inline: auto;
+      padding: 8px 40px 24px;
+
+      @media (max-width: 640px) {
+        padding: 8px var(--qhc-gutter) 24px;
+      }
+
+      /* The CTA pill sits below the link list, not inside it */
+      :global(.btn.primary) {
+        min-height: 56px;
+        margin-top: 8px;
+      }
+    }
+
+    &__drawer-phone {
+      display: flex;
+      align-items: center;
+      min-height: 56px;
+      color: var(--qhc-navy-900);
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--qhc-ember-700);
+      }
+    }
+  }
+</style>

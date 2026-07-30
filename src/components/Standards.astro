@@ -1,0 +1,62 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// DATA
+import { standards } from "@/data/homeData";
+---
+
+<section class="band band--down" data-reveal>
+  <div class="band__inner">
+    <div class="section-header section-header--left standards__header">
+      <span class="eyebrow eyebrow--band">Our Standards</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Six things every caregiver here is held to.
+      </Heading>
+    </div>
+
+    <div class="auto-grid standards__grid">
+      {
+        standards.map(standard => (
+          <div class="card standards__card">
+            <Heading
+              tag="span"
+              size="word"
+              fontFamily="primary"
+              weight="fw300"
+              marginBottom="none"
+              color="link"
+            >
+              {standard.word}
+            </Heading>
+            <span class="standards__line">{standard.copy}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .standards {
+    &__header {
+      --w: 48ch;
+      --mb: 3rem;
+    }
+
+    &__grid {
+      --min: 340px;
+      --gap: 1.25rem;
+    }
+
+    &__card {
+      --pad: 30px 28px;
+      --gap: 0.375rem;
+    }
+
+    &__line {
+      color: var(--qhc-ink-700);
+      font-size: var(--qhc-size-label);
+    }
+  }
+</style>

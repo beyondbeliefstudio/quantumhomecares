@@ -1,0 +1,41 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { services } from "@/data/homeData";
+---
+
+<section id="services" class="band band--down" data-reveal>
+  <div class="band__inner">
+    <div class="section-header">
+      <span class="eyebrow eyebrow--band">What We Do</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Complete support, built around one person.
+      </Heading>
+      <p class="lead">
+        Every family arrives with a different situation. We build a care plan around what your
+        parent actually needs, then adjust it as things change.
+      </p>
+    </div>
+
+    <div class="auto-grid">
+      {
+        services.map(s => (
+          <article class="card">
+            <span class="icon-circle">
+              <Icon name={s.icon} aria-hidden="true" />
+            </span>
+            <Heading tag="h3" size="s" fontFamily="secondary" weight="fw600" marginBottom="none">
+              {s.title}
+            </Heading>
+            <p>{s.copy}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

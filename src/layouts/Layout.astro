@@ -1,0 +1,36 @@
+---
+// COMPONENTS
+import BaseHead from "@/layouts/BaseHead.astro";
+import Nav from "@/layouts/Nav.astro";
+import Footer from "@/layouts/Footer.astro";
+import UserBack from "@/components/UserBack.astro";
+
+// STYLES
+import "@/styles/global.scss";
+---
+
+<!doctype html>
+<html lang="en">
+  <BaseHead {...Astro.props} />
+  <body>
+    <!--
+      .page carries `overflow-x: clip` so the hero's decorative glow can bleed
+      past the viewport edge. It must never be `overflow: hidden` — that would
+      break the sticky header.
+    -->
+    <div class="page">
+      <!-- 40px tall: the header flips to its scrolled state when this leaves view -->
+      <div class="scroll-sentinel" aria-hidden="true"></div>
+
+      <Nav />
+
+      <main>
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+
+    <UserBack />
+  </body>
+</html>

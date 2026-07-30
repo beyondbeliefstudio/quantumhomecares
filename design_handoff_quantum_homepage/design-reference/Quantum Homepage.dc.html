@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="./quantum-tokens.css" />
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #F9F6F1; color: #12181D; font-family: "Hanken Grotesk", Helvetica, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 116px; }
+  a { color: #14508C; text-underline-offset: 4px; }
+  a:hover { color: #7B614E; }
+  h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
+  h1, h2, h3, h4, blockquote, summary, figcaption { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  ul { padding: 0; list-style: none; }
+  img { display: block; }
+  summary::-webkit-details-marker { display: none; }
+  summary { list-style: none; }
+  details[open] summary span { background: var(--qhc-navy-700); color: #fff; transform: rotate(45deg); }
+  summary span { transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), background 220ms ease, color 220ms ease; }
+  @keyframes qhc-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  [data-qhc-header][data-scrolled="1"] { background: rgba(249, 246, 241, 0.55) !important; backdrop-filter: saturate(1.6) blur(24px) !important; -webkit-backdrop-filter: saturate(1.6) blur(24px) !important; border-bottom-color: rgba(10, 44, 76, 0.10) !important; box-shadow: 0 18px 40px -30px rgba(10, 44, 76, 0.55) !important; }
+  [data-qhc-header][data-scrolled="1"] [data-qhc-logo] { opacity: 0 !important; }
+  [data-qhc-header][data-scrolled="1"] [data-qhc-mark] { opacity: 1 !important; transform: translateY(-50%) scale(1) !important; }
+  [data-qhc-header][data-scrolled="1"] [data-qhc-logolink] { width: 68px !important; }
+  @media (max-width: 1180px) {
+    [data-qhc-credgrid] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 30px 44px !important; }
+    [data-qhc-cred] { padding: 0 !important; border-left: 0 !important; }
+  }
+  @media (max-width: 620px) {
+    [data-qhc-credgrid] { grid-template-columns: minmax(0, 1fr) !important; }
+  }
+</style>
+</helmet>
+
+<main style="background: var(--qhc-paper); overflow-x: clip;">
+
+  <div data-qhc-sentinel aria-hidden="true" style="position: absolute; top: 0; left: 0; height: 40px; width: 1px; pointer-events: none;"></div>
+
+  <header data-qhc-header style="position: sticky; top: 0; z-index: 40; background: rgba(249, 246, 241, 0.86); backdrop-filter: saturate(1.4) blur(18px); -webkit-backdrop-filter: saturate(1.4) blur(18px); border-bottom: 1px solid transparent; transition: background var(--qhc-duration-slow) var(--qhc-ease-out), box-shadow var(--qhc-duration-slow) var(--qhc-ease-out), border-color var(--qhc-duration-slow) var(--qhc-ease-out);">
+    <div style="max-width: 1360px; margin: 0 auto; min-height: 104px; padding: 12px 40px; display: flex; align-items: center; gap: 28px;">
+      <a href="#top" data-qhc-logolink style="position: relative; display: block; height: 56px; width: 222px; text-decoration: none; transition: width var(--qhc-duration-slow) var(--qhc-ease-out);">
+        <img data-qhc-logo src="uploads/quantum-wordmark.png" alt="Quantum Home Cares" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 52px; width: auto; opacity: 1; transition: opacity 260ms var(--qhc-ease-out), height var(--qhc-duration-slow) var(--qhc-ease-out);" />
+        <img data-qhc-mark src="uploads/quantum-mark.png" alt="" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%) scale(0.9); height: 54px; width: auto; opacity: 0; transition: opacity 260ms var(--qhc-ease-out), transform 320ms var(--qhc-ease-out);" />
+      </a>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 28px; flex-wrap: nowrap;">
+      <nav data-qhc-nav style="display: flex; align-items: center; gap: 24px; flex-wrap: nowrap;">
+        <a href="#services" style="font-size: 16px; font-weight: 500; white-space: nowrap; color: var(--qhc-ink-900); text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent;" style-hover="border-bottom-color: var(--qhc-ember-600);">Services</a>
+        <a href="#approach" style="font-size: 16px; font-weight: 500; white-space: nowrap; color: var(--qhc-ink-900); text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent;" style-hover="border-bottom-color: var(--qhc-ember-600);">Our Approach</a>
+        <a href="#who" style="font-size: 16px; font-weight: 500; white-space: nowrap; color: var(--qhc-ink-900); text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent;" style-hover="border-bottom-color: var(--qhc-ember-600);">Who We Help</a>
+        <a href="#how" style="font-size: 16px; font-weight: 500; white-space: nowrap; color: var(--qhc-ink-900); text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent;" style-hover="border-bottom-color: var(--qhc-ember-600);">How It Works</a>
+        <a href="#professionals" style="font-size: 16px; font-weight: 500; white-space: nowrap; color: var(--qhc-ink-900); text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent;" style-hover="border-bottom-color: var(--qhc-ember-600);">For Professionals</a>
+        <a href="#about" style="font-size: 16px; font-weight: 500; white-space: nowrap; color: var(--qhc-ink-900); text-decoration: none; padding: 10px 0; border-bottom: 1px solid transparent;" style-hover="border-bottom-color: var(--qhc-ember-600);">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a data-qhc-phone href="{{ telHref }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-navy-800); border: 1px solid var(--qhc-navy-200); font-size: 16px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="background: var(--qhc-navy-200); border-color: var(--qhc-navy-300);">{{ phone }}</a>
+        <a href="#contact" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: var(--qhc-radius-pill); background: var(--qhc-ember-600); color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="background: var(--qhc-ember-700); transform: translateY(-1px);">Request care</a>
+        <button type="button" data-qhc-menu aria-label="Open menu" aria-expanded="false" style="display: none; align-items: center; justify-content: center; width: 48px; height: 48px; flex: 0 0 auto; padding: 0; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); cursor: pointer;" style-hover="background: var(--qhc-navy-200);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+      </div>
+    </div>
+    <div data-qhc-menupanel style="display: none; border-top: 1px solid var(--qhc-hairline); background: rgba(249, 246, 241, 0.98); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);">
+      <div style="max-width: 1360px; margin: 0 auto; padding: 8px 40px 24px; display: flex; flex-direction: column;">
+          <a href="#services" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">Services</a>
+          <a href="#approach" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">Our Approach</a>
+          <a href="#who" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">Who We Help</a>
+          <a href="#how" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">How It Works</a>
+          <a href="#professionals" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">For Care Professionals</a>
+          <a href="#about" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">About</a>
+          <a href="#news" data-qhc-menulink style="display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 500; color: var(--qhc-ink-900); text-decoration: none; border-bottom: 1px solid var(--qhc-hairline);">In the News</a>
+        <a href="{{ telHref }}" data-qhc-menulink style="display: flex; align-items: center; min-height: 56px; font-size: 20px; font-weight: 600; color: var(--qhc-navy-900); text-decoration: none;">Call {{ phone }}</a>
+        <a href="#contact" data-qhc-menulink style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; margin-top: 8px; padding: 0 26px; border-radius: var(--qhc-radius-pill); background: var(--qhc-ember-600); color: #fff; font-size: 17px; font-weight: 600; text-decoration: none;">Request care</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== 1. HERO ========== -->
+  <section id="top" style="position: relative; max-width: 1360px; margin: 0 auto; padding: 84px 56px 40px;">
+    <div aria-hidden="true" style="position: absolute; top: -140px; right: -180px; width: 720px; height: 720px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, var(--qhc-navy-100) 0%, rgba(214, 231, 246, 0.45) 46%, rgba(214, 231, 246, 0) 72%); pointer-events: none;"></div>
+    <div style="position: relative; display: grid; grid-template-columns: 6fr 5fr; gap: 64px; align-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 24px; animation: qhc-rise 700ms var(--qhc-ease-out) both;">
+        <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">In-Home Senior Care Across New Jersey</span>
+        <h1 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(44px, 4.4vw, 66px); line-height: 1.04; letter-spacing: -3px; color: var(--qhc-navy-900); max-width: 18ch;">Home is where they want to be. We help them stay there.</h1>
+        <p style="font-size: 19px; line-height: 1.6; color: var(--qhc-ink-700); max-width: 50ch;">Quantum Home Cares pairs everyday in-home support with hands-on medical advocacy, so aging at home stays safe and dignified and your family is not managing it alone.</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 4px;">
+          <a href="#contact" style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 34px; border-radius: var(--qhc-radius-pill); background: var(--qhc-ember-600); color: #fff; font-size: 17px; font-weight: 600; text-decoration: none; transition: background var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="background: var(--qhc-ember-700);">Request a free consultation</a>
+          <a href="#how" style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 28px; border-radius: var(--qhc-radius-pill); background: transparent; color: var(--qhc-navy-800); font-size: 17px; font-weight: 600; text-decoration: none; border: 1px solid var(--qhc-navy-200);" style-hover="border-color: var(--qhc-navy-700);">See how it works</a>
+        </div>
+      </div>
+      <div style="position: relative; animation: qhc-rise 900ms var(--qhc-ease-out) 120ms both;">
+        <div style="aspect-ratio: 4 / 5; border-radius: var(--qhc-radius-lg); overflow: hidden; margin-left: 12%;">
+          <img src="https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?auto=format&fit=crop&q=70&w=1100&h=1375" alt="Smiling senior woman at home" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        <div style="position: absolute; left: -12%; bottom: -40px; width: 42%; aspect-ratio: 1 / 1; border-radius: var(--qhc-radius-lg); overflow: hidden; border: 8px solid var(--qhc-paper);">
+          <img src="https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&q=70&w=800&h=800" alt="Older couple sitting together outdoors" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. CREDENTIAL ROW ========== -->
+  <section style="margin-top: 72px; background: var(--qhc-ember-700);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 52px 56px;"><div data-qhc-credgrid style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 0;">
+      <p data-qhc-cred style="font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.82); padding: 0 26px; padding-left: 0;"><strong style="display: block; font-weight: 600; color: #fff;">Licensed and registered</strong>New Jersey Health Care Service Firm HP0426700</p>
+      <p data-qhc-cred style="font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.82); padding: 0 26px; border-left: 1px solid rgba(255, 255, 255, 0.28);"><strong style="display: block; font-weight: 600; color: #fff;">Insured and bonded</strong>Every caregiver screened and background checked</p>
+      <p data-qhc-cred style="font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.82); padding: 0 26px; border-left: 1px solid rgba(255, 255, 255, 0.28);"><strong style="display: block; font-weight: 600; color: #fff;">Advocacy included</strong>We attend appointments and follow through</p>
+      <p data-qhc-cred style="font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.82); padding: 0 26px; border-left: 1px solid rgba(255, 255, 255, 0.28);"><strong style="display: block; font-weight: 600; color: #fff;">Serving all of {{ area }}</strong>North, Central, and South Jersey</p>
+    </div></div>
+  </section>
+
+  <!-- ========== 3. RECOGNITION ========== -->
+  <section style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: grid; grid-template-columns: 5fr 6fr; gap: 72px; align-items: center;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="aspect-ratio: 3 / 4; border-radius: var(--qhc-radius); overflow: hidden;"><img src="https://images.unsplash.com/photo-1543333995-a78aea2eee50?auto=format&fit=crop&q=70&w=700&h=930" alt="Caregiver walking with a senior client" style="width: 100%; height: 100%; object-fit: cover;" /></div>
+        <div style="aspect-ratio: 3 / 4; border-radius: var(--qhc-radius); overflow: hidden; margin-top: 48px;"><img src="https://images.unsplash.com/photo-1616286608358-0e1b143f7d2f?auto=format&fit=crop&q=70&w=700&h=930" alt="Senior woman smiling" style="width: 100%; height: 100%; object-fit: cover;" /></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 58ch;">
+        <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Why Families Reach Out</span>
+        <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Caring for a parent becomes a second full-time job.</h2>
+        <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700);">The appointments. The medications. The insurance calls that go nowhere. The phone ringing at two in the morning and the drive over to check on them.</p>
+        <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700);">Most families are holding all of it while working and raising children of their own, with the constant sense that something is being missed. That is not a personal failure. It is what happens when one person is asked to be a nurse, a scheduler, a driver, and an advocate at once.</p>
+        <div style="display: flex; align-items: center; gap: 22px; margin-top: 12px; padding: 26px 30px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);">
+          <img src="uploads/quantum-mark.png" alt="" style="height: 58px; width: auto; flex: 0 0 auto;" />
+          <p style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 26px; line-height: 1.26; letter-spacing: -0.8px; color: var(--qhc-navy-900);">Quantum Home Cares takes that weight off your family.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. SERVICES ========== -->
+  <section id="services" style="margin-top: 128px; background: linear-gradient(180deg, var(--qhc-navy-100) 0%, rgba(214, 231, 246, 0.42) 55%, var(--qhc-paper) 100%); border-top: 1px solid var(--qhc-hairline); border-bottom: 1px solid var(--qhc-hairline);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 104px 56px;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; max-width: 76ch; margin: 0 auto 64px;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <span style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-white); border: 1px solid var(--qhc-navy-300); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">What We Do</span>
+        <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Complete support, built around one person.</h2>
+      </div>
+      <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700); max-width: 64ch;">Every family arrives with a different situation. We build a care plan around what your parent actually needs, then adjust it as things change.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span data-om-raster style="width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4.5" width="14" height="16" rx="3"/><path d="M9.5 4.5V3.6A1.1 1.1 0 0 1 10.6 2.5h2.8a1.1 1.1 0 0 1 1.1 1.1v.9"/><path d="M9.2 12.8l2.3 2.3 4-4.3"/></svg></span>
+        <h3 style="font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">Care Planning and Advocacy</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">A custom care plan, and someone in the room at medical appointments who knows the right questions to ask. We coordinate with doctors, follow up on decisions, and make sure nothing falls through.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span data-om-raster style="width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11.2 12 5l8 6.2v7.3A1.6 1.6 0 0 1 18.4 20H5.6A1.6 1.6 0 0 1 4 18.5z"/><path d="M12 17.2c-1.7-1.2-2.7-2-2.7-3.1a1.55 1.55 0 0 1 2.7-.95 1.55 1.55 0 0 1 2.7.95c0 1.1-1 1.9-2.7 3.1z"/></svg></span>
+        <h3 style="font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">Daily Living Support</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Personal hygiene assistance, light housekeeping, and laundry. The everyday tasks that get harder over time, handled with dignity and privacy.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span data-om-raster style="width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.8 12.4h16.4a8.2 8.2 0 0 1-8.2 7.4 8.2 8.2 0 0 1-8.2-7.4z"/><path d="M6 19.8h12"/><path d="M10 9.6c-.9-1.1.4-1.9 0-3.2"/><path d="M14 9.6c-.9-1.1.4-1.9 0-3.2"/></svg></span>
+        <h3 style="font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">Meals, Nutrition, and Wellness</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">In-home meal preparation, grocery shopping, and medication reminders. Good nutrition and consistent routines are the foundation of staying independent.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span data-om-raster style="width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.2 14.6 5.9 10a2.1 2.1 0 0 1 2-1.4h8.2a2.1 2.1 0 0 1 2 1.4l1.7 4.6"/><path d="M4.2 14.6h15.6v3.2a.9.9 0 0 1-.9.9h-1.2a.9.9 0 0 1-.9-.9v-.6H7.2v.6a.9.9 0 0 1-.9.9H5.1a.9.9 0 0 1-.9-.9z"/><path d="M7.4 12.6h1.2M15.4 12.6h1.2"/></svg></span>
+        <h3 style="font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">Transportation and Companionship</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Errands, appointments, and time spent together. Isolation is one of the biggest risks to senior health, and one of the easiest to solve.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span data-om-raster style="width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 12.4V9.2a2.2 2.2 0 0 1 2.2-2.2h5.6A2.2 2.2 0 0 1 17 9.2v3.2"/><rect x="5" y="12.4" width="14" height="5.2" rx="2.2"/><path d="M7.4 17.6V20M16.6 17.6V20"/></svg></span>
+        <h3 style="font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">Respite and Specialized Care</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Coverage so family caregivers can rest, plus closer supervision for seniors who need it. Caring for someone else should not cost you your own health.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span data-om-raster style="width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); border: 1px solid var(--qhc-navy-200); color: var(--qhc-navy-800); transition: background var(--qhc-duration-fast) var(--qhc-ease-out), border-color var(--qhc-duration-fast) var(--qhc-ease-out);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 4.6a7.6 7.6 0 1 0 3.8 12.2 8.1 8.1 0 0 1-3.8-12.2z"/><path d="M18.4 6.6h.02M20.4 9.6h.02"/></svg></span>
+        <h3 style="font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">Overnight and Live-In Care</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">For families worried about the hours nobody is watching. Awake overnight shifts and live-in arrangements, scheduled around how your parent actually sleeps.</p>
+      </article>
+    </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. PHOTO STRIP ========== -->
+  <section style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+      <div style="aspect-ratio: 4 / 5; border-radius: var(--qhc-radius); overflow: hidden;"><img src="https://images.unsplash.com/photo-1513159446162-54eb8bdaa79b?auto=format&fit=crop&q=70&w=600&h=750" alt="Two men playing chess" style="width: 100%; height: 100%; object-fit: cover;" /></div>
+      <div style="aspect-ratio: 4 / 5; border-radius: var(--qhc-radius); overflow: hidden;"><img src="https://images.unsplash.com/photo-1559234938-b60fff04894d?auto=format&fit=crop&q=70&w=600&h=750" alt="Senior couple walking outdoors" style="width: 100%; height: 100%; object-fit: cover;" /></div>
+      <div style="aspect-ratio: 4 / 5; border-radius: var(--qhc-radius); overflow: hidden;"><img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=70&w=600&h=750" alt="Hands of a senior client and caregiver" style="width: 100%; height: 100%; object-fit: cover;" /></div>
+      <div style="aspect-ratio: 4 / 5; border-radius: var(--qhc-radius); overflow: hidden;"><img src="https://images.unsplash.com/photo-1532329683184-6ffd13057d1c?auto=format&fit=crop&q=70&w=600&h=750" alt="Older couple outdoors together" style="width: 100%; height: 100%; object-fit: cover;" /></div>
+    </div>
+    <p style="font-size: 15px; color: var(--qhc-slate-600); margin-top: 18px;">Placeholder photography. Replace with photographs of real clients and caregivers once releases are signed.</p>
+  </section>
+
+  <!-- ========== 6. APPROACH ========== -->
+  <section id="approach" style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; max-width: 76ch; margin: 0 auto 56px;">
+      <span style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Our Approach</span>
+      <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Most agencies send help. We <span style="color: var(--qhc-ember-700); border-bottom: 2px solid var(--qhc-ember-300);">show up and follow through</span>.</h2>
+      <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700); max-width: 64ch;">Large agencies run on clinical quotas and insurance billing. An aide arrives, hours get logged, and your family is still the one on hold with the insurance company at four in the afternoon. Here is the difference, line by line.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; align-items: stretch;">
+      <div style="background: var(--qhc-paper); border-left: 1px solid var(--qhc-hairline); border-right: 1px solid var(--qhc-hairline); border-top: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius-lg) 0 0 0; padding: 30px 32px 24px;">
+        <span style="font-size: 20px; font-weight: 600; color: var(--qhc-slate-600);">Most agencies</span>
+      </div>
+      <div style="background: var(--qhc-navy-050); border-left: 1px solid var(--qhc-navy-300); border-right: 1px solid var(--qhc-navy-300); border-top: 1px solid var(--qhc-navy-300); border-radius: 0 var(--qhc-radius-lg) 0 0; padding: 30px 32px 24px;">
+        <span style="display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 600; color: var(--qhc-navy-900);"><img src="uploads/quantum-mark.png" alt="" style="height: 34px; width: auto;" />Quantum Home Cares</span>
+      </div>
+      <div style="background: var(--qhc-paper); border-left: 1px solid var(--qhc-hairline); border-right: 1px solid var(--qhc-hairline); border-top: 1px solid var(--qhc-hairline); padding: 22px 32px; ">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-slate-600)" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" style="margin-top: 3px; opacity: 0.8;"><path d="M7.5 7.5l9 9M16.5 7.5l-9 9"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-slate-600); opacity: 0.85;">Who shows up</span>
+            <p style="font-size: 17px; line-height: 1.5; color: var(--qhc-slate-600);">Whoever is available that day</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-navy-050); border-left: 1px solid var(--qhc-navy-300); border-right: 1px solid var(--qhc-navy-300); border-top: 1px solid var(--qhc-navy-300); padding: 22px 32px; ">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-ember-600)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 3px;"><path d="M5 12.8l4.2 4.2L19 7.2"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-ember-700);">Who shows up</span>
+            <p style="font-size: 17px; line-height: 1.5; font-weight: 600; color: var(--qhc-navy-900);">A caregiver matched to your parent, kept consistent</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-paper); border-left: 1px solid var(--qhc-hairline); border-right: 1px solid var(--qhc-hairline); border-top: 1px solid var(--qhc-hairline); padding: 22px 32px; ">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-slate-600)" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" style="margin-top: 3px; opacity: 0.8;"><path d="M7.5 7.5l9 9M16.5 7.5l-9 9"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-slate-600); opacity: 0.85;">The care plan</span>
+            <p style="font-size: 17px; line-height: 1.5; color: var(--qhc-slate-600);">Hours logged, then on to the next client</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-navy-050); border-left: 1px solid var(--qhc-navy-300); border-right: 1px solid var(--qhc-navy-300); border-top: 1px solid var(--qhc-navy-300); padding: 22px 32px; ">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-ember-600)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 3px;"><path d="M5 12.8l4.2 4.2L19 7.2"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-ember-700);">The care plan</span>
+            <p style="font-size: 17px; line-height: 1.5; font-weight: 600; color: var(--qhc-navy-900);">A written plan we build, maintain, and update as needs change</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-paper); border-left: 1px solid var(--qhc-hairline); border-right: 1px solid var(--qhc-hairline); border-top: 1px solid var(--qhc-hairline); padding: 22px 32px; ">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-slate-600)" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" style="margin-top: 3px; opacity: 0.8;"><path d="M7.5 7.5l9 9M16.5 7.5l-9 9"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-slate-600); opacity: 0.85;">The paperwork</span>
+            <p style="font-size: 17px; line-height: 1.5; color: var(--qhc-slate-600);">Insurance calls and coordination left to you</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-navy-050); border-left: 1px solid var(--qhc-navy-300); border-right: 1px solid var(--qhc-navy-300); border-top: 1px solid var(--qhc-navy-300); padding: 22px 32px; ">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-ember-600)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 3px;"><path d="M5 12.8l4.2 4.2L19 7.2"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-ember-700);">The paperwork</span>
+            <p style="font-size: 17px; line-height: 1.5; font-weight: 600; color: var(--qhc-navy-900);">We handle the calls, the forms, and the follow-through</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-paper); border-left: 1px solid var(--qhc-hairline); border-right: 1px solid var(--qhc-hairline); border-top: 1px solid var(--qhc-hairline); padding: 22px 32px; border-bottom: 1px solid var(--qhc-hairline); border-radius: 0 0 0 var(--qhc-radius-lg);">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-slate-600)" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" style="margin-top: 3px; opacity: 0.8;"><path d="M7.5 7.5l9 9M16.5 7.5l-9 9"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-slate-600); opacity: 0.85;">Communication</span>
+            <p style="font-size: 17px; line-height: 1.5; color: var(--qhc-slate-600);">You hear from them once something goes wrong</p>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--qhc-navy-050); border-left: 1px solid var(--qhc-navy-300); border-right: 1px solid var(--qhc-navy-300); border-top: 1px solid var(--qhc-navy-300); padding: 22px 32px; border-bottom: 1px solid var(--qhc-navy-300); border-radius: 0 0 var(--qhc-radius-lg) 0;">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--qhc-ember-600)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 3px;"><path d="M5 12.8l4.2 4.2L19 7.2"/></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: var(--qhc-ember-700);">Communication</span>
+            <p style="font-size: 17px; line-height: 1.5; font-weight: 600; color: var(--qhc-navy-900);">We check in before it does, and keep you posted either way</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size: 18px; line-height: 1.6; font-weight: 600; color: var(--qhc-navy-900); text-align: center; max-width: 52ch; margin: 40px auto 0;">Advocacy is not an add-on service here. It is the reason this company exists.</p>
+  </section>
+
+  <!-- ========== 7. FULL-BLEED QUOTE ========== -->
+  <section style="position: relative; margin-top: 128px; min-height: 620px; display: flex; align-items: flex-end;">
+    <img src="https://images.unsplash.com/photo-1554331292-735256644d5f?auto=format&fit=crop&q=72&w=2200&h=1200" alt="Senior couple walking a path together" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,44,76,0) 30%, rgba(10,44,76,0.72) 100%);"></div>
+    <div style="position: relative; max-width: 1360px; margin: 0 auto; width: 100%; padding: 0 56px 72px;">
+      <p style="font-family: var(--qhc-font-display); font-weight: 300; font-size: clamp(30px, 3vw, 44px); line-height: 1.16; letter-spacing: -0.02em; color: #fff; max-width: 26ch;">Aging at home should not depend on how much fight a family has left.</p>
+    </div>
+  </section>
+
+  <!-- ========== 8. WHO WE HELP ========== -->
+  <section id="who" style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; max-width: 72ch; margin: 0 auto 52px;">
+      <span style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Who We Help</span>
+      <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Families usually reach us at one of four moments.</h2>
+      <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700); max-width: 62ch;">Sometimes the senior calls us directly. More often it is an adult child, a spouse, or a discharge planner calling on their behalf. All of it is welcome.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 34px; line-height: 0.9; letter-spacing: -1.5px; color: var(--qhc-navy-300);">01</span>
+        <h3 style="font-size: 20px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">After a hospital stay</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Discharge paperwork, new medications, and follow-up appointments arriving all at once. We take over the coordination and get the home ready before your parent walks back in.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 34px; line-height: 0.9; letter-spacing: -1.5px; color: var(--qhc-navy-300);">02</span>
+        <h3 style="font-size: 20px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">When memory starts changing</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Early dementia and Alzheimer's support built on routine and familiarity, with caregivers trained to redirect rather than correct.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 34px; line-height: 0.9; letter-spacing: -1.5px; color: var(--qhc-navy-300);">03</span>
+        <h3 style="font-size: 20px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">When the family caregiver is worn down</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Respite coverage by the shift, the week, or ongoing, so the adult child holding everything together can sleep, travel, and be a family member again.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 30px 28px 32px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+        <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 34px; line-height: 0.9; letter-spacing: -1.5px; color: var(--qhc-navy-300);">04</span>
+        <h3 style="font-size: 20px; font-weight: 600; line-height: 1.25; color: var(--qhc-navy-900);">When you live too far away</h3>
+        <p style="font-size: 17px; color: var(--qhc-ink-700);">Eyes in the home and a person on the ground in New Jersey, with regular updates so distance stops feeling like negligence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 9. HOW IT WORKS ========== -->
+  <section id="how" style="margin-top: 128px; background: linear-gradient(180deg, var(--qhc-paper) 0%, rgba(214, 231, 246, 0.42) 45%, var(--qhc-navy-100) 100%); border-top: 1px solid var(--qhc-hairline); border-bottom: 1px solid var(--qhc-hairline);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 104px 56px;">
+    <div style="display: grid; grid-template-columns: 5fr 6fr; gap: 72px; align-items: center;">
+      <div style="aspect-ratio: 5 / 6; border-radius: var(--qhc-radius-lg); overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1587556930720-58ec521056a5?auto=format&fit=crop&q=70&w=1000&h=1200" alt="Senior woman at home" style="width: 100%; height: 100%; object-fit: cover;" />
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 40px;">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-white); border: 1px solid var(--qhc-navy-300); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Getting Started</span>
+          <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Three steps. No pressure, no obligation.</h2>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: grid; grid-template-columns: 52px 1fr; gap: 22px; align-items: start; padding: 26px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);">
+            <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 40px; line-height: 0.9; letter-spacing: -2px; color: var(--qhc-ember-600);">01</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <h3 style="font-size: 20px; font-weight: 600; color: var(--qhc-navy-900);">Tell us what is going on</h3>
+              <p style="font-size: 17px; color: var(--qhc-ink-700);">Send the form and we respond within one business day. We listen, ask questions, and give you an honest read on what your family needs, at no cost.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 52px 1fr; gap: 22px; align-items: start; padding: 26px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);">
+            <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 40px; line-height: 0.9; letter-spacing: -2px; color: var(--qhc-ember-600);">02</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <h3 style="font-size: 20px; font-weight: 600; color: var(--qhc-navy-900);">We build a plan for your parent</h3>
+              <p style="font-size: 17px; color: var(--qhc-ink-700);">A visit to the home, an assessment of the real needs and routines, and a written care plan you approve before anything begins.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 52px 1fr; gap: 22px; align-items: start; padding: 26px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);">
+            <span style="font-family: var(--qhc-font-display); font-weight: 400; font-size: 40px; line-height: 0.9; letter-spacing: -2px; color: var(--qhc-ember-600);">03</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <h3 style="font-size: 20px; font-weight: 600; color: var(--qhc-navy-900);">Care begins, and we stay involved</h3>
+              <p style="font-size: 17px; color: var(--qhc-ink-700);">We match a caregiver, get started, and stay in regular contact. As needs change, the plan changes with them.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ========== 9b. FOR CARE PROFESSIONALS ========== -->
+  <section id="professionals" style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 56px 72px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">For Care Professionals</span>
+        <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">A referral partner who closes the loop.</h2>
+        <p style="font-size: 18px; line-height: 1.6; color: var(--qhc-ink-700); max-width: 46ch;">Hospitals, rehab facilities, discharge planners, case managers, and social workers across New Jersey use us to place patients safely at home — and to hear back about what happened next.</p>
+        <a href="#contact" style="display: inline-flex; align-self: flex-start; align-items: center; justify-content: center; min-height: 56px; margin-top: 6px; padding: 0 28px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-700); color: #fff; font-size: 17px; font-weight: 600; text-decoration: none; transition: background var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="background: var(--qhc-navy-800); transform: translateY(-1px);">Send a referral</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px 40px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="font-size: 19px; font-weight: 600; color: var(--qhc-navy-900);">Fast discharge turnaround</h3>
+          <p style="font-size: 17px; color: var(--qhc-ink-700);">We can assess and staff a home within days of a discharge date, including same-week starts when the situation calls for it.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="font-size: 19px; font-weight: 600; color: var(--qhc-navy-900);">One point of contact</h3>
+          <p style="font-size: 17px; color: var(--qhc-ink-700);">You reach the owner directly, not a regional call center. Referrals are acknowledged the same business day.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="font-size: 19px; font-weight: 600; color: var(--qhc-navy-900);">Reduced readmission risk</h3>
+          <p style="font-size: 17px; color: var(--qhc-ink-700);">Medication reminders, follow-up appointments, and nutrition handled in the home, so your discharge plan actually gets carried out.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="font-size: 19px; font-weight: 600; color: var(--qhc-navy-900);">Licensed and documented</h3>
+          <p style="font-size: 17px; color: var(--qhc-ink-700);">NJ Health Care Service Firm HP0426700. Insured, bonded, background-checked providers, with written care plans on file.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 11. COVERAGE ========== -->
+  <section style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: grid; grid-template-columns: 6fr 5fr; gap: 72px; align-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Where We Work</span>
+        <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Care and advocacy statewide, {{ area }}.</h2>
+        <p style="font-size: 18px; line-height: 1.6; color: var(--qhc-ink-700); max-width: 50ch;">We serve families across the state, from the northern counties to the shore. If your parent is in New Jersey, we can be in their home.</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 40px; padding-top: 24px; border-top: 1px solid var(--qhc-hairline);">
+          <p style="font-size: 16px; line-height: 1.55; color: var(--qhc-ink-700);"><strong style="display: block; font-weight: 600; color: var(--qhc-navy-900);">North Jersey</strong>Bergen, Essex, Morris, Passaic, Hudson, Union</p>
+          <p style="font-size: 16px; line-height: 1.55; color: var(--qhc-ink-700);"><strong style="display: block; font-weight: 600; color: var(--qhc-navy-900);">Central Jersey</strong>Somerset, Middlesex, Monmouth, Mercer, Hunterdon</p>
+          <p style="font-size: 16px; line-height: 1.55; color: var(--qhc-ink-700);"><strong style="display: block; font-weight: 600; color: var(--qhc-navy-900);">South Jersey</strong>Ocean, Burlington, Camden, Atlantic, Cape May</p>
+        </div>
+      </div>
+      <div style="aspect-ratio: 1 / 1; border-radius: var(--qhc-radius-lg); overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&q=70&w=1100&h=1100" alt="Older couple sitting together outdoors" style="width: 100%; height: 100%; object-fit: cover;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 12. STANDARDS ========== -->
+  <section style="margin-top: 128px; background: linear-gradient(180deg, var(--qhc-navy-100) 0%, rgba(214, 231, 246, 0.42) 55%, var(--qhc-paper) 100%); border-top: 1px solid var(--qhc-hairline); border-bottom: 1px solid var(--qhc-hairline);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 104px 56px;">
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 48ch; margin-bottom: 48px;">
+      <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-white); border: 1px solid var(--qhc-navy-300); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Our Standards</span>
+      <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">Six things every caregiver here is held to.</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);"><span style="font-family: var(--qhc-font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.02em; color: var(--qhc-navy-800);">Care</span><span style="font-size: 16px; color: var(--qhc-ink-700);">Personalized attention for every client</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);"><span style="font-family: var(--qhc-font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.02em; color: var(--qhc-navy-800);">Competency</span><span style="font-size: 16px; color: var(--qhc-ink-700);">High standards of skill and medical literacy</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);"><span style="font-family: var(--qhc-font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.02em; color: var(--qhc-navy-800);">Commitment</span><span style="font-size: 16px; color: var(--qhc-ink-700);">Focused on long-term wellness, not billable hours</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);"><span style="font-family: var(--qhc-font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.02em; color: var(--qhc-navy-800);">Communication</span><span style="font-size: 16px; color: var(--qhc-ink-700);">Transparent updates between families and providers</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);"><span style="font-family: var(--qhc-font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.02em; color: var(--qhc-navy-800);">Compassion</span><span style="font-size: 16px; color: var(--qhc-ink-700);">Every senior treated with the empathy they deserve</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius);"><span style="font-family: var(--qhc-font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.02em; color: var(--qhc-navy-800);">Courage</span><span style="font-size: 16px; color: var(--qhc-ink-700);">Advocating firmly in complex medical settings</span></div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ========== 13. ABOUT ========== -->
+  <section id="about" style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: grid; grid-template-columns: 6fr 5fr; gap: 72px; align-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 56ch;">
+        <span style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Meet Marvalyn</span>
+        <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(34px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -3px; color: var(--qhc-navy-900);">One owner. One standard. Every family.</h2>
+        <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700);">Marvalyn Ellis founded Quantum Home Cares after 25 years of managing care for her own aging parents while holding down a full-time career. That is where the advocacy model came from: learning the healthcare system by fighting through it, and seeing what happens to families with no one in their corner.</p>
+        <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700);">She still owns and runs the company herself. Marvalyn handles the intake call, the in-home assessment, the care plan, and the scheduling, then matches a vetted care provider to the home. National agencies route you through a call center. Here, the person who plans your parent's care is the person who answers the phone.</p>
+        <p style="font-size: 18px; line-height: 1.62; color: var(--qhc-ink-700);">Every care provider is selected the way she would select someone to care for her own mother. That standard does not move, and it is why families stay.</p>
+        <p style="font-size: 16px; color: var(--qhc-slate-600); padding-top: 18px; border-top: 1px solid var(--qhc-hairline);">Marvalyn Ellis, Founder · Quantum Home Cares, LLC</p>
+      </div>
+      <div style="position: relative; aspect-ratio: 4 / 5; border-radius: var(--qhc-radius-lg); overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1526795443948-005b48ce4791?auto=format&fit=crop&q=70&w=1000&h=1250" alt="Placeholder founder portrait" style="width: 100%; height: 100%; object-fit: cover;" />
+        <span style="position: absolute; left: 16px; bottom: 16px; padding: 7px 12px; border-radius: var(--qhc-radius-pill); background: rgba(255,255,255,0.9); font-size: 13px; letter-spacing: 0.04em; font-weight: 600; color: var(--qhc-slate-600);">PLACEHOLDER HEADSHOT</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 13b. IN THE NEWS ========== -->
+  <section id="news" style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; max-width: 62ch; margin: 0 auto 44px;">
+      <span style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">In the News</span>
+      <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(30px, 3vw, 42px); line-height: 1.1; letter-spacing: -3px; color: var(--qhc-navy-900);">Coverage of our New Jersey launch</h2>
+    </div>
+    <a href="https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location" target="_blank" rel="noopener" style="display: grid; grid-template-columns: 5fr 7fr; align-items: stretch; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius-lg); overflow: hidden; text-decoration: none; transition: border-color var(--qhc-duration-fast) var(--qhc-ease-out), transform var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="border-color: var(--qhc-navy-300); transform: translateY(-2px);">
+      <div style="position: relative; min-height: 340px;">
+        <img src="https://images.unsplash.com/photo-1543333995-a78aea2eee50?auto=format&fit=crop&q=70&w=900&h=1000" alt="Caregiver walking with a senior client" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 18px; padding: 44px 48px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-navy-800); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;">HomeCare Magazine</span>
+          <span style="font-size: 15px; color: var(--qhc-slate-600);">Industry press</span>
+        </div>
+        <h3 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(28px, 2.5vw, 36px); line-height: 1.12; letter-spacing: -1.5px; color: var(--qhc-navy-900);">Quantum Home Cares Opens New Jersey Location</h3>
+        <p style="font-size: 17px; line-height: 1.6; color: var(--qhc-ink-700); max-width: 52ch;">HomeCare Magazine covers our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.</p>
+        <span style="display: inline-flex; align-items: center; gap: 8px; margin-top: auto; font-size: 16px; font-weight: 600; color: var(--qhc-ember-700);">Read the article
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+  </section>
+
+  <!-- ========== 15. FAQ ========== -->
+  <sc-if value="{{ showFaq }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width: 1360px; margin: 0 auto; padding: 128px 56px 0;">
+    <div style="display: grid; grid-template-columns: 4fr 7fr; gap: 72px; align-items: start;">
+      <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(30px, 3vw, 42px); line-height: 1.1; letter-spacing: -3px; color: var(--qhc-navy-900);">Questions families ask first</h2>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <details open style="background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); padding: 4px 24px;">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; cursor: pointer; font-size: 18px; font-weight: 600; color: var(--qhc-navy-900); list-style: none;" style-hover="color: var(--qhc-navy-700);">What is the minimum commitment?<span style="width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); color: var(--qhc-navy-800); font-size: 18px; font-weight: 500;">+</span></summary>
+          <p style="font-size: 16px; line-height: 1.6; color: var(--qhc-ink-700); padding: 0 0 20px; max-width: 62ch;">There is no long contract. We start with the schedule your parent needs and adjust month to month.</p>
+        </details>
+        <details style="background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); padding: 4px 24px;">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; cursor: pointer; font-size: 18px; font-weight: 600; color: var(--qhc-navy-900); list-style: none;" style-hover="color: var(--qhc-navy-700);">How quickly can care start?<span style="width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); color: var(--qhc-navy-800); font-size: 18px; font-weight: 500;">+</span></summary>
+          <p style="font-size: 16px; line-height: 1.6; color: var(--qhc-ink-700); padding: 0 0 20px; max-width: 62ch;">In most cases within a few days of the assessment, and faster for hospital discharges.</p>
+        </details>
+        <details style="background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); padding: 4px 24px;">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; cursor: pointer; font-size: 18px; font-weight: 600; color: var(--qhc-navy-900); list-style: none;" style-hover="color: var(--qhc-navy-700);">What if my parent refuses help?<span style="width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); color: var(--qhc-navy-800); font-size: 18px; font-weight: 500;">+</span></summary>
+          <p style="font-size: 16px; line-height: 1.6; color: var(--qhc-ink-700); padding: 0 0 20px; max-width: 62ch;">Common, and expected. We start small, often with companionship or errands, and let trust build before adding personal care.</p>
+        </details>
+        <details style="background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius); padding: 4px 24px;">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; cursor: pointer; font-size: 18px; font-weight: 600; color: var(--qhc-navy-900); list-style: none;" style-hover="color: var(--qhc-navy-700);">Will it be the same caregiver?<span style="width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--qhc-radius-circle); background: var(--qhc-navy-100); color: var(--qhc-navy-800); font-size: 18px; font-weight: 500;">+</span></summary>
+          <p style="font-size: 16px; line-height: 1.6; color: var(--qhc-ink-700); padding: 0 0 20px; max-width: 62ch;">Yes, with a named backup who already knows the care plan for vacations and sick days.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ========== 16. CONTACT ========== -->
+  <section id="contact" style="margin-top: 128px; border-top: 1px solid var(--qhc-hairline); background: var(--qhc-navy-050);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 96px 56px; display: grid; grid-template-columns: 6fr 5fr; gap: 80px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <h2 style="font-family: var(--qhc-font-display); font-weight: 400; font-size: clamp(38px, 4vw, 56px); line-height: 1.06; letter-spacing: -3px; color: var(--qhc-navy-900); max-width: 20ch;">Tell us about your parents.</h2>
+        <p style="font-size: 18px; line-height: 1.6; color: var(--qhc-ink-700); max-width: 46ch;">Send us the situation and we will respond within one business day with an honest read on what is needed. Families, seniors, and referring professionals all use this form. No cost, no commitment, no pressure.</p>
+        <div style="aspect-ratio: 16 / 10; border-radius: var(--qhc-radius-lg); overflow: hidden; margin-top: 8px;">
+          <img src="https://plus.unsplash.com/premium_photo-1663090054202-8835fa45fd77?auto=format&fit=crop&q=70&w=1200&h=750" alt="Caregiver talking with a senior woman at home" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        <p style="font-size: 16px; color: var(--qhc-slate-600);">Prefer to talk? Call <a href="{{ telHref }}" style="color: var(--qhc-navy-800); font-weight: 600;">{{ phone }}</a> or email <a href="mailto:hello@quantumhomecares.com" style="color: var(--qhc-navy-800); font-weight: 600;">hello@quantumhomecares.com</a>.</p>
+      </div>
+      <form style="display: flex; flex-direction: column; gap: 18px; padding: 36px; background: var(--qhc-white); border: 1px solid var(--qhc-hairline); border-radius: var(--qhc-radius-lg);" onSubmit="{{ onSubmit }}">
+        <p style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 32px; padding: 0 14px; border-radius: var(--qhc-radius-pill); background: var(--qhc-navy-100); color: var(--qhc-ember-700); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">Request a free consultation</p>
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <label for="qhc-name" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">Your name</label>
+          <input id="qhc-name" type="text" style="min-height: 52px; padding: 0 16px; font-size: 17px; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm);" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <label for="qhc-phone" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">Phone</label>
+            <input id="qhc-phone" type="tel" style="min-height: 52px; padding: 0 16px; font-size: 17px; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm);" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;" />
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <label for="qhc-email" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">Email</label>
+            <input id="qhc-email" type="email" style="min-height: 52px; padding: 0 16px; font-size: 17px; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm);" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;" />
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <label for="qhc-who" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">Care is for</label>
+            <select id="qhc-who" style="min-height: 52px; padding: 0 16px; font-size: 17px; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm);" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;">
+              <option>A parent</option>
+              <option>A spouse</option>
+              <option>Myself</option>
+              <option>Someone else</option>
+              <option>A patient I am referring</option>
+            </select>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <label for="qhc-county" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">County in New Jersey</label>
+            <input id="qhc-county" type="text" style="min-height: 52px; padding: 0 16px; font-size: 17px; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm);" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;" />
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <label for="qhc-timing" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">When would care start?</label>
+          <select id="qhc-timing" style="min-height: 52px; padding: 0 16px; font-size: 17px; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm);" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;">
+            <option>As soon as possible</option>
+            <option>Within a few weeks</option>
+            <option>Planning ahead</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <label for="qhc-note" style="font-size: 15px; font-weight: 600; color: var(--qhc-ink-900);">What is going on <span style="font-weight: 500; color: var(--qhc-slate-600);">(optional)</span></label>
+          <textarea id="qhc-note" rows="3" style="padding: 12px 16px; font-size: 17px; line-height: 1.55; font-family: inherit; color: var(--qhc-ink-900); background: var(--qhc-white); border: 1px solid var(--qhc-hairline-strong); border-radius: var(--qhc-radius-sm); resize: vertical;" style-focus="border-color: var(--qhc-ember-600); box-shadow: var(--qhc-focus-ring); outline: none;"></textarea>
+        </div>
+        <button type="submit" style="min-height: 56px; padding: 0 30px; border: none; border-radius: var(--qhc-radius-pill); background: var(--qhc-ember-600); color: #fff; font-size: 17px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background var(--qhc-duration-fast) var(--qhc-ease-out);" style-hover="background: var(--qhc-ember-700);" style-focus="box-shadow: var(--qhc-focus-ring); outline: none;">Send request</button>
+        <p style="font-size: 15px; line-height: 1.5; color: var(--qhc-slate-600);">We respond within one business day. Please leave out medical details — we will gather what we need when we speak.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer style="border-top: 1px solid var(--qhc-hairline); background: var(--qhc-paper);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 64px 56px 40px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px 48px;">
+        <img src="uploads/quantum-wordmark.png" alt="Quantum Home Cares" style="height: 44px; width: auto;" />
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px;">
+          <a href="{{ telHref }}" style="font-size: 20px; font-weight: 600; color: var(--qhc-navy-900); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">{{ phone }}</a>
+          <a href="mailto:hello@quantumhomecares.com" style="font-size: 17px; color: var(--qhc-navy-800);">hello@quantumhomecares.com</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 14px 26px; padding: 32px 0; margin-top: 32px; border-top: 1px solid var(--qhc-hairline); border-bottom: 1px solid var(--qhc-hairline);">
+        <a href="#services" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">Services</a>
+        <a href="#approach" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">Our Approach</a>
+        <a href="#who" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">Who We Help</a>
+        <a href="#how" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">How It Works</a>
+        <a href="#professionals" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">For Professionals</a>
+        <a href="#about" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">About</a>
+        <a href="#contact" style="font-size: 16px; color: var(--qhc-slate-600); text-decoration: none;" style-hover="color: var(--qhc-ember-700);">Request Care</a>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding-top: 24px; font-size: 15px; line-height: 1.6; color: var(--qhc-slate-600);">
+        <span>© 2026 Quantum Home Cares, LLC · Serving all of New Jersey</span>
+        <span>NJ Health Care Service Firm HP0426700 · Insured and bonded</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440 },
+  &quot;phone&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;732-498-2960&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot; },
+  &quot;serviceArea&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;New Jersey&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot; },
+  &quot;showFaq&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Sections&quot; }
+}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const header = document.querySelector("[data-qhc-header]");
+    const sentinel = document.querySelector("[data-qhc-sentinel]");
+    const setScrolled = (past) => {
+      if (header) header.setAttribute("data-scrolled", past ? "1" : "0");
+    };
+    if (sentinel && window.IntersectionObserver) {
+      this._headerIo = new IntersectionObserver(
+        (entries) => setScrolled(!entries[0].isIntersecting),
+        { threshold: 0 }
+      );
+      this._headerIo.observe(sentinel);
+    }
+    let lastTop = null;
+    const tick = () => {
+      const d = document.scrollingElement || document.documentElement;
+      const y = Math.max(window.scrollY || 0, d ? d.scrollTop : 0);
+      if (y !== lastTop) {
+        lastTop = y;
+        setScrolled(y > 40);
+      }
+      this._raf = requestAnimationFrame(tick);
+    };
+    tick();
+
+    const nav = document.querySelector("[data-qhc-nav]");
+    const phone = document.querySelector("[data-qhc-phone]");
+    const menuBtn = document.querySelector("[data-qhc-menu]");
+    const menuPanel = document.querySelector("[data-qhc-menupanel]");
+    const closeMenu = () => {
+      if (menuPanel) menuPanel.style.display = "none";
+      if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+    };
+    if (menuBtn && menuPanel) {
+      this._onMenuClick = () => {
+        const open = menuBtn.getAttribute("aria-expanded") === "true";
+        menuPanel.style.display = open ? "none" : "block";
+        menuBtn.setAttribute("aria-expanded", open ? "false" : "true");
+        menuBtn.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+      };
+      menuBtn.addEventListener("click", this._onMenuClick);
+      this._menuLinks = Array.prototype.slice.call(document.querySelectorAll("[data-qhc-menulink]"));
+      this._menuLinks.forEach((a) => a.addEventListener("click", closeMenu));
+    }
+    const onResize = () => {
+      const w = window.innerWidth;
+      const compact = w < 1020;
+      if (phone) phone.style.display = w < 1180 ? "none" : "inline-flex";
+      if (nav) nav.style.display = compact ? "none" : "flex";
+      if (nav) nav.style.gap = w < 1200 ? "18px" : "24px";
+      if (menuBtn) menuBtn.style.display = compact ? "inline-flex" : "none";
+      if (!compact) closeMenu();
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    this._onResize = onResize;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const blocks = Array.from(document.querySelectorAll("main > section, main > footer"));
+    blocks.forEach((el, i) => {
+      if (i === 0) return;
+      el.style.opacity = "0";
+      el.style.transform = "translateY(22px)";
+      el.style.transition = "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)";
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = "1";
+        e.target.style.transform = "none";
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.04 });
+    blocks.slice(1).forEach(el => io.observe(el));
+    this._io = io;
+
+    const hero = blocks[0];
+    if (hero) {
+      Array.from(hero.querySelectorAll(":scope > div > div > *, :scope > div > div")).slice(0, 9).forEach((el, i) => {
+        el.style.animation = `qhc-rise 760ms cubic-bezier(0.16, 1, 0.3, 1) ${60 + i * 70}ms both`;
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._headerIo) this._headerIo.disconnect();
+    if (this._onResize) window.removeEventListener("resize", this._onResize);
+    const menuBtn = document.querySelector("[data-qhc-menu]");
+    if (menuBtn && this._onMenuClick) menuBtn.removeEventListener("click", this._onMenuClick);
+    if (this._io) this._io.disconnect();
+  }
+
+  renderVals() {
+    const phone = this.props.phone ?? "732-498-2960";
+    return {
+      phone,
+      telHref: "tel:" + phone.replace(/[^0-9]/g, ""),
+      area: this.props.serviceArea ?? "New Jersey",
+      showFaq: this.props.showFaq ?? true,
+      onSubmit: e => e.preventDefault()
+    };
+  }
+}
+</script>
+</body>
+</html>

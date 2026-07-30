@@ -1,0 +1,73 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// DATA
+import { baseData } from "@/data/siteData";
+
+// IMAGES
+import portrait from "@/assets/photos/marvalyn_1.jpeg";
+---
+
+<section id="about" class="section" data-reveal>
+  <div class="split">
+    <div class="stack about__copy">
+      <span class="eyebrow">Meet {baseData.owner.name.split(" ")[0]}</span>
+
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        One owner. One standard. Every family.
+      </Heading>
+
+      <p class="lead">
+        Marvalyn Ellis founded Quantum Home Cares after 25 years of managing care for her own aging
+        parents while holding down a full-time career. That is where the advocacy model came from:
+        learning the healthcare system by fighting through it, and seeing what happens to families
+        with no one in their corner.
+      </p>
+      <p class="lead">
+        She still owns and runs the company herself. Marvalyn handles the intake call, the in-home
+        assessment, the care plan, and the scheduling, then matches a vetted care provider to the
+        home. National agencies route you through a call center. Here, the person who plans your
+        parent's care is the person who answers the phone.
+      </p>
+      <p class="lead">
+        Every care provider is selected the way she would select someone to care for her own mother.
+        That standard does not move, and it is why families stay.
+      </p>
+
+      <p class="meta--lg about__byline">
+        {baseData.owner.name}, {baseData.owner.role} · {baseData.legalName}
+      </p>
+    </div>
+
+    <div class="plate plate--lg about__plate">
+      <Image
+        src={portrait}
+        alt={`${baseData.owner.name}, founder of ${baseData.legalName}`}
+        widths={[500, 1000]}
+      />
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .about {
+    &__copy {
+      --gap: 1.25rem;
+      max-width: 56ch;
+    }
+
+    &__byline {
+      padding-top: 18px;
+      border-top: 1px solid var(--qhc-hairline);
+      color: var(--qhc-slate-600);
+    }
+
+    &__plate {
+      aspect-ratio: 4 / 5;
+    }
+  }
+</style>

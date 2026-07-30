@@ -1,0 +1,129 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// DATA
+import { regions } from "@/data/homeData";
+import { baseData } from "@/data/siteData";
+
+// IMAGES
+import landscape from "@/assets/photos/quote-path.jpg";
+---
+
+<section class="section" data-reveal>
+  <div class="section-header coverage__header">
+    <span class="eyebrow">Where We Work</span>
+
+    <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+      Care and advocacy statewide, {baseData.serviceArea.state}.
+    </Heading>
+
+    <p class="lead">
+      We serve families across the state, from the northern counties to the shore. If your parent
+      is in New Jersey, we can be in their home.
+    </p>
+  </div>
+
+  <!-- Panoramic plate with the county index on glass — the tokens' type-over-photography treatment -->
+  <div class="coverage__media">
+    <div class="plate plate--lg coverage__plate">
+      <Image
+        src={landscape}
+        alt="Senior couple walking a path together"
+        widths={[700, 1400, 2200]}
+        sizes="(max-width: 900px) 100vw, 1248px"
+      />
+    </div>
+
+    <div class="coverage__regions">
+      {
+        regions.map(region => (
+          <p class="pair">
+            <strong>{region.name}</strong>
+            {region.counties}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .coverage {
+    &__header {
+      --w: 62ch;
+      --mb: 3rem;
+    }
+
+    &__media {
+      position: relative;
+    }
+
+    &__plate {
+      aspect-ratio: 21 / 9;
+
+      @media (max-width: 760px) {
+        aspect-ratio: 3 / 2;
+      }
+    }
+
+    &__regions {
+      position: absolute;
+      inset-inline: 20px;
+      bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px 0;
+      padding: 26px 30px;
+      /* Whiter than the stock glass token — this photo is too busy under 0.62 */
+      background: rgba(255, 255, 255, 0.86);
+      -webkit-backdrop-filter: var(--qhc-glass-blur);
+      backdrop-filter: var(--qhc-glass-blur);
+      border: var(--qhc-glass-edge);
+      border-radius: var(--qhc-radius);
+
+      /* Blur unsupported → go near-solid so the counties stay readable */
+      @supports not (backdrop-filter: blur(1px)) {
+        background: rgba(255, 255, 255, 0.97);
+      }
+
+      :global(.pair) {
+        padding: 0 26px;
+      }
+
+      :global(.pair:first-child) {
+        padding-left: 0;
+      }
+
+      /* hairline-strong — the plain hairline washes out on the white glass */
+      :global(.pair + .pair) {
+        border-left: 1px solid var(--qhc-hairline-strong);
+      }
+
+      /* Off the photo and onto paper — a plain white card below the plate */
+      @media (max-width: 760px) {
+        position: static;
+        margin-top: 16px;
+        grid-template-columns: minmax(0, 1fr);
+        padding: 24px 26px;
+        background: var(--qhc-white);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        border: 1px solid var(--qhc-hairline);
+
+        :global(.pair) {
+          padding: 0;
+        }
+
+        :global(.pair + .pair) {
+          padding-top: 20px;
+          border-left: 0;
+          border-top: 1px solid var(--qhc-hairline-strong);
+        }
+      }
+    }
+  }
+</style>

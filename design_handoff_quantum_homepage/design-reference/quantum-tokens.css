@@ -1,0 +1,204 @@
+/* ============================================================
+   QUANTUM HOME CARES — DESIGN TOKENS v3
+   src/styles/tokens.css → import once in your Astro layout.
+   House rules encoded here:
+     · The page is LIGHT. There are no dark planes. Depth comes
+       from soft blue washes, glass, and hairlines.
+     · Gambetta is set light (300) and only ever Capitalized —
+       never uppercase, never bold.
+     · Corners are rounded. Softness is a brand value here.
+     · Ember (warm coral-clay) carries warmth and conversion.
+       Never gold — blue-and-gold reads as a bank.
+   ============================================================ */
+
+@font-face {
+  font-family: "Gambetta";
+  src: url("fonts/Gambetta-Variable.woff2") format("woff2-variations"),
+       url("fonts/Gambetta-Variable.woff") format("woff");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gambetta";
+  src: url("fonts/Gambetta-VariableItalic.woff2") format("woff2-variations"),
+       url("fonts/Gambetta-VariableItalic.woff") format("woff");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- 1. BLUE — pulled from the logo heart ------------- */
+  --qhc-navy-900: #0A2C4C;  /* TEXT ONLY — headlines. Never a plane. */
+  --qhc-navy-800: #14508C;  /* text-safe blue, links, secondary action */
+  --qhc-navy-700: #1B6BC0;  /* logo wordmark blue — accents, rules */
+  --qhc-navy-500: #3B8FE0;  /* decorative only, never text */
+  --qhc-navy-300: #9CC7F0;  /* rules and marks on light */
+  --qhc-navy-200: #C4DDF4;  /* tinted chips, quiet fills */
+  --qhc-navy-100: #DBE9F7;  /* cool tint surface */
+  --qhc-navy-050: #EDF4FB;  /* faint cool wash — the workhorse */
+
+  /* ---------- 2. CLAY — tan brown accent, conversion ----------- */
+  --qhc-ember-800: #3F3126;  /* pressed */
+  --qhc-ember-700: #5C4838;  /* warm text on light */
+  --qhc-ember-600: #7B614E;  /* PRIMARY ACTION fill (5.4:1 w/ white) */
+  --qhc-ember-500: #9A8069;  /* rules, numerals, small marks */
+  --qhc-ember-300: #D5C6B5;  /* soft rules and marks on light */
+  --qhc-ember-100: #EBE2D6;  /* credential surface */
+  --qhc-ember-050: #F6F1E9;  /* section wash */
+
+  /* ---------- 3. NEUTRALS — warm linen, cool ink -------------- */
+  --qhc-ink-900:   #12181D;  /* body copy */
+  --qhc-ink-700:   #2E363D;  /* lead paragraphs */
+  --qhc-slate-600: #575F68;  /* meta, captions */
+  --qhc-slate-400: #8B9299;  /* disabled only — never copy */
+  --qhc-hairline:  #DFD9CE;  /* THE structural line */
+  --qhc-hairline-strong: #C8BFB0;
+  --qhc-hairline-cool: #CBDEF0;  /* hairline inside blue washes */
+  --qhc-shell:     #EFEAE1;  /* quiet warm surface */
+  --qhc-paper:     #F9F6F1;  /* page — warm linen, not white */
+  --qhc-white:     #FFFFFF;  /* raised planes, logo plate */
+
+  /* ---------- 3b. GRADIENTS — all light, all atmospheric ------ */
+  --qhc-grad-sky:   linear-gradient(168deg, #EAF3FC 0%, #DCEAF8 52%, #F9F6F1 100%);
+  --qhc-grad-dawn:  linear-gradient(150deg, #DFEDFA 0%, #F0E7E8 56%, #FBE7DD 100%);
+  --qhc-grad-mist:  linear-gradient(160deg, #F9F6F1 0%, #EDF4FB 60%, #E3EEF9 100%);
+  --qhc-grad-ember: linear-gradient(150deg, #F6F1E9 0%, #EBE2D6 100%);
+  --qhc-grad-rule:  linear-gradient(90deg, #7B614E 0%, #3B8FE0 58%, rgba(59,143,224,0) 100%);
+
+  /* ---------- 3c. GLASS — for type over photography ----------- */
+  --qhc-glass-light: rgba(249, 246, 241, 0.62);   /* on bright photos */
+  --qhc-glass-tint:  rgba(219, 233, 247, 0.52);   /* cool variant */
+  --qhc-glass-deep:  rgba(10, 44, 76, 0.42);      /* on busy photos, white type */
+  --qhc-glass-blur: saturate(1.3) blur(18px);
+  --qhc-glass-edge: 1px solid rgba(255, 255, 255, 0.55);
+
+  /* ---------- 4. STATUS (warm-toned) -------------------------- */
+  --qhc-success-700: #1F6B4A;  --qhc-success-050: #E8F0E9;
+  --qhc-warning-700: #8A5A00;  --qhc-warning-050: #F5EEDC;
+  --qhc-error-700:   #A32020;  --qhc-error-050:   #F6EAE6;
+
+  /* ---------- 5. SEMANTIC ROLES ------------------------------- */
+  --qhc-text-primary:   var(--qhc-ink-900);
+  --qhc-text-secondary: var(--qhc-slate-600);
+  --qhc-text-heading:   var(--qhc-navy-900);
+  --qhc-text-warm:      var(--qhc-ember-700);
+  --qhc-text-link:      var(--qhc-navy-800);
+  --qhc-text-link-hover:var(--qhc-ember-700);
+  --qhc-surface-page:   var(--qhc-paper);
+  --qhc-surface-raised: var(--qhc-white);
+  --qhc-surface-quiet:  var(--qhc-shell);
+  --qhc-surface-warm:   var(--qhc-ember-050);
+  --qhc-surface-cool:   var(--qhc-navy-050);
+  --qhc-rule:           var(--qhc-hairline);
+  --qhc-action:         var(--qhc-ember-600);
+  --qhc-action-hover:   var(--qhc-ember-700);
+  --qhc-action-secondary: var(--qhc-navy-800);
+
+  --qhc-focus-ring: 0 0 0 2px var(--qhc-paper), 0 0 0 5px var(--qhc-ember-600);
+  --qhc-clay-600: #7B614E;   /* alias — the tan brown accent */
+
+  /* ---------- 6. TYPE ---------------------------------------- */
+  --qhc-font-display: "Gambetta", "Iowan Old Style", Georgia, serif;
+  --qhc-font-text: "Hanken Grotesk", "Helvetica Neue", Helvetica, sans-serif;
+
+  --qhc-weight-display: 300;   /* Gambetta is set light, always */
+  --qhc-weight-regular: 400;
+  --qhc-weight-medium: 500;
+  --qhc-weight-semibold: 600;
+
+  --qhc-size-display-xl: clamp(2.75rem, 8vw, 5.75rem);      /*  44 → 92 */
+  --qhc-size-display-l:  clamp(2.25rem, 6vw, 4.25rem);      /*  36 → 68 */
+  --qhc-size-display-m:  clamp(1.875rem, 4.2vw, 3rem);      /*  30 → 48 */
+  --qhc-size-heading-l:  clamp(1.625rem, 2.8vw, 2.125rem);  /*  26 → 34 */
+  --qhc-size-heading-m:  clamp(1.375rem, 2vw, 1.625rem);    /*  22 → 26 */
+  --qhc-size-heading-s:  clamp(1.1875rem, 1.5vw, 1.3125rem);/*  19 → 21 */
+  --qhc-size-body-l:     clamp(1.1875rem, 1.35vw, 1.3125rem);/* 19 → 21 */
+  --qhc-size-body-m:     1.125rem;   /* 18 — BASE */
+  --qhc-size-body-s:     1.0625rem;  /* 17 */
+  --qhc-size-label:      1rem;       /* 16 — HARD FLOOR */
+
+  --qhc-leading-display: 1.02;
+  --qhc-leading-heading: 1.2;
+  --qhc-leading-body: 1.65;
+  --qhc-leading-label: 1.4;
+
+  --qhc-tracking-display: -0.012em;
+  --qhc-tracking-heading: -0.008em;
+  --qhc-tracking-body: 0.002em;
+  --qhc-tracking-label: 0.06em;   /* Capitalized labels, gently tracked */
+
+  --qhc-measure: 66ch;
+
+  /* ---------- 7. SPACE (8px base) ---------------------------- */
+  --qhc-space-3xs: 0.25rem;
+  --qhc-space-2xs: 0.5rem;
+  --qhc-space-xs:  0.75rem;
+  --qhc-space-sm:  1rem;
+  --qhc-space-md:  1.5rem;
+  --qhc-space-lg:  2rem;
+  --qhc-space-xl:  2.5rem;
+  --qhc-space-2xl: 3rem;
+  --qhc-space-3xl: 4rem;
+  --qhc-space-4xl: 5rem;
+  --qhc-space-5xl: 6rem;
+  --qhc-space-6xl: 8.5rem;
+  --qhc-space-7xl: 11rem;
+
+  /* ---------- 8. LAYOUT ------------------------------------- */
+  --qhc-container-prose: 41rem;
+  --qhc-container-content: 68rem;
+  --qhc-container-wide: 84rem;
+  --qhc-gutter-mobile: 1.25rem;
+  --qhc-gutter-tablet: 2rem;
+  --qhc-gutter-desktop: 3.5rem;
+  --qhc-section-y-mobile: 4.5rem;
+  --qhc-section-y-desktop: 8.5rem;
+  --qhc-grid-columns: 12;
+  --qhc-grid-gap-desktop: 2.5rem;
+  --qhc-grid-gap-tablet: 1.5rem;
+  --qhc-grid-gap-mobile: 1rem;
+  --qhc-tap-min: 3rem;
+
+  /* ---------- 9. GEOMETRY — rounded, in four steps ---------- */
+  --qhc-radius-xs:   6px;    /* chips, small marks */
+  --qhc-radius-sm:  10px;    /* inputs, selects, small buttons */
+  --qhc-radius:     16px;    /* the default — cards, plates, panels */
+  --qhc-radius-lg:  24px;    /* image plates, glass panels, sections */
+  --qhc-radius-pill: 999px;  /* buttons, badges, nav pills */
+  --qhc-radius-circle: 50%;  /* avatars */
+  --qhc-border-hair: 1px;
+  --qhc-border-mark: 2px;
+  --qhc-border-heavy: 3px;
+
+  /* ---------- 10. ELEVATION — soft, low-contrast ------------ */
+  --qhc-shadow-none: none;
+  --qhc-shadow-lift: 0 1px 2px rgba(10, 44, 76, 0.05), 0 8px 24px -18px rgba(10, 44, 76, 0.30);
+  --qhc-shadow-raise: 0 2px 6px rgba(10, 44, 76, 0.06), 0 18px 40px -24px rgba(10, 44, 76, 0.32);
+  --qhc-shadow-overlay: 0 24px 48px -16px rgba(10, 44, 76, 0.18);
+  --qhc-shadow-glass: 0 12px 40px -18px rgba(10, 44, 76, 0.35);
+
+  /* ---------- 11. MOTION ----------------------------------- */
+  --qhc-duration-fast: 120ms;
+  --qhc-duration-base: 220ms;
+  --qhc-duration-slow: 340ms;
+  --qhc-duration-enter: 520ms;
+  --qhc-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --qhc-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --qhc-duration-fast: 1ms;
+    --qhc-duration-base: 1ms;
+    --qhc-duration-slow: 1ms;
+    --qhc-duration-enter: 1ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

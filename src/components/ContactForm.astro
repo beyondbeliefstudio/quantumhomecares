@@ -1,0 +1,67 @@
+---
+// COMPONENTS
+import Buttons from "@/components/Buttons.astro";
+---
+
+<form
+  class="form-panel"
+  name="contact"
+  method="POST"
+  action="/submit-contact"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <!-- Honeypot — hidden from users, visible to bots -->
+  <p class="hidden">
+    <label>
+      Don't fill this out:
+      <input name="bot-field" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+
+  <!-- Tags the submission with the page it came from -->
+  <input type="hidden" name="source" value="homepage-contact" />
+
+  <p class="eyebrow">Request a free consultation</p>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="first-name">First name</label>
+      <input id="first-name" name="firstName" type="text" autocomplete="given-name" required />
+    </div>
+    <div class="form-group">
+      <label for="last-name">Last name</label>
+      <input id="last-name" name="lastName" type="text" autocomplete="family-name" required />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="needs">Tell us about your home care needs</label>
+    <textarea id="needs" name="needs" rows="3" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="questions">
+      What questions do you have for us? <span class="optional">(optional)</span>
+    </label>
+    <textarea id="questions" name="questions" rows="3"></textarea>
+  </div>
+
+  <Buttons variant="primary" classes="full">Send Request</Buttons>
+
+  <p class="meta">
+    We respond within one business day. Please leave out medical details — we will gather what we
+    need when we speak.
+  </p>
+</form>

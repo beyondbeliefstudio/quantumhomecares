@@ -1,0 +1,207 @@
+---
+import { type HTMLAttributes } from "astro/types";
+
+const tags = { h1: "h1", h2: "h2", h3: "h3", h4: "h4", h5: "h5", h6: "h6", p: "p", span: "span" };
+
+/**
+ * Size carries font-size, line-height, and letter-spacing together —
+ * in this design tracking is a function of scale, so they never separate.
+ */
+const sizes = {
+  display: "fs-display", // 44 → 66  hero h1
+  xxl: "fs-xxl", // 38 → 56  contact h2
+  xl: "fs-xl", // 34 → 48  section h2, the workhorse
+  l: "fs-l", // 30 → 42  FAQ and news section h2
+  m: "fs-m", // 28 → 36  news card headline
+  quote: "fs-quote", // 30 → 44  full-bleed quote
+  statement: "fs-statement", // 26      pull statement
+  word: "fs-word", // 26      standards word
+  s: "fs-s", // 21      service card h3
+  xs: "fs-xs", // 20      card h3
+  xxs: "fs-xxs", // 19      referral point h3
+};
+
+const fontFamilies = { primary: "ff-display", secondary: "ff-text" };
+
+const marginBottoms = { xl: "mb-xl", l: "mb-l", m: "mb-m", s: "mb-s", xs: "mb-xs", none: "mb-none" };
+
+const weights = {
+  fw300: "fw-300",
+  fw400: "fw-400",
+  fw500: "fw-500",
+  fw600: "fw-600",
+};
+
+const colors = {
+  heading: "c-heading",
+  link: "c-link",
+  light: "c-light",
+};
+
+const textTransforms = {
+  uppercase: "text-uppercase",
+  lowercase: "text-lowercase",
+  capitalize: "text-capitalize",
+  none: "text-none",
+};
+
+interface Props extends HTMLAttributes<keyof typeof tags> {
+  tag: keyof typeof tags;
+  size: keyof typeof sizes;
+  fontFamily: keyof typeof fontFamilies;
+  marginBottom: keyof typeof marginBottoms;
+  weight: keyof typeof weights;
+  color?: keyof typeof colors;
+  textTransform?: keyof typeof textTransforms;
+}
+
+const {
+  tag,
+  size,
+  fontFamily,
+  marginBottom,
+  weight,
+  color = "heading",
+  textTransform,
+  ...rest
+} = Astro.props;
+
+const CustomTag = tag;
+---
+
+<CustomTag
+  class:list={[
+    sizes[size],
+    fontFamilies[fontFamily],
+    marginBottoms[marginBottom],
+    weights[weight],
+    colors[color],
+    textTransform ? textTransforms[textTransform] : null,
+  ]}
+  {...rest}
+>
+  <slot />
+</CustomTag>
+
+<style>
+  /* --- Display roles: Gambetta ---
+     Tracking steps down with size rather than sharing one value: the hero
+     is the one place -3px reads as intentional, not cramped. Everything
+     below it loosens incrementally as the type gets smaller. */
+  .fs-display {
+    font-size: var(--qhc-size-hero);
+    line-height: 1.04;
+    letter-spacing: var(--qhc-tracking-display); /* -3px — hero only */
+  }
+  .fs-xxl {
+    font-size: var(--qhc-size-h2-xl);
+    line-height: 1.06;
+    letter-spacing: -2px;
+  }
+  .fs-xl {
+    font-size: var(--qhc-size-h2);
+    line-height: 1.08;
+    letter-spacing: -1.75px;
+  }
+  .fs-l {
+    font-size: var(--qhc-size-h2-sm);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+  }
+  .fs-m {
+    font-size: var(--qhc-size-h3-display);
+    line-height: 1.12;
+    letter-spacing: -1.25px;
+  }
+  .fs-quote {
+    font-size: var(--qhc-size-quote);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+  }
+  .fs-statement {
+    font-size: var(--qhc-size-statement);
+    line-height: 1.26;
+    letter-spacing: -0.8px;
+  }
+  .fs-word {
+    font-size: var(--qhc-size-statement);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* --- Text roles: Hanken Grotesk, normal tracking --- */
+  .fs-s {
+    font-size: 1.3125rem;
+    line-height: 1.25;
+  }
+  .fs-xs {
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+  .fs-xxs {
+    font-size: 1.1875rem;
+    line-height: 1.3;
+  }
+
+  .ff-display {
+    font-family: var(--qhc-font-display);
+  }
+  .ff-text {
+    font-family: var(--qhc-font-text);
+  }
+
+  .mb-xl {
+    margin-bottom: 2rem;
+  }
+  .mb-l {
+    margin-bottom: 1.5rem;
+  }
+  .mb-m {
+    margin-bottom: 1rem;
+  }
+  .mb-s {
+    margin-bottom: 0.5rem;
+  }
+  .mb-xs {
+    margin-bottom: 0.25rem;
+  }
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  .fw-300 {
+    font-weight: 300;
+  }
+  .fw-400 {
+    font-weight: 400;
+  }
+  .fw-500 {
+    font-weight: 500;
+  }
+  .fw-600 {
+    font-weight: 600;
+  }
+
+  .c-heading {
+    color: var(--qhc-navy-900);
+  }
+  .c-link {
+    color: var(--qhc-navy-800);
+  }
+  .c-light {
+    color: var(--qhc-white);
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+  .text-lowercase {
+    text-transform: lowercase;
+  }
+  .text-capitalize {
+    text-transform: capitalize;
+  }
+  .text-none {
+    text-transform: none;
+  }
+</style>

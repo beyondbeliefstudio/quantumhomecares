@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+/** Skins are shared with Links.astro — see its is:global block. */
+export interface Props extends HTMLAttributes<"button"> {
+  variant?: "primary" | "secondary" | "outline";
+  classes?: string;
+}
+
+const { variant = "primary", classes = "", type = "submit", ...rest } = Astro.props;
+---
+
+<button {type} class:list={["btn", variant, classes]} {...rest}>
+  <slot />
+</button>

@@ -1,0 +1,49 @@
+---
+// HELPERS
+import { Image } from "astro:assets";
+
+// IMAGES
+import chess from "@/assets/photos/strip-chess.jpg";
+import walking from "@/assets/photos/strip-walking.jpg";
+import hands from "@/assets/photos/strip-hands.jpg";
+import outdoors from "@/assets/photos/strip-outdoors.jpg";
+
+const photos = [
+  { src: chess, alt: "Two men playing chess" },
+  { src: walking, alt: "Senior couple walking outdoors" },
+  { src: hands, alt: "Hands of a senior client and caregiver" },
+  { src: outdoors, alt: "Older couple outdoors together" },
+];
+---
+
+<section class="section section--bleed" data-reveal>
+  <div class="fixed-grid strip">
+    {
+      photos.map(p => (
+        <div class="plate strip__plate">
+          <Image src={p.src} alt={p.alt} widths={[400, 800, 1200]} sizes="(max-width: 560px) 50vw, 25vw" />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style lang="scss">
+  .strip {
+    --cols: 4;
+    --gap: 1rem;
+
+    /* Same inset at the screen edges as the gap between photos, so the
+       rhythm is even all the way across. Driven by --gap, never a literal. */
+    padding-inline: var(--gap);
+
+    /* Two across is the floor — one photo per screen is too much scroll */
+    @media (max-width: 560px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__plate {
+      aspect-ratio: 4 / 5;
+    }
+  }
+</style>

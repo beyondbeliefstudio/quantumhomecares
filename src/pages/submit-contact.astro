@@ -1,0 +1,42 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// DATA
+import { baseData, telHref } from "@/data/siteData";
+---
+
+<Layout
+  pageTitle={`Request Received | ${baseData.title}`}
+  description="Thank you for reaching out to Quantum Home Cares. We respond within one business day."
+>
+  <section class="section notice" aria-label="Request received">
+    <div class="section-header">
+      <span class="eyebrow">Request Received</span>
+
+      <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Thank you. We have your request.
+      </Heading>
+
+      <p class="lead">
+        We respond within one business day. If the situation is urgent — a discharge date or a
+        hospital stay — call <a href={telHref}>{baseData.phone}</a> and we will move faster.
+      </p>
+
+      <Links variant="primary" href="/">Back To The Homepage</Links>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .notice {
+    display: flex;
+    align-items: center;
+    min-height: 60vh;
+    padding-bottom: var(--qhc-section-gap);
+  }
+</style>

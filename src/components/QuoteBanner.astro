@@ -1,0 +1,78 @@
+---
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// IMAGES
+import backdrop from "@/assets/photos/aging-at-home.jpg";
+---
+
+<section class="quote" data-reveal>
+  <Image
+    src={backdrop}
+    alt="A caregiver spending time with seniors during an in-home visit"
+    widths={[900, 1600, 2200]}
+    class="quote__bg"
+  />
+  <div class="quote__scrim" aria-hidden="true"></div>
+
+  <div class="quote__plate">
+    <Heading
+      tag="p"
+      size="quote"
+      fontFamily="primary"
+      weight="fw300"
+      marginBottom="none"
+      color="light"
+    >
+      Aging at home should not depend on how much fight a family has left.
+    </Heading>
+  </div>
+</section>
+
+<style lang="scss">
+  .quote {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 620px;
+    margin-top: var(--qhc-section-gap);
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 44, 76, 0) 30%, rgba(10, 44, 76, 0.72) 100%);
+    }
+
+    &__plate {
+      position: relative;
+      width: 100%;
+      max-width: var(--qhc-page-max);
+      margin-inline: auto;
+      padding: 0 var(--qhc-gutter) 72px;
+
+      /* 26ch keeps the line breaks where the design put them */
+      p {
+        max-width: 26ch;
+      }
+    }
+
+    @media (max-width: 700px) {
+      min-height: 460px;
+
+      &__plate {
+        padding-bottom: 48px;
+      }
+    }
+  }
+</style>
