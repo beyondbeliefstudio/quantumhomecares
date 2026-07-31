@@ -10,7 +10,7 @@ export const baseData = {
   serviceArea: {
     state: "New Jersey",
     summary: "Serving all of New Jersey",
-    regions: "North, Central, and South Jersey",
+    regions: "North, Central, South, and Western Jersey",
   },
 
   credentials: {

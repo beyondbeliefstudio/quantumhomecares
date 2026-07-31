@@ -63,8 +63,8 @@ import mark from "@/assets/brand/quantum-mark.png";
             <div class="approach__row">
               <Icon name="check" class="approach__glyph approach__glyph--us" aria-hidden="true" />
               <div>
-                <span class="topic topic--warm approach__scope">{row.topic}</span>
-                <span class="topic topic--warm approach__side">{baseData.title}</span>
+                <span class="topic topic--accent approach__scope">{row.topic}</span>
+                <span class="topic topic--accent approach__side">{baseData.title}</span>
                 <p class="approach__line approach__line--us">{row.us}</p>
               </div>
             </div>
@@ -118,7 +118,7 @@ import mark from "@/assets/brand/quantum-mark.png";
       border-top: 1px solid var(--line);
       border-left: 1px solid var(--line);
       border-right: 1px solid var(--line);
-      padding: 22px 32px;
+      padding: 1.375rem 2rem;
 
       &--them {
         --line: var(--qhc-hairline);
@@ -133,14 +133,14 @@ import mark from "@/assets/brand/quantum-mark.png";
       }
 
       &--head {
-        padding: 30px 32px 24px;
+        padding: 1.875rem 2rem 1.5rem;
       }
 
-      @media (max-width: 560px) {
-        padding: 20px 22px;
+      @media (max-width: 616px) {
+        padding: 1.25rem 1.375rem;
 
         &--head {
-          padding: 26px 22px 20px;
+          padding: 1.625rem 1.375rem 1.25rem;
         }
       }
     }
@@ -176,7 +176,7 @@ import mark from "@/assets/brand/quantum-mark.png";
     &__label {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
       color: var(--qhc-slate-600);
       font-size: 1.25rem;
       font-weight: 600;
@@ -187,21 +187,21 @@ import mark from "@/assets/brand/quantum-mark.png";
     }
 
     &__mark {
-      height: 34px;
+      height: 2.125rem;
       width: auto;
     }
 
     &__row {
       display: grid;
-      grid-template-columns: 20px 1fr;
-      gap: 12px;
+      grid-template-columns: 1.25rem 1fr;
+      gap: 0.75rem;
       align-items: start;
     }
 
     &__glyph {
-      width: 20px;
-      height: 20px;
-      margin-top: 3px;
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.1875rem;
 
       &--them {
         color: var(--qhc-slate-600);
@@ -209,7 +209,7 @@ import mark from "@/assets/brand/quantum-mark.png";
       }
 
       &--us {
-        color: var(--qhc-ember-600);
+        color: var(--qhc-navy-700);
       }
     }
 
@@ -225,7 +225,7 @@ import mark from "@/assets/brand/quantum-mark.png";
 
     &__closer {
       max-width: 52ch;
-      margin: 40px auto 0;
+      margin: 2.5rem auto 0;
       color: var(--qhc-navy-900);
       font-size: var(--qhc-size-body-m);
       font-weight: 600;
@@ -242,10 +242,10 @@ import mark from "@/assets/brand/quantum-mark.png";
       once in the header, and the two rows inside it are labelled by side.
       Same content, no cross-referencing.
     */
-    @media (max-width: 760px) {
+    @media (max-width: 836px) {
       &__table {
         grid-template-columns: minmax(0, 1fr);
-        gap: 16px;
+        gap: 1rem;
       }
 
       /* Each card names both sides, so the shared headers are dead weight */
@@ -262,7 +262,7 @@ import mark from "@/assets/brand/quantum-mark.png";
 
       &__group-topic {
         display: block;
-        padding: 14px 22px;
+        padding: 0.875rem 1.375rem;
         background: var(--qhc-shell);
         border-bottom: 1px solid var(--qhc-hairline);
         color: var(--qhc-navy-900);

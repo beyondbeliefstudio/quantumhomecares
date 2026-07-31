@@ -67,8 +67,8 @@ import mark from "@/assets/brand/quantum-mark.png";
     top: 0;
     z-index: 40;
     background: rgba(249, 246, 241, 0.86);
-    backdrop-filter: saturate(1.4) blur(18px);
-    -webkit-backdrop-filter: saturate(1.4) blur(18px);
+    backdrop-filter: saturate(1.4) blur(1.125rem);
+    -webkit-backdrop-filter: saturate(1.4) blur(1.125rem);
     border-bottom: 1px solid transparent;
     transition:
       background var(--qhc-duration-slow) var(--qhc-ease-out),
@@ -78,24 +78,24 @@ import mark from "@/assets/brand/quantum-mark.png";
     /* Past the 40px sentinel — thinner glass, a hairline, and a soft lift */
     &[data-scrolled] {
       background: rgba(249, 246, 241, 0.55);
-      backdrop-filter: saturate(1.6) blur(24px);
-      -webkit-backdrop-filter: saturate(1.6) blur(24px);
+      backdrop-filter: saturate(1.6) blur(1.5rem);
+      -webkit-backdrop-filter: saturate(1.6) blur(1.5rem);
       border-bottom-color: rgba(10, 44, 76, 0.1);
-      box-shadow: 0 18px 40px -30px rgba(10, 44, 76, 0.55);
+      box-shadow: 0 1.125rem 2.5rem -1.875rem rgba(10, 44, 76, 0.55);
     }
 
     &__bar {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 1.75rem;
       max-width: var(--qhc-page-max);
       min-height: var(--qhc-header-h);
       margin-inline: auto;
-      padding: 12px 40px;
+      padding: 0.75rem 2.5rem;
 
-      @media (max-width: 640px) {
-        gap: 16px;
-        padding: 12px var(--qhc-gutter);
+      @media (max-width: 704px) {
+        gap: 1rem;
+        padding: 0.75rem var(--qhc-gutter);
       }
     }
 
@@ -104,16 +104,16 @@ import mark from "@/assets/brand/quantum-mark.png";
       position: relative;
       display: block;
       flex: 0 0 auto;
-      width: 222px;
-      height: 56px;
+      width: 13.875rem;
+      height: 3.5rem;
       transition: width var(--qhc-duration-slow) var(--qhc-ease-out);
 
       /* The logo is flex: 0 0 auto, so it never gives ground — the right
          cluster is what gets pushed out of the bar. It has to step down
          before the bar runs out of room, not after. 222px stops fitting
          alongside the CTA at ~490px, so the step happens at 560. */
-      @media (max-width: 560px) {
-        width: 180px;
+      @media (max-width: 616px) {
+        width: 11.25rem;
       }
     }
 
@@ -127,17 +127,17 @@ import mark from "@/assets/brand/quantum-mark.png";
     }
 
     &__wordmark {
-      height: 52px;
+      height: 3.25rem;
       transform: translateY(-50%);
       opacity: 1;
 
-      @media (max-width: 560px) {
-        height: 44px;
+      @media (max-width: 616px) {
+        height: 2.75rem;
       }
     }
 
     &__mark {
-      height: 54px;
+      height: 3.375rem;
       transform: translateY(-50%) scale(0.9);
       opacity: 0;
       transition:
@@ -146,7 +146,7 @@ import mark from "@/assets/brand/quantum-mark.png";
     }
 
     &[data-scrolled] &__logo {
-      width: 68px;
+      width: 4.25rem;
     }
     &[data-scrolled] &__wordmark {
       opacity: 0;
@@ -160,7 +160,7 @@ import mark from "@/assets/brand/quantum-mark.png";
     &__actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
       margin-left: auto;
 
       /*
@@ -170,7 +170,7 @@ import mark from "@/assets/brand/quantum-mark.png";
         already carries a full-width Request Care button and the phone link,
         so the header CTA is the piece to drop rather than the logo.
       */
-      @media (max-width: 480px) {
+      @media (max-width: 528px) {
         :global(.btn.primary) {
           display: none;
         }
@@ -180,14 +180,14 @@ import mark from "@/assets/brand/quantum-mark.png";
     &__links {
       display: flex;
       align-items: center;
-      gap: 24px;
-      margin-right: 16px;
+      gap: 1.5rem;
+      margin-right: 1rem;
 
-      @media (max-width: 1200px) {
-        gap: 18px;
+      @media (max-width: 1320px) {
+        gap: 1.125rem;
       }
 
-      @media (max-width: 1020px) {
+      @media (max-width: 1122px) {
         display: none;
       }
     }
@@ -196,8 +196,8 @@ import mark from "@/assets/brand/quantum-mark.png";
       display: none;
       place-items: center;
       flex: 0 0 auto;
-      width: 48px;
-      height: 48px;
+      width: 3rem;
+      height: 3rem;
       padding: 0;
       border: 1px solid var(--qhc-navy-200);
       border-radius: var(--qhc-radius-circle);
@@ -211,11 +211,11 @@ import mark from "@/assets/brand/quantum-mark.png";
       }
 
       svg {
-        width: 22px;
-        height: 22px;
+        width: 1.375rem;
+        height: 1.375rem;
       }
 
-      @media (max-width: 1020px) {
+      @media (max-width: 1122px) {
         display: grid;
       }
     }
@@ -225,12 +225,12 @@ import mark from "@/assets/brand/quantum-mark.png";
       display: none;
       border-top: 1px solid var(--qhc-hairline);
       background: rgba(249, 246, 241, 0.98);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(1.125rem);
+      -webkit-backdrop-filter: blur(1.125rem);
     }
 
     &.is-open &__drawer {
-      @media (max-width: 1020px) {
+      @media (max-width: 1122px) {
         display: block;
       }
     }
@@ -256,7 +256,7 @@ import mark from "@/assets/brand/quantum-mark.png";
 
     /* Only below the drawer breakpoint — the drawer itself cannot open above it */
     &.is-open + &__scrim {
-      @media (max-width: 1020px) {
+      @media (max-width: 1122px) {
         opacity: 1;
         visibility: visible;
       }
@@ -267,16 +267,16 @@ import mark from "@/assets/brand/quantum-mark.png";
       flex-direction: column;
       max-width: var(--qhc-page-max);
       margin-inline: auto;
-      padding: 8px 40px 24px;
+      padding: 0.5rem 2.5rem 1.5rem;
 
-      @media (max-width: 640px) {
-        padding: 8px var(--qhc-gutter) 24px;
+      @media (max-width: 704px) {
+        padding: 0.5rem var(--qhc-gutter) 1.5rem;
       }
 
       /* The CTA pill sits below the link list, not inside it */
       :global(.btn.primary) {
-        min-height: 56px;
-        margin-top: 8px;
+        min-height: 3.5rem;
+        margin-top: 0.5rem;
       }
     }
 
@@ -286,7 +286,7 @@ import mark from "@/assets/brand/quantum-mark.png";
     &__drawer-phone {
       display: flex;
       align-items: center;
-      min-height: 52px;
+      min-height: 3.25rem;
       border-bottom: 1px solid var(--qhc-hairline);
       color: var(--qhc-ink-900);
       font-size: var(--qhc-size-body-m);
@@ -295,7 +295,7 @@ import mark from "@/assets/brand/quantum-mark.png";
 
       &:hover,
       &:focus-visible {
-        color: var(--qhc-ember-700);
+        color: var(--qhc-navy-800);
       }
     }
   }

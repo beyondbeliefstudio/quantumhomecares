@@ -66,7 +66,7 @@ export const credentials: Credential[] = [
   },
   {
     label: "Serving all of New Jersey",
-    detail: "North, Central, and South Jersey",
+    detail: "North, Central, South, and Western Jersey",
   },
 ];
 
@@ -138,12 +138,12 @@ export const comparison: ComparisonRow[] = [
 export const whoWeHelp: NumberedCard[] = [
   {
     title: "After a hospital stay",
-    copy: "Discharge paperwork, new medications, and follow-up appointments arriving all at once. We take over the coordination and get the home ready before they walk back in.",
+    copy: "Discharge paperwork, new medications, and follow-up appointments arriving all at once. We manage the coordination and get the home ready before they walk back in.",
     icon: "after-hospital-stay",
   },
   {
     title: "When memory starts changing",
-    copy: "Early dementia and Alzheimer's support built on routine and familiarity, with caregivers trained to redirect rather than correct.",
+    copy: "Early dementia and Alzheimer's support built on routine and familiarity, with caregivers trained to redirect and engage.",
     icon: "memory-changing",
   },
   {
@@ -153,7 +153,7 @@ export const whoWeHelp: NumberedCard[] = [
   },
   {
     title: "When you live too far away",
-    copy: "Eyes in the home and a person on the ground in New Jersey, with regular updates so distance stops feeling like negligence.",
+    copy: "Eyes in the home and a person you and your loved one can trust to care for them and provide timely updates to bridge the distance.",
     icon: "live-too-far-away",
   },
 ];
@@ -164,7 +164,7 @@ export const whoWeHelp: NumberedCard[] = [
 export const steps: NumberedCard[] = [
   {
     title: "Tell us what is going on",
-    copy: "Send the form and we respond within one business day. We listen, ask a few questions, and tell you what would help, even if that is less care than you expected. The conversation is free.",
+    copy: "Complete the request care form, call or email us and we will respond within one day. We listen, ask a few questions, and tell you what would help, even if that is less care than you expected. The conversation is free.",
   },
   {
     title: "We build a plan for your loved one",
@@ -205,16 +205,17 @@ export const regions: Region[] = [
   { name: "North Jersey", counties: "Bergen, Essex, Morris, Passaic, Hudson, Union" },
   { name: "Central Jersey", counties: "Somerset, Middlesex, Monmouth, Mercer, Hunterdon" },
   { name: "South Jersey", counties: "Ocean, Burlington, Camden, Atlantic, Cape May" },
+  { name: "Western Jersey", counties: "Warren, Sussex, Salem, Gloucester, Cumberland" },
 ];
 
 // ==========================================
-// 12. STANDARDS — the six C's
+// 12. CULTURE — the six C's
 // ==========================================
-export const standards: Standard[] = [
+export const culture: Standard[] = [
   { word: "Care", copy: "Personalized attention for every client" },
   { word: "Competency", copy: "High standards of skill and medical literacy" },
   { word: "Commitment", copy: "Focused on long-term wellness, not billable hours" },
-  { word: "Communication", copy: "Transparent updates between families and providers" },
+  { word: "Communication", copy: "Transparent dialogs between families and providers" },
   { word: "Compassion", copy: "Every senior treated with the empathy they deserve" },
   { word: "Courage", copy: "Advocating firmly in complex medical settings" },
 ];

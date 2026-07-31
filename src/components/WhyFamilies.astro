@@ -8,7 +8,7 @@ import { Image } from "astro:assets";
 // IMAGES
 import mark from "@/assets/brand/quantum-mark.png";
 import caregiver from "@/assets/photos/families-reach-out.jpg";
-import senior from "@/assets/photos/strip-walking.jpg";
+import senior from "@/assets/photos/reach-out.jpg";
 ---
 
 <section class="section" data-reveal>
@@ -23,7 +23,11 @@ import senior from "@/assets/photos/strip-walking.jpg";
         />
       </div>
       <div class="plate why__plate-offset">
-        <Image src={senior} alt="Senior couple walking outdoors" widths={[350, 700]} />
+        <Image
+          src={senior}
+          alt="Caregiver taking a senior man's blood pressure at home"
+          widths={[350, 700]}
+        />
       </div>
     </div>
 
@@ -60,7 +64,7 @@ import senior from "@/assets/photos/strip-walking.jpg";
     &__plates {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 1rem;
 
       .plate {
         aspect-ratio: 3 / 4;
@@ -68,7 +72,7 @@ import senior from "@/assets/photos/strip-walking.jpg";
     }
 
     &__plate-offset {
-      margin-top: 48px;
+      margin-top: 3rem;
     }
 
     &__copy {
@@ -79,24 +83,24 @@ import senior from "@/assets/photos/strip-walking.jpg";
     &__statement {
       display: flex;
       align-items: center;
-      gap: 22px;
-      margin-top: 12px;
-      padding: 26px 30px;
+      gap: 1.375rem;
+      margin-top: 0.75rem;
+      padding: 1.625rem 1.875rem;
       background: var(--qhc-white);
       border: 1px solid var(--qhc-hairline);
       border-radius: var(--qhc-radius);
 
-      @media (max-width: 480px) {
+      @media (max-width: 528px) {
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
-        padding: 24px;
+        gap: 1rem;
+        padding: 1.5rem;
       }
     }
 
     &__mark {
       flex: 0 0 auto;
-      height: 58px;
+      height: 3.625rem;
       width: auto;
     }
   }

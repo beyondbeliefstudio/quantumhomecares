@@ -3,13 +3,13 @@
 import { Image } from "astro:assets";
 
 // IMAGES
-import man from "@/assets/photos/strip-man.jpg";
+import medical from "@/assets/photos/strip-medical.jpg";
 import love from "@/assets/photos/strip-love.jpg";
 import hug from "@/assets/photos/strip-hug.jpg";
 import outdoors from "@/assets/photos/strip-outdoors.jpg";
 
 const photos = [
-  { src: man, alt: "Senior man seated in a bright room with others nearby" },
+  { src: medical, alt: "Senior woman taking a health reading for her partner at home" },
   {
     src: love,
     alt: "Senior woman resting her hands on her partner's shoulder as they smile at each other",
@@ -46,7 +46,7 @@ const photos = [
     padding-inline: var(--gap);
 
     /* Two across is the floor — one photo per screen is too much scroll */
-    @media (max-width: 560px) {
+    @media (max-width: 616px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 

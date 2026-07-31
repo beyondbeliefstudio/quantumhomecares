@@ -1,7 +1,6 @@
 ---
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
-import Links from "@/components/Links.astro";
 
 // DATA
 import { referralPoints } from "@/data/homeData";
@@ -13,22 +12,11 @@ import { referralPoints } from "@/data/homeData";
 -->
 <section id="professionals" class="section" data-reveal>
   <div class="pro">
-    <div class="pro__intro">
-      <div class="stack pro__heading">
-        <span class="eyebrow eyebrow--band">For Care Professionals</span>
-        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-          A referral partner who closes the loop.
-        </Heading>
-      </div>
-
-      <div class="stack pro__action">
-        <p class="lead">
-          Hospitals, rehab facilities, discharge planners, case managers, and social workers across
-          New Jersey use us to place patients safely at home — and to hear back about what happened
-          next.
-        </p>
-        <Links variant="secondary" href="#contact">Send A Referral</Links>
-      </div>
+    <div class="stack pro__intro">
+      <span class="eyebrow eyebrow--band">For Care Professionals</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        A referral partner who closes the loop.
+      </Heading>
     </div>
 
     <!-- Ruled columns, credential-band rhythm: dividers between items, never stranded on a wrap -->
@@ -49,42 +37,43 @@ import { referralPoints } from "@/data/homeData";
 
 <style lang="scss">
   .pro {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: 44px;
-    padding: 56px;
+    gap: 2.75rem;
+    padding: 3.5rem;
     background: var(--qhc-navy-050);
     border: 1px solid var(--qhc-navy-300);
     border-radius: var(--qhc-radius-lg);
 
-    /* Editorial header: headline left, lead and action right */
+    /*
+      Centered intro: eyebrow + heading.
+
+      align-items: center is doing the real work. .stack only sets the column
+      direction, so align-items defaults to stretch — and .eyebrow is
+      width: fit-content, which cannot stretch, so it fell to flex-start and
+      sat on the heading's left edge instead of centred under it. text-align
+      alone does not fix that: the pill is a flex item, not inline text.
+    */
     &__intro {
-      display: grid;
-      grid-template-columns: 6fr 5fr;
-      gap: 28px 72px;
-      align-items: start;
-    }
-
-    &__heading {
       --gap: 1.25rem;
-    }
-
-    &__action {
-      --gap: 1.5rem;
-      max-width: 46ch;
+      align-items: center;
+      text-align: center;
     }
 
     &__points {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 32px 0;
-      padding-top: 40px;
+      gap: 2rem 0;
+      padding-top: 2.5rem;
       border-top: 1px solid var(--qhc-hairline-cool);
     }
 
     &__point {
       --gap: 0.5rem;
-      padding: 0 26px;
+      padding: 0 1.625rem;
 
       &:first-child {
         padding-left: 0;
@@ -95,10 +84,10 @@ import { referralPoints } from "@/data/homeData";
       }
     }
 
-    @media (max-width: 1180px) {
+    @media (max-width: 1298px) {
       &__points {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 30px 44px;
+        gap: 1.875rem 2.75rem;
       }
 
       &__point {
@@ -110,16 +99,12 @@ import { referralPoints } from "@/data/homeData";
       }
     }
 
-    @media (max-width: 900px) {
-      padding: 40px 32px;
-
-      &__intro {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media (max-width: 990px) {
+      padding: 2.5rem 2rem;
     }
 
-    @media (max-width: 620px) {
-      padding: 32px 24px;
+    @media (max-width: 682px) {
+      padding: 2rem 1.5rem;
 
       &__points {
         grid-template-columns: minmax(0, 1fr);

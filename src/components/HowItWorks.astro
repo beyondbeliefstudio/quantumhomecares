@@ -45,7 +45,7 @@ import { steps } from "@/data/homeData";
     }
 
     &__steps {
-      --gap: 40px;
+      --gap: 2.5rem;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--gap);
@@ -57,7 +57,7 @@ import { steps } from "@/data/homeData";
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 1.125rem;
       text-align: center;
 
       /* Connector — this marker's edge to the next, across the gap.
@@ -65,9 +65,9 @@ import { steps } from "@/data/homeData";
       &:not(:last-child)::before {
         content: "";
         position: absolute;
-        top: 28px;
-        left: calc(50% + 42px);
-        right: calc(-50% - var(--gap) + 42px);
+        top: 1.75rem;
+        left: calc(50% + 2.625rem);
+        right: calc(-50% - var(--gap) + 2.625rem);
         height: 1px;
         background: var(--qhc-navy-300);
       }
@@ -76,8 +76,8 @@ import { steps } from "@/data/homeData";
     &__marker {
       display: grid;
       place-items: center;
-      width: 56px;
-      height: 56px;
+      width: 3.5rem;
+      height: 3.5rem;
       background: var(--qhc-white);
       border: 1px solid var(--qhc-navy-300);
       border-radius: var(--qhc-radius-circle);
@@ -91,10 +91,10 @@ import { steps } from "@/data/homeData";
       --gap: 0.5rem;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 990px) {
       &__steps {
         grid-template-columns: minmax(0, 1fr);
-        gap: 36px;
+        gap: 2.25rem;
       }
 
       /* Stacked — same centred column, connectors off */

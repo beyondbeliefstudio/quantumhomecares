@@ -59,7 +59,7 @@ const year = new Date().getFullYear();
     &__inner {
       max-width: var(--qhc-page-max);
       margin-inline: auto;
-      padding: 72px var(--qhc-gutter) 40px;
+      padding: 4.5rem var(--qhc-gutter) 2.5rem;
     }
 
     /* Two sides, not three even columns: brand pinned left, nav + contact
@@ -70,42 +70,42 @@ const year = new Date().getFullYear();
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: start;
-      gap: 40px 64px;
-      padding-bottom: 56px;
+      gap: 2.5rem 4rem;
+      padding-bottom: 3.5rem;
 
-      @media (max-width: 900px) {
+      @media (max-width: 990px) {
         flex-direction: column;
       }
     }
 
     &__brand {
       --gap: 1.5rem;
-      flex: 0 1 380px;
+      flex: 0 1 23.75rem;
       max-width: 34ch;
 
       /* 380px is a width — it only means that while .footer__grid is a row.
          Once the grid flips to column the main axis is vertical, so that same
          basis pins this block to 380px TALL and strands ~155px of empty space
          under the tagline. Release it when the axis flips. */
-      @media (max-width: 900px) {
+      @media (max-width: 990px) {
         flex-basis: auto;
       }
     }
 
     &__lockup {
       width: auto;
-      height: 150px;
+      height: 9.375rem;
     }
 
     /* The related pair — kept close together as they move as one block */
     &__links-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 40px 64px;
+      gap: 2.5rem 4rem;
 
       /* Full stack below 900, same breakpoint as .footer__grid — Explore and
          Contact each get their own row rather than pairing up mid-width. */
-      @media (max-width: 900px) {
+      @media (max-width: 990px) {
         flex-direction: column;
       }
     }
@@ -126,8 +126,8 @@ const year = new Date().getFullYear();
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 8px 32px;
-      padding-top: 24px;
+      gap: 0.5rem 2rem;
+      padding-top: 1.5rem;
       border-top: 1px solid var(--qhc-hairline);
       color: var(--qhc-slate-600);
       font-size: var(--qhc-size-meta);

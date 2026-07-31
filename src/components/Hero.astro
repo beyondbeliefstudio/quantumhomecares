@@ -57,15 +57,15 @@ import inset from "@/assets/photos/hero-small.jpg";
 
 <style lang="scss">
   .hero {
-    padding-top: 84px;
-    padding-bottom: 40px;
+    padding-top: 5.25rem;
+    padding-bottom: 2.5rem;
 
     &__glow {
       position: absolute;
-      top: -140px;
-      right: -180px;
-      width: 720px;
-      height: 720px;
+      top: -8.75rem;
+      right: -11.25rem;
+      width: 45rem;
+      height: 45rem;
       border-radius: 50%;
       background: radial-gradient(
         circle at 50% 50%,
@@ -105,7 +105,7 @@ import inset from "@/assets/photos/hero-small.jpg";
     &__inset {
       position: absolute;
       left: -12%;
-      bottom: -40px;
+      bottom: -2.5rem;
       width: 42%;
       aspect-ratio: 1 / 1;
       border: 8px solid var(--qhc-paper);
@@ -124,7 +124,7 @@ import inset from "@/assets/photos/hero-small.jpg";
     }
 
     /* Stacked: pull the portrait back to full width and re-seat the inset */
-    @media (max-width: 980px) {
+    @media (max-width: 1078px) {
       &__portrait {
         margin-left: 0;
       }
@@ -132,7 +132,7 @@ import inset from "@/assets/photos/hero-small.jpg";
       &__inset {
         left: auto;
         right: 0;
-        bottom: -32px;
+        bottom: -2rem;
         width: 34%;
       }
     }
@@ -140,10 +140,10 @@ import inset from "@/assets/photos/hero-small.jpg";
     /* Narrow phones: the inset stays, but 34% of a 350px column is a ~120px
        thumbnail, so it gains width and gives back some of its overhang and
        border to stay legible against the portrait behind it. */
-    @media (max-width: 560px) {
+    @media (max-width: 616px) {
       &__inset {
         width: 44%;
-        bottom: -24px;
+        bottom: -1.5rem;
         border-width: 6px;
       }
     }

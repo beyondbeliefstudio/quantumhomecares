@@ -4,8 +4,8 @@ import type { HTMLAttributes } from "astro/types";
 export interface Props extends HTMLAttributes<"a"> {
   href: string;
   variant?:
-    | "primary" // ember pill — the conversion action
-    | "secondary" // navy pill — referral action
+    | "primary" // logo-blue pill — the conversion action
+    | "secondary" // deep navy pill — referral action
     | "outline" // quiet outlined pill
     | "nav-link" // desktop header link
     | "drawer-link" // mobile drawer link
@@ -52,9 +52,9 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
     }
 
     &.primary {
-      --btn-fill: var(--qhc-ember-600);
-      --btn-ink: var(--qhc-ember-700);
-      --btn-pressed: var(--qhc-ember-800);
+      --btn-fill: var(--qhc-navy-700);
+      --btn-ink: var(--qhc-navy-800);
+      --btn-pressed: var(--qhc-navy-900);
       color: var(--qhc-white);
 
       &:hover,
@@ -64,10 +64,12 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
     }
 
     &.secondary {
-      --btn-fill: var(--qhc-navy-700);
+      /* Deep navy against primary's brighter logo blue. Before the palette went
+         blue-only, primary was the clay pill and this was the navy one; with
+         both on the blue ramp they need different steps or they collide. */
+      --btn-fill: var(--qhc-navy-900);
       --btn-ink: var(--qhc-navy-800);
-      /* navy-900 is text-only, never a plane — pressed leans on the squeeze */
-      --btn-pressed: var(--qhc-navy-800);
+      --btn-pressed: var(--qhc-navy-900);
       color: var(--qhc-white);
 
       &:hover,
@@ -104,7 +106,7 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
     }
 
     &.nav-link {
-      padding: 10px 0;
+      padding: 0.625rem 0;
       color: var(--qhc-ink-900);
       font-size: var(--qhc-size-label);
       font-weight: 500;
@@ -120,7 +122,7 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
       */
       --btn-wipe: var(--qhc-duration-enter);
       --btn-wipe-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-      background-image: linear-gradient(var(--qhc-ember-600), var(--qhc-ember-600));
+      background-image: linear-gradient(var(--qhc-navy-700), var(--qhc-navy-700));
       background-repeat: no-repeat;
       background-position: 0 100%;
       background-size: 0% 1px;
@@ -136,7 +138,7 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
       justify-content: flex-start;
       align-self: stretch;
       width: 100%;
-      min-height: 52px;
+      min-height: 3.25rem;
       border-bottom: 1px solid var(--qhc-hairline);
       color: var(--qhc-ink-900);
       font-size: var(--qhc-size-body-m);
@@ -145,7 +147,7 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
 
       &:hover,
       &:focus-visible {
-        color: var(--qhc-ember-700);
+        color: var(--qhc-navy-800);
       }
     }
 
@@ -156,28 +158,28 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
 
       &:hover,
       &:focus-visible {
-        color: var(--qhc-ember-700);
+        color: var(--qhc-navy-800);
       }
     }
 
     &.inline {
       gap: 0.5rem;
-      color: var(--qhc-ember-700);
+      color: var(--qhc-navy-800);
       font-size: var(--qhc-size-label);
       font-weight: 600;
 
       svg {
-        width: 18px;
-        height: 18px;
+        width: 1.125rem;
+        height: 1.125rem;
         transition: transform var(--qhc-duration-fast) var(--qhc-ease-out);
       }
 
       &:hover,
       &:focus-visible {
-        color: var(--qhc-ember-800);
+        color: var(--qhc-navy-900);
 
         svg {
-          transform: translateX(4px);
+          transform: translateX(0.25rem);
         }
       }
     }

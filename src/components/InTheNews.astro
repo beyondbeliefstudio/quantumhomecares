@@ -77,7 +77,7 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
       border-radius: var(--qhc-radius-lg);
       text-decoration: none;
 
-      @media (max-width: 760px) {
+      @media (max-width: 836px) {
         grid-template-columns: minmax(0, 1fr);
       }
     }
@@ -86,7 +86,7 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
       position: relative;
       /* Clips its own image zoom without touching the card's rounded corners */
       overflow: hidden;
-      min-height: 340px;
+      min-height: 21.25rem;
 
       img {
         position: absolute;
@@ -97,19 +97,19 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
         transition: transform var(--qhc-duration-enter) var(--qhc-ease-out);
       }
 
-      @media (max-width: 760px) {
-        min-height: 260px;
+      @media (max-width: 836px) {
+        min-height: 16.25rem;
       }
     }
 
     &__body {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      padding: 44px 48px;
+      gap: 1.125rem;
+      padding: 2.75rem 3rem;
 
-      @media (max-width: 560px) {
-        padding: 28px 24px;
+      @media (max-width: 616px) {
+        padding: 1.75rem 1.5rem;
       }
     }
 
@@ -126,7 +126,7 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
     /*
       The whole card is the link, so hover reads through the photo and the
       headline rather than the card shell: the cover image eases into a slow,
-      contained zoom and the headline warms to ember — the arrow was already
+      contained zoom and the headline shifts to navy-800 — the arrow was already
       doing this same job in miniature. No lift, no border change, and
       nothing shifts position.
     */
@@ -141,12 +141,12 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
 
     &__card:hover :global(.news__headline),
     &__card:focus-visible :global(.news__headline) {
-      color: var(--qhc-ember-700);
+      color: var(--qhc-navy-800);
     }
 
     &__card:hover &__cue :global(svg),
     &__card:focus-visible &__cue :global(svg) {
-      transform: translateX(4px);
+      transform: translateX(0.25rem);
     }
   }
 </style>
