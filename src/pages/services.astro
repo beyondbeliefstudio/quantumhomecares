@@ -71,7 +71,11 @@ const serviceSchema = serviceDetails.map(service => ({
   </InternalHero>
 
   <!-- ===== 2–7. THE SIX SERVICES ===== -->
-  {serviceDetails.map((service, i) => <ServiceBlock service={service} alt={i % 2 === 1} />)}
+  {
+    serviceDetails.map((service, i) => (
+      <ServiceBlock service={service} number={i + 1} flip={i % 2 === 1} />
+    ))
+  }
 
   <!-- Chapter break between what we do and how it is scheduled -->
   <PhotoStrip />

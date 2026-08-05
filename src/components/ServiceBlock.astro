@@ -1,11 +1,16 @@
 ---
 /**
- * One service on /services: prose on the left, the service's photo with its
- * "what this includes" checklist on the right.
+ * One service on /services, in three registers:
  *
- * Six of these run back to back, so alternating blocks sit on a cool wash —
- * the rhythm has to come from the surface, because flipping the columns would
- * mean the reader hunts for where the prose restarts each time.
+ *   1. A full-bleed 50/50 split — the photo owns one half of the viewport,
+ *      edge to edge and full height, rounded only toward the centre seam so
+ *      the brand's softness reads at the meeting point. Text fills the other
+ *      half. Sides alternate per service (`flip`), which is where the page's
+ *      rhythm comes from now.
+ *   2. An oversized Gambetta numeral (01–06) opens the text — the editorial
+ *      marker that carries the sequence instead of another icon circle.
+ *   3. "What this includes" is its own band below the pair: full-width cool
+ *      wash, label left, items in a fluid grid.
  */
 
 // COMPONENTS
@@ -20,20 +25,30 @@ import type { ServiceDetail } from "@/data/servicesData";
 
 interface Props {
   service: ServiceDetail;
-  /** Every other block, to break up six in a row. */
-  alt?: boolean;
+  /** 1-based position in the sequence — rendered as the block's numeral. */
+  number: number;
+  /** Every other block mirrors, photo on the right. */
+  flip?: boolean;
 }
 
-const { service, alt = false } = Astro.props;
+const { service, number, flip = false } = Astro.props;
+const numeral = String(number).padStart(2, "0");
 ---
 
-<section id={service.id} class:list={["svc", alt && "svc--alt"]} data-reveal>
-  <div class="svc__inner">
-    <div class="split split--top split--gap-lg">
+<section id={service.id} class:list={["svc", flip && "svc--flip"]} data-reveal>
+  <div class="svc__split">
+    <div class="svc__media">
+      <Image
+        src={service.photo}
+        alt={service.photoAlt}
+        widths={[800, 1400, 2000]}
+        sizes="(max-width: 1078px) 100vw, 50vw"
+      />
+    </div>
+
+    <div class="svc__panel">
       <div class="stack svc__copy">
-        <span class="icon-circle">
-          <Icon name={service.icon} aria-hidden="true" />
-        </span>
+        <span class="svc__numeral" aria-hidden="true">{numeral}</span>
 
         <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
           {service.title}
@@ -60,56 +75,83 @@ const { service, alt = false } = Astro.props;
 
         {service.bodyAfter?.map(paragraph => <p>{paragraph}</p>)}
       </div>
+    </div>
+  </div>
 
-      <div class="svc__side">
-        <div class="plate plate--lg svc__photo">
-          <Image
-            src={service.photo}
-            alt={service.photoAlt}
-            widths={[600, 1200]}
-            sizes="(max-width: 1078px) 92vw, 38vw"
-          />
-        </div>
-
-        <div class="svc__includes">
-          <span class="topic">What this includes</span>
-          <ul class="svc__list">
-            {
-              service.includes.map(item => (
-                <li class="svc__item">
-                  <Icon name="check" class="svc__check" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
+  <div class="svc__includes">
+    <div class="svc__includes-inner">
+      <span class="topic topic--accent">What this includes</span>
+      <ul class="svc__list">
+        {
+          service.includes.map(item => (
+            <li class="svc__item">
+              <Icon name="check" class="svc__check" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
 </section>
 
 <style lang="scss">
   .svc {
-    padding-block: var(--qhc-section-gap);
+    margin-top: var(--qhc-section-gap);
 
-    /* Full-bleed wash. The hairlines are the cool variant so the seam reads as
-       part of the blue plane rather than a grey rule dropped on top of it. */
-    &--alt {
-      background: var(--qhc-surface-cool);
-      border-top: 1px solid var(--qhc-hairline-cool);
-      border-bottom: 1px solid var(--qhc-hairline-cool);
+    &__split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      min-height: 34rem;
     }
 
-    &__inner {
-      max-width: var(--qhc-page-max);
-      margin-inline: auto;
-      padding-inline: var(--qhc-gutter);
+    /* The photo half. Flush to the viewport edge; the two corners facing the
+       centre seam take the large radius, so the softness shows exactly where
+       image meets text and nowhere else. */
+    &__media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 var(--qhc-radius-lg) var(--qhc-radius-lg) 0;
+
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
+    /* Mirrored blocks: photo to column 2, radius to the other seam. */
+    &--flip &__media {
+      order: 2;
+      border-radius: var(--qhc-radius-lg) 0 0 var(--qhc-radius-lg);
+    }
+
+    &__panel {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Centred in the half, capped at half the page grid, so the text sits
+       where it would in a .section split at page-max. */
     &__copy {
       --gap: 1.25rem;
-      max-width: 60ch;
+      width: 100%;
+      max-width: calc(var(--qhc-page-max) / 2);
+      margin-inline: auto;
+      padding: 3.5rem var(--qhc-gutter);
+    }
+
+    /* The sequence marker. Display face, hairline weight, tint — present
+       enough to structure six blocks, quiet enough not to fight the H2. */
+    &__numeral {
+      font-family: var(--qhc-font-display);
+      font-size: clamp(3.25rem, 4.4vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--qhc-navy-300);
     }
 
     /* Sits between the h2 and the body: navy and a step up in size, so the
@@ -147,47 +189,34 @@ const { service, alt = false } = Astro.props;
       }
     }
 
-    &__side {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    &__photo {
-      aspect-ratio: 3 / 2;
-    }
-
+    /* ---- The includes band ---- */
     &__includes {
-      display: flex;
-      flex-direction: column;
-      gap: 1.125rem;
-      padding: 1.875rem 1.75rem 2rem;
-      background: var(--qhc-surface-raised);
-      border: 1px solid var(--qhc-hairline);
-      border-radius: var(--qhc-radius);
+      margin-top: 3rem;
+      background: var(--qhc-surface-cool);
+      border-top: 1px solid var(--qhc-hairline-cool);
+      border-bottom: 1px solid var(--qhc-hairline-cool);
+    }
 
-      /* The prose column is much taller than photo + list, so on desktop the
-         card rides along under the photo instead of stranding a screen of
-         whitespace beside paragraph four. Sticky is relative to the column,
-         so the photo scrolls away first and the checklist follows the prose.
-         Falls back to static wherever position: sticky is not supported,
-         which is the layout below anyway. */
-      position: sticky;
-      top: 8.5rem;
+    &__includes-inner {
+      display: grid;
+      grid-template-columns: minmax(10rem, 13rem) 1fr;
+      gap: 1.5rem 3rem;
+      align-items: start;
+      max-width: var(--qhc-page-max);
+      margin-inline: auto;
+      padding: 2.5rem var(--qhc-gutter);
 
-      @media (max-width: 1078px) {
-        position: static;
-      }
-
-      @media (max-width: 616px) {
-        padding: 1.5rem 1.375rem 1.625rem;
+      /* Rides just below the sticky header once the list is long enough to
+         scroll past, so the label never detaches from its items. */
+      .topic {
+        padding-top: 0.25rem;
       }
     }
 
     &__list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+      gap: 0.875rem 2.5rem;
     }
 
     &__item {
@@ -205,6 +234,50 @@ const { service, alt = false } = Astro.props;
       height: 1.125rem;
       margin-top: 0.1875rem;
       color: var(--qhc-navy-700);
+    }
+
+    /* ---- Stacked ---- */
+    @media (max-width: 1078px) {
+      &__split {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 0;
+      }
+
+      /* Full-bleed banner above the text — the aspect box replaces the
+         stretched half, and the seam radius goes with it. */
+      &__media {
+        order: 0;
+        aspect-ratio: 16 / 10;
+        border-radius: 0;
+      }
+
+      &--flip &__media {
+        order: 0;
+        border-radius: 0;
+      }
+
+      &__panel {
+        display: block;
+      }
+
+      &__copy {
+        max-width: 100%;
+        padding: 2.5rem var(--qhc-gutter) 0;
+      }
+
+      &__numeral {
+        font-size: 3rem;
+      }
+
+      &__includes {
+        margin-top: 2.5rem;
+      }
+
+      &__includes-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.25rem;
+        padding-block: 2rem;
+      }
     }
   }
 </style>
