@@ -15,9 +15,8 @@ import { serviceDetails } from "@/data/servicesData";
 <nav class="subnav" aria-label="Services on this page" data-subnav>
   <div class="subnav__rail">
     {
-      serviceDetails.map((service, i) => (
+      serviceDetails.map(service => (
         <a href={`#${service.id}`} class="subnav__pill">
-          <span class="subnav__num">{String(i + 1).padStart(2, "0")}</span>
           {service.shortTitle}
         </a>
       ))
@@ -80,21 +79,9 @@ import { serviceDetails } from "@/data/servicesData";
     }
   }
 
-  .subnav__num {
-    font-family: var(--qhc-font-display);
-    font-size: 0.9375rem;
-    line-height: 1;
-    color: var(--qhc-navy-700);
-    transition: color var(--qhc-duration-base) var(--qhc-ease-out);
-  }
-
   /* Scrollspy state — set by initScrollSpy in app.js */
   .subnav__pill.is-active {
     background: var(--qhc-navy-700);
     color: var(--qhc-white);
-
-    .subnav__num {
-      color: var(--qhc-navy-200);
-    }
   }
 </style>
