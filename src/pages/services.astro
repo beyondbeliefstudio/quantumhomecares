@@ -1,0 +1,225 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+import ServiceBlock from "@/components/ServiceBlock.astro";
+import PhotoStrip from "@/components/PhotoStrip.astro";
+
+// DATA
+import { serviceDetails } from "@/data/servicesData";
+import { baseData, telHref, schemaIds } from "@/data/siteData";
+
+/**
+ * One Service node per block, each pointing at the single LocalBusiness node
+ * BaseHead emits rather than restating the business. Generated from the same
+ * array the page renders, so a new service cannot ship without its schema.
+ */
+const { business: businessId } = schemaIds(Astro.site);
+
+const serviceSchema = serviceDetails.map(service => ({
+  "@type": "Service",
+  name: service.title,
+  serviceType: service.title,
+  description: service.lead,
+  provider: { "@id": businessId },
+  areaServed: { "@type": "State", name: baseData.serviceArea.state },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: `${service.title} — what this includes`,
+    itemListElement: service.includes.map(item => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: item },
+    })),
+  },
+}));
+---
+
+<Layout
+  pageTitle="Senior Home Care Services in New Jersey | Quantum Home Cares"
+  description="In-home care across New Jersey: personal care, meals, transportation, respite, overnight and live-in support, plus advocacy at medical appointments."
+  schemaNodes={serviceSchema}
+>
+  <!-- ===== 1. PAGE INTRO ===== -->
+  <section id="intro" class="section" data-reveal>
+    <div class="section-header intro__header">
+      <span class="eyebrow">What We Do</span>
+      <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Care that fits the person, not a package.
+      </Heading>
+    </div>
+
+    <!-- Three paragraphs, so they read left-aligned in a centred measure
+         rather than centre-set like the heading above them. -->
+    <div class="stack intro__body">
+      <p class="lead">
+        Most agencies hand you a tier. Bronze, silver, gold, pick one. It is easier to sell that
+        way, but it has almost nothing to do with what any particular person actually needs.
+      </p>
+      <p class="lead">
+        We start the other direction. We visit the home, we talk to your loved one and to you, and
+        we build a written plan around the real situation. Someone recovering from a hip replacement
+        needs something completely different from someone in the early stages of dementia, and both
+        of those change over time.
+      </p>
+      <p class="lead">
+        Below is everything we provide. Most families start with two or three of these and add more
+        as things shift. Nothing here is locked in.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== 2–7. THE SIX SERVICES ===== -->
+  {serviceDetails.map((service, i) => <ServiceBlock service={service} alt={i % 2 === 1} />)}
+
+  <!-- Chapter break between what we do and how it is scheduled -->
+  <PhotoStrip />
+
+  <!-- ===== 8. SCHEDULING ===== -->
+  <section id="scheduling" class="section" data-reveal>
+    <div class="split split--4-7 split--top">
+      <div class="stack scheduling__intro">
+        <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+          How hours and scheduling work
+        </Heading>
+      </div>
+
+      <div class="stack scheduling__body">
+        <p class="lead">
+          Every plan is built around the actual week. Some families need four hours on a Tuesday and
+          Thursday. Others need daily mornings, or full days, or somebody in the house around the
+          clock.
+        </p>
+        <p class="lead">
+          Once we know the schedule, we match a caregiver and keep them consistent. That consistency
+          matters more than most families expect. A person who has to explain their routine to a
+          different face every week never really settles, and someone with memory changes may never
+          settle at all.
+        </p>
+        <p class="lead">
+          Every client also gets a named backup caregiver who already knows the care plan, so
+          vacations and sick days do not turn into a stranger at the door.
+        </p>
+        <p class="lead">
+          Schedules change, and that is normal. Recovery goes well and hours come down. A diagnosis
+          changes and hours go up. We adjust the plan and the schedule with it. There is no long
+          contract holding you to a level of care you no longer need.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9. HONEST SCOPE ===== -->
+  <section id="scope" class="section" data-reveal>
+    <!-- Framed rather than open on the page: this is the one section that says
+         what the company will not sell you, and the panel keeps it from
+         reading as a footnote to the services above it. -->
+    <div class="scope">
+      <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+        What we do not do
+      </Heading>
+
+      <div class="stack scope__body">
+        <p class="lead">Being clear about this saves everyone time.</p>
+        <p class="lead">
+          We are not a skilled nursing agency. We do not provide wound care, injections, IV therapy,
+          or anything that requires a licensed clinician in the home. If your loved one needs that
+          level of care, tell us during the consultation and we will point you toward the right
+          provider. Many families end up using both, and we coordinate alongside them without a
+          problem.
+        </p>
+        <p class="lead">
+          We also will not sell you more hours than the situation calls for. If a phone call tells
+          us that what your family really needs is two mornings a week and a conversation with an
+          elder law attorney, that is what we will say.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 10. PAGE CTA ===== -->
+  <section id="cta" class="band band--cool" data-reveal>
+    <div class="band__inner">
+      <div class="section-header cta__header">
+        <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+          Not sure what your family needs?
+        </Heading>
+        <p class="lead">
+          That is the most common place people start. Tell us what is going on and we will help you
+          sort out what would actually help, even if that turns out to be less care than you
+          expected. The conversation is free and there is nothing to sign.
+        </p>
+        <div class="btn-wrapper btn-wrapper--center">
+          <Links variant="primary" href="/#contact" classes="lg">Request a Free Consultation</Links>
+          <Links variant="outline" href={telHref}>Call {baseData.phone}</Links>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .intro {
+    &__header {
+      --gap: 1.125rem;
+      --mb: 2.5rem;
+      /* rem, not ch. `ch` on this container resolves against the container's
+         own font-size (~17.6px), not the h1's ~62px, so a "24ch" measure came
+         out near 200px and broke the headline into five words-per-line. Cap
+         the box in rem and let the display type wrap inside it. */
+      --w: 46rem;
+    }
+
+    &__body {
+      --gap: 1.25rem;
+      max-width: 68ch;
+      margin-inline: auto;
+    }
+  }
+
+  .scheduling {
+    &__body {
+      --gap: 1.25rem;
+    }
+  }
+
+  .scope {
+    display: flex;
+    flex-direction: column;
+    /* Centres the two children as boxes — the panel matches .pro's 78rem on
+       the homepage, but the prose keeps a readable measure, so without this
+       the text stranded against the left edge of a very wide white plane.
+       The paragraphs themselves stay left-aligned; only the block is centred. */
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding: 3.5rem;
+    background: var(--qhc-surface-raised);
+    border: 1px solid var(--qhc-hairline);
+    border-radius: var(--qhc-radius-lg);
+
+    &__body {
+      --gap: 1.125rem;
+      max-width: 68ch;
+    }
+
+    @media (max-width: 990px) {
+      padding: 2.5rem 2rem;
+    }
+
+    @media (max-width: 682px) {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  .cta {
+    &__header {
+      --gap: 1.25rem;
+      --mb: 0;
+      --w: 60ch;
+    }
+  }
+</style>

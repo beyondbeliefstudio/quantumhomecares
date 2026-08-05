@@ -4,7 +4,7 @@ import Analytics from "@/components/Analytics.astro";
 import AhrefsAnalytics from "@/components/AhrefsAnalytics.astro";
 
 // DATA
-import { baseData, telHref } from "@/data/siteData";
+import { baseData, telHref, schemaIds } from "@/data/siteData";
 
 // PROPS
 /**
@@ -29,8 +29,7 @@ const ogUrl = Astro.url.toString();
 // Stable @ids so the business and the founder can point at each other, and so
 // page-level nodes can attach to the business rather than redeclaring it.
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "";
-const businessId = `${siteUrl}/#business`;
-const founderId = `${siteUrl}/#founder`;
+const { business: businessId, founder: founderId } = schemaIds(Astro.site);
 
 const business = {
   "@type": ["LocalBusiness", "HomeHealthCareService"],

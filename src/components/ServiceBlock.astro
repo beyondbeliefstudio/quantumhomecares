@@ -1,0 +1,186 @@
+---
+/**
+ * One service on /services: prose on the left, its "what this includes"
+ * checklist on the right.
+ *
+ * Six of these run back to back, so alternating blocks sit on a cool wash —
+ * the rhythm has to come from the surface, because flipping the columns would
+ * mean the reader hunts for where the prose restarts each time.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+
+// TYPES
+import type { ServiceDetail } from "@/data/servicesData";
+
+interface Props {
+  service: ServiceDetail;
+  /** Every other block, to break up six in a row. */
+  alt?: boolean;
+}
+
+const { service, alt = false } = Astro.props;
+---
+
+<section id={service.id} class:list={["svc", alt && "svc--alt"]} data-reveal>
+  <div class="svc__inner">
+    <div class="split split--top split--gap-lg">
+      <div class="stack svc__copy">
+        <span class="icon-circle">
+          <Icon name={service.icon} aria-hidden="true" />
+        </span>
+
+        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+          {service.title}
+        </Heading>
+
+        <p class="svc__lead">{service.lead}</p>
+
+        {service.body.map(paragraph => <p>{paragraph}</p>)}
+
+        {
+          service.definitions && (
+            <dl class="svc__defs">
+              {service.definitions.map(def => (
+                <div class="svc__def">
+                  {/* The term runs into its own sentence — "Awake overnight
+                      means…" — so dt and dd sit inline rather than stacked. */}
+                  <dt>{def.term}</dt>
+                  <dd>{def.copy}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+
+        {service.bodyAfter?.map(paragraph => <p>{paragraph}</p>)}
+      </div>
+
+      <div class="svc__includes">
+        <span class="topic">What this includes</span>
+        <ul class="svc__list">
+          {
+            service.includes.map(item => (
+              <li class="svc__item">
+                <Icon name="check" class="svc__check" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .svc {
+    padding-block: var(--qhc-section-gap);
+
+    /* Full-bleed wash. The hairlines are the cool variant so the seam reads as
+       part of the blue plane rather than a grey rule dropped on top of it. */
+    &--alt {
+      background: var(--qhc-surface-cool);
+      border-top: 1px solid var(--qhc-hairline-cool);
+      border-bottom: 1px solid var(--qhc-hairline-cool);
+    }
+
+    &__inner {
+      max-width: var(--qhc-page-max);
+      margin-inline: auto;
+      padding-inline: var(--qhc-gutter);
+    }
+
+    &__copy {
+      --gap: 1.25rem;
+      max-width: 60ch;
+    }
+
+    /* Sits between the h2 and the body: navy and a step up in size, so the
+       one-line reason lands before the reader commits to four paragraphs. */
+    &__lead {
+      color: var(--qhc-navy-900);
+      font-size: var(--qhc-size-body-m);
+      font-weight: 500;
+      line-height: 1.55;
+    }
+
+    &__defs {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-left: 1.125rem;
+      border-left: 2px solid var(--qhc-navy-300);
+    }
+
+    &__def {
+      font-size: var(--qhc-size-body-s);
+      line-height: 1.6;
+      color: var(--qhc-ink-700);
+
+      dt {
+        display: inline;
+        color: var(--qhc-navy-900);
+        font-weight: 600;
+      }
+
+      /* Cancels the UA margin so the definition continues the term's sentence */
+      dd {
+        display: inline;
+        margin: 0;
+      }
+    }
+
+    &__includes {
+      display: flex;
+      flex-direction: column;
+      gap: 1.125rem;
+      padding: 1.875rem 1.75rem 2rem;
+      background: var(--qhc-surface-raised);
+      border: 1px solid var(--qhc-hairline);
+      border-radius: var(--qhc-radius);
+
+      /* The prose column is much taller than this list, so on desktop the card
+         rides along instead of stranding a screen of whitespace beside
+         paragraph four. Falls back to static wherever position: sticky is not
+         supported, which is the layout below anyway. */
+      position: sticky;
+      top: 8.5rem;
+
+      @media (max-width: 1078px) {
+        position: static;
+      }
+
+      @media (max-width: 616px) {
+        padding: 1.5rem 1.375rem 1.625rem;
+      }
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    &__item {
+      display: grid;
+      grid-template-columns: 1.125rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      font-size: var(--qhc-size-label);
+      line-height: 1.5;
+      color: var(--qhc-ink-700);
+    }
+
+    &__check {
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-top: 0.1875rem;
+      color: var(--qhc-navy-700);
+    }
+  }
+</style>

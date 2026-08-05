@@ -34,6 +34,20 @@ export const baseData = {
   },
 };
 
+/**
+ * Stable @id fragments for the JSON-LD graph.
+ *
+ * BaseHead emits the business and founder nodes once. Page-level nodes — the
+ * homepage's FAQPage, the Service nodes on /services — reference the business
+ * by @id rather than redeclaring it, so the whole site describes one entity
+ * instead of a new business per page. Derived from `site` in astro.config.mjs
+ * so the URL is never written twice.
+ */
+export const schemaIds = (site: URL | undefined) => {
+  const base = site?.toString().replace(/\/$/, "") ?? "";
+  return { business: `${base}/#business`, founder: `${base}/#founder` };
+};
+
 /** `tel:` href with every non-digit stripped, so markup never has to do it. */
 export const telHref = `tel:${baseData.phone.replace(/\D/g, "")}`;
 
