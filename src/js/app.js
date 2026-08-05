@@ -15,7 +15,7 @@ function init() {
   // Isolated so one broken feature cannot take the rest of the page with it.
   // The reveal styles hide every section until initScrollReveal runs, so a
   // throw earlier in this list used to leave the whole page at opacity 0.
-  [initStickyHeader, initMobileMenu, initScrollReveal].forEach(feature => {
+  [initStickyHeader, initMobileMenu, initScrollReveal, initScrollSpy].forEach(feature => {
     try {
       feature();
     } catch (error) {
@@ -85,6 +85,44 @@ function initMobileMenu() {
   window.matchMedia("(min-width: 1123px)").addEventListener("change", e => {
     if (e.matches) setOpen(false);
   });
+}
+
+// ==========================================
+// SCROLL SPY
+// Any [data-subnav] rail gets its in-page anchors tracked: the link whose
+// section currently crosses the reading band is marked .is-active, and the
+// rail scrolls sideways to keep that pill in view. Pages without a rail
+// bail out on the first line.
+// ==========================================
+function initScrollSpy() {
+  const nav = document.querySelector("[data-subnav]");
+  if (!nav) return;
+
+  const links = [...nav.querySelectorAll('a[href^="#"]')];
+  const byRef = new Map();
+  links.forEach(link => {
+    const section = document.getElementById(link.hash.slice(1));
+    if (section) byRef.set(section, link);
+  });
+  if (!byRef.size) return;
+
+  const setActive = active => {
+    links.forEach(link => link.classList.toggle("is-active", link === active));
+    // Keep the active pill visible when the rail overflows on small screens
+    active?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+  };
+
+  // The "reading band": a section is current while it crosses the zone just
+  // below the header. Top/bottom margins shrink the viewport to that band.
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(byRef.get(entry.target));
+      });
+    },
+    { rootMargin: "-25% 0px -65% 0px" }
+  );
+  byRef.forEach((_, section) => observer.observe(section));
 }
 
 // ==========================================

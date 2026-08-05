@@ -36,6 +36,8 @@ export interface ServiceDetail {
   /** Filename in src/icons/, without the extension. */
   icon: string;
   title: string;
+  /** One or two words for the sticky sub-nav rail. */
+  shortTitle: string;
   photo: ImageMetadata;
   photoAlt: string;
   /** One line under the heading — the reason a family cares about this. */
@@ -53,6 +55,7 @@ export const serviceDetails: ServiceDetail[] = [
     id: "advocacy",
     icon: "care-plan",
     title: "Care Planning and Advocacy",
+    shortTitle: "Advocacy",
     photo: photoAdvocacy,
     photoAlt: "A caregiver checking a senior man's blood pressure at home and recording the reading",
     lead: "This is the part most agencies do not do at all, and it is the reason many families call us in the first place.",
@@ -77,6 +80,7 @@ export const serviceDetails: ServiceDetail[] = [
     id: "daily-living",
     icon: "daily-living",
     title: "Daily Living Support",
+    shortTitle: "Daily Living",
     photo: photoDailyLiving,
     photoAlt: "A caregiver's hands gently holding a senior's hand",
     lead: "The everyday things that get harder, handled in a way that protects your loved one's dignity.",
@@ -100,6 +104,7 @@ export const serviceDetails: ServiceDetail[] = [
     id: "nutrition",
     icon: "meals",
     title: "Meals, Nutrition, and Wellness",
+    shortTitle: "Nutrition",
     photo: photoNutrition,
     photoAlt: "A caregiver sharing time with seniors around a table at home",
     lead: "Nutrition is where decline usually starts, and it is one of the easiest things to catch early.",
@@ -123,6 +128,7 @@ export const serviceDetails: ServiceDetail[] = [
     id: "companionship",
     icon: "transportation",
     title: "Transportation and Companionship",
+    shortTitle: "Companionship",
     photo: photoCompanionship,
     photoAlt: "Two senior men playing chess together outdoors",
     lead: "Isolation is one of the biggest risks to senior health, and one of the easiest to solve.",
@@ -145,6 +151,7 @@ export const serviceDetails: ServiceDetail[] = [
     id: "respite",
     icon: "respite",
     title: "Respite and Specialized Care",
+    shortTitle: "Respite",
     photo: photoRespite,
     photoAlt: "A caregiver guiding a senior man through gentle stretching exercises at home",
     lead: "Caring for someone else should not cost you your own health.",
@@ -167,6 +174,7 @@ export const serviceDetails: ServiceDetail[] = [
     id: "overnight",
     icon: "overnight",
     title: "Overnight and Live-In Care",
+    shortTitle: "Overnight",
     photo: photoOvernight,
     photoAlt: "Two caregivers settling a senior man comfortably into bed",
     lead: "For families worried about the hours nobody is watching.",

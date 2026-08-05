@@ -5,6 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
 import InternalHero from "@/components/InternalHero.astro";
+import ServicesSubnav from "@/components/ServicesSubnav.astro";
 import ServiceBlock from "@/components/ServiceBlock.astro";
 import PhotoStrip from "@/components/PhotoStrip.astro";
 
@@ -69,6 +70,8 @@ const serviceSchema = serviceDetails.map(service => ({
       things shift. Nothing here is locked in.
     </p>
   </InternalHero>
+
+  <ServicesSubnav />
 
   <!-- ===== 2–7. THE SIX SERVICES ===== -->
   {

@@ -1,0 +1,100 @@
+---
+/**
+ * Sticky pill rail for /services — six anchors, one per chapter card, riding
+ * just below the site header on a glass bar. app.js's scrollspy
+ * (initScrollSpy) marks whichever service is currently on screen.
+ *
+ * Overlaps the hero's bottom seam by half its height, so the rail reads as a
+ * fixture of the page rather than the first line of content.
+ */
+
+// DATA
+import { serviceDetails } from "@/data/servicesData";
+---
+
+<nav class="subnav" aria-label="Services on this page" data-subnav>
+  <div class="subnav__rail">
+    {
+      serviceDetails.map((service, i) => (
+        <a href={`#${service.id}`} class="subnav__pill">
+          <span class="subnav__num">{String(i + 1).padStart(2, "0")}</span>
+          {service.shortTitle}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<style lang="scss">
+  .subnav {
+    /* Below the header (z 40), above everything on the page */
+    position: sticky;
+    top: calc(var(--qhc-header-h) + 0.75rem);
+    z-index: 30;
+    display: flex;
+    justify-content: center;
+    margin-top: -1.625rem;
+    padding-inline: var(--qhc-gutter);
+    pointer-events: none; /* the bar, not the whole strip, takes clicks */
+  }
+
+  .subnav__rail {
+    display: flex;
+    gap: 0.25rem;
+    max-width: 100%;
+    padding: 0.375rem;
+    overflow-x: auto;
+    background: var(--qhc-glass-light);
+    backdrop-filter: var(--qhc-glass-blur);
+    -webkit-backdrop-filter: var(--qhc-glass-blur);
+    border: var(--qhc-glass-edge);
+    border-radius: var(--qhc-radius-pill);
+    pointer-events: auto;
+    /* Rail scrolls sideways on narrow screens; no scrollbar chrome */
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .subnav__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4375rem;
+    flex: 0 0 auto;
+    padding: 0.5rem 1rem;
+    border-radius: var(--qhc-radius-pill);
+    color: var(--qhc-navy-800);
+    font-size: var(--qhc-size-meta);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background var(--qhc-duration-base) var(--qhc-ease-out),
+      color var(--qhc-duration-base) var(--qhc-ease-out);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--qhc-navy-100);
+      color: var(--qhc-navy-900);
+    }
+  }
+
+  .subnav__num {
+    font-family: var(--qhc-font-display);
+    font-size: 0.9375rem;
+    line-height: 1;
+    color: var(--qhc-navy-700);
+    transition: color var(--qhc-duration-base) var(--qhc-ease-out);
+  }
+
+  /* Scrollspy state — set by initScrollSpy in app.js */
+  .subnav__pill.is-active {
+    background: var(--qhc-navy-700);
+    color: var(--qhc-white);
+
+    .subnav__num {
+      color: var(--qhc-navy-200);
+    }
+  }
+</style>

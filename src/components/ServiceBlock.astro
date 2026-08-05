@@ -1,16 +1,17 @@
 ---
 /**
- * One service on /services, in three registers:
+ * One service on /services, framed as a chapter card:
  *
- *   1. A full-bleed 50/50 split — the photo owns one half of the viewport,
- *      edge to edge and full height, rounded only toward the centre seam so
- *      the brand's softness reads at the meeting point. Text fills the other
- *      half. Sides alternate per service (`flip`), which is where the page's
- *      rhythm comes from now.
- *   2. An oversized Gambetta numeral (01–06) opens the text — the editorial
- *      marker that carries the sequence instead of another icon circle.
- *   3. "What this includes" is its own band below the pair: full-width cool
- *      wash, label left, items in a fluid grid.
+ *   · The whole service is one bordered, heavily-rounded plate — photo fills
+ *     one half inside the frame, text the other, sides alternating per
+ *     service (`flip`).
+ *   · The sequence numeral rides the photo on a glass chip — the one place
+ *     glass is honest, over photography.
+ *   · The photo drifts a few percent as the card crosses the viewport
+ *     (CSS scroll-driven animation; browsers without animation-timeline, and
+ *     anyone preferring reduced motion, get a still image).
+ *   · "What this includes" is the card's footer strip: a cool wash with each
+ *     item as a check chip, staggering in once the section reveals.
  */
 
 // COMPONENTS
@@ -25,9 +26,9 @@ import type { ServiceDetail } from "@/data/servicesData";
 
 interface Props {
   service: ServiceDetail;
-  /** 1-based position in the sequence — rendered as the block's numeral. */
+  /** 1-based position in the sequence — rendered on the glass chip. */
   number: number;
-  /** Every other block mirrors, photo on the right. */
+  /** Every other card mirrors, photo on the right. */
   flip?: boolean;
 }
 
@@ -36,55 +37,54 @@ const numeral = String(number).padStart(2, "0");
 ---
 
 <section id={service.id} class:list={["svc", flip && "svc--flip"]} data-reveal>
-  <div class="svc__split">
-    <div class="svc__media">
-      <Image
-        src={service.photo}
-        alt={service.photoAlt}
-        widths={[800, 1400, 2000]}
-        sizes="(max-width: 1078px) 100vw, 50vw"
-      />
-    </div>
+  <article class="svc__card">
+    <div class="svc__split">
+      <div class="svc__media">
+        <Image
+          src={service.photo}
+          alt={service.photoAlt}
+          widths={[800, 1400, 2000]}
+          sizes="(max-width: 1078px) 92vw, 46vw"
+        />
+        <span class="svc__numeral" aria-hidden="true">{numeral}<em>/ 06</em></span>
+      </div>
 
-    <div class="svc__panel">
-      <div class="stack svc__copy">
-        <span class="svc__numeral" aria-hidden="true">{numeral}</span>
+      <div class="svc__panel">
+        <div class="stack svc__copy">
+          <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+            {service.title}
+          </Heading>
 
-        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-          {service.title}
-        </Heading>
+          <p class="svc__lead">{service.lead}</p>
 
-        <p class="svc__lead">{service.lead}</p>
+          {service.body.map(paragraph => <p>{paragraph}</p>)}
 
-        {service.body.map(paragraph => <p>{paragraph}</p>)}
+          {
+            service.definitions && (
+              <dl class="svc__defs">
+                {service.definitions.map(def => (
+                  <div class="svc__def">
+                    {/* The term runs into its own sentence — "Awake overnight
+                        means…" — so dt and dd sit inline rather than stacked. */}
+                    <dt>{def.term}</dt>
+                    <dd>{def.copy}</dd>
+                  </div>
+                ))}
+              </dl>
+            )
+          }
 
-        {
-          service.definitions && (
-            <dl class="svc__defs">
-              {service.definitions.map(def => (
-                <div class="svc__def">
-                  {/* The term runs into its own sentence — "Awake overnight
-                      means…" — so dt and dd sit inline rather than stacked. */}
-                  <dt>{def.term}</dt>
-                  <dd>{def.copy}</dd>
-                </div>
-              ))}
-            </dl>
-          )
-        }
-
-        {service.bodyAfter?.map(paragraph => <p>{paragraph}</p>)}
+          {service.bodyAfter?.map(paragraph => <p>{paragraph}</p>)}
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="svc__includes">
-    <div class="svc__includes-inner">
+    <div class="svc__footer">
       <span class="topic topic--accent">What this includes</span>
-      <ul class="svc__list">
+      <ul class="svc__chips">
         {
-          service.includes.map(item => (
-            <li class="svc__item">
+          service.includes.map((item, i) => (
+            <li class="svc__chip" style={`--i: ${i}`}>
               <Icon name="check" class="svc__check" aria-hidden="true" />
               <span>{item}</span>
             </li>
@@ -92,27 +92,36 @@ const numeral = String(number).padStart(2, "0");
         }
       </ul>
     </div>
-  </div>
+  </article>
 </section>
 
 <style lang="scss">
   .svc {
-    margin-top: var(--qhc-section-gap);
+    max-width: var(--qhc-page-max);
+    margin-inline: auto;
+    margin-top: clamp(3rem, 6.6vw, 5rem);
+    padding-inline: var(--qhc-gutter);
+    /* The sticky header plus the services sub-nav rail — anchor jumps from
+       the rail have to clear both. */
+    scroll-margin-top: 12rem;
+
+    &__card {
+      overflow: hidden;
+      background: var(--qhc-surface-raised);
+      border: 1px solid var(--qhc-hairline);
+      border-radius: var(--qhc-radius-lg);
+    }
 
     &__split {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: stretch;
-      min-height: 34rem;
+      min-height: 30rem;
     }
 
-    /* The photo half. Flush to the viewport edge; the two corners facing the
-       centre seam take the large radius, so the softness shows exactly where
-       image meets text and nowhere else. */
     &__media {
       position: relative;
       overflow: hidden;
-      border-radius: 0 var(--qhc-radius-lg) var(--qhc-radius-lg) 0;
 
       img {
         position: absolute;
@@ -123,10 +132,54 @@ const numeral = String(number).padStart(2, "0");
       }
     }
 
-    /* Mirrored blocks: photo to column 2, radius to the other seam. */
     &--flip &__media {
       order: 2;
-      border-radius: var(--qhc-radius-lg) 0 0 var(--qhc-radius-lg);
+    }
+
+    /*
+      Scroll drift. The image is overscaled ~12% and slides through that
+      headroom as the card crosses the viewport, so the crop never runs out
+      of pixels. Scroll-driven animations ignore duration, so the global
+      reduced-motion duration override cannot stop this one — hence the
+      explicit no-preference gate on top of @supports.
+    */
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) {
+        &__media img {
+          scale: 1.12;
+          animation: svc-drift linear both;
+          animation-timeline: view();
+        }
+      }
+    }
+
+    /* Glass over photography — the one honest home for the effect */
+    &__numeral {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.375rem;
+      padding: 0.5rem 1rem 0.4375rem;
+      background: var(--qhc-glass-light);
+      backdrop-filter: var(--qhc-glass-blur);
+      -webkit-backdrop-filter: var(--qhc-glass-blur);
+      border: var(--qhc-glass-edge);
+      border-radius: var(--qhc-radius-pill);
+      font-family: var(--qhc-font-display);
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--qhc-navy-900);
+
+      em {
+        font-family: var(--qhc-font-text);
+        font-size: var(--qhc-size-eyebrow);
+        font-style: normal;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--qhc-slate-600);
+      }
     }
 
     &__panel {
@@ -134,24 +187,12 @@ const numeral = String(number).padStart(2, "0");
       align-items: center;
     }
 
-    /* Centred in the half, capped at half the page grid, so the text sits
-       where it would in a .section split at page-max. */
     &__copy {
       --gap: 1.25rem;
       width: 100%;
-      max-width: calc(var(--qhc-page-max) / 2);
+      max-width: 58ch;
       margin-inline: auto;
-      padding: 3.5rem var(--qhc-gutter);
-    }
-
-    /* The sequence marker. Display face, hairline weight, tint — present
-       enough to structure six blocks, quiet enough not to fight the H2. */
-    &__numeral {
-      font-family: var(--qhc-font-display);
-      font-size: clamp(3.25rem, 4.4vw, 4.5rem);
-      font-weight: 300;
-      line-height: 1;
-      color: var(--qhc-navy-300);
+      padding: clamp(2.5rem, 4.4vw, 4rem) clamp(1.75rem, 3.3vw, 3.25rem);
     }
 
     /* Sits between the h2 and the body: navy and a step up in size, so the
@@ -189,71 +230,69 @@ const numeral = String(number).padStart(2, "0");
       }
     }
 
-    /* ---- The includes band ---- */
-    &__includes {
-      margin-top: 3rem;
-      background: var(--qhc-surface-cool);
+    /* ---- Footer strip: the includes, as chips ---- */
+    &__footer {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.625rem clamp(1.75rem, 3.3vw, 3.25rem) 1.875rem;
+      background: var(--qhc-navy-050);
       border-top: 1px solid var(--qhc-hairline-cool);
-      border-bottom: 1px solid var(--qhc-hairline-cool);
     }
 
-    &__includes-inner {
-      display: grid;
-      grid-template-columns: minmax(10rem, 13rem) 1fr;
-      gap: 1.5rem 3rem;
-      align-items: start;
-      max-width: var(--qhc-page-max);
-      margin-inline: auto;
-      padding: 2.5rem var(--qhc-gutter);
-
-      /* Rides just below the sticky header once the list is long enough to
-         scroll past, so the label never detaches from its items. */
-      .topic {
-        padding-top: 0.25rem;
-      }
+    &__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
     }
 
-    &__list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
-      gap: 0.875rem 2.5rem;
-    }
-
-    &__item {
-      display: grid;
-      grid-template-columns: 1.125rem 1fr;
-      gap: 0.75rem;
-      align-items: start;
-      font-size: var(--qhc-size-label);
-      line-height: 1.5;
+    &__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5625rem 1rem 0.5625rem 0.875rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-navy-200);
+      border-radius: var(--qhc-radius-pill);
+      font-size: var(--qhc-size-meta);
+      line-height: 1.35;
       color: var(--qhc-ink-700);
+      /* Staggered entrance — each chip trails the reveal by its index */
+      transition:
+        opacity 500ms var(--qhc-ease-out),
+        transform 500ms var(--qhc-ease-out);
+      transition-delay: calc(var(--i) * 55ms);
     }
 
     &__check {
-      width: 1.125rem;
-      height: 1.125rem;
-      margin-top: 0.1875rem;
+      flex: 0 0 auto;
+      width: 1rem;
+      height: 1rem;
       color: var(--qhc-navy-700);
     }
 
     /* ---- Stacked ---- */
     @media (max-width: 1078px) {
+      scroll-margin-top: 10rem;
+
       &__split {
         grid-template-columns: minmax(0, 1fr);
         min-height: 0;
       }
 
-      /* Full-bleed banner above the text — the aspect box replaces the
-         stretched half, and the seam radius goes with it. */
+      /* Banner above the text — aspect box instead of a stretched half */
       &__media {
         order: 0;
         aspect-ratio: 16 / 10;
-        border-radius: 0;
+
+        img {
+          position: static;
+          inset: auto;
+        }
       }
 
       &--flip &__media {
         order: 0;
-        border-radius: 0;
       }
 
       &__panel {
@@ -262,22 +301,35 @@ const numeral = String(number).padStart(2, "0");
 
       &__copy {
         max-width: 100%;
-        padding: 2.5rem var(--qhc-gutter) 0;
       }
+    }
 
-      &__numeral {
-        font-size: 3rem;
-      }
+    @media (max-width: 616px) {
+      /* Card frame to the screen edges on phones — the gutter inside the
+         card already provides the breathing room, and a frame within a
+         gutter within a bezel is one border too many. */
+      padding-inline: 0.625rem;
 
-      &__includes {
-        margin-top: 2.5rem;
+      &__media {
+        aspect-ratio: 4 / 3;
       }
+    }
+  }
 
-      &__includes-inner {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1.25rem;
-        padding-block: 2rem;
-      }
+  /* Chips hold until the section's own reveal fires, then cascade. The
+     hiding is gated on .js-reveal exactly like the global reveal styles, so
+     no-JS readers always see the chips. */
+  :global(.js-reveal) .svc:not(.is-visible) .svc__chip {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  @keyframes svc-drift {
+    from {
+      transform: translateY(-3.5%);
+    }
+    to {
+      transform: translateY(3.5%);
     }
   }
 </style>
