@@ -113,33 +113,10 @@ const serviceSchema = serviceDetails.map(service => ({
     </div>
   </section>
 
-  <!-- ===== 9. HONEST SCOPE ===== -->
-  <section id="scope" class="section" data-reveal>
-    <!-- Framed rather than open on the page: this is the one section that says
-         what the company will not sell you, and the panel keeps it from
-         reading as a footnote to the services above it. -->
-    <div class="scope">
-      <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
-        What we do not do
-      </Heading>
-
-      <div class="stack scope__body">
-        <p class="lead">Being clear about this saves everyone time.</p>
-        <p class="lead">
-          We are not a skilled nursing agency. We do not provide wound care, injections, IV therapy,
-          or anything that requires a licensed clinician in the home. If your loved one needs that
-          level of care, tell us during the consultation and we will point you toward the right
-          provider. Many families end up using both, and we coordinate alongside them without a
-          problem.
-        </p>
-        <p class="lead">
-          We also will not sell you more hours than the situation calls for. If a phone call tells
-          us that what your family really needs is two mornings a week and a conversation with an
-          elder law attorney, that is what we will say.
-        </p>
-      </div>
-    </div>
-  </section>
+  <!-- ===== 9. "What we do not do" was cut in design review (2026-08-05) —
+       the skilled-nursing question in 02-services.md's accuracy note was
+       still open, and the page reads fine without it. Restore from git
+       history if the client wants the honest-scope section back. -->
 
   <!-- ===== 10. PAGE CTA ===== is the sitewide contact band, retitled via the
        contactTitle / contactLead props on Layout above. The 02-services.md CTA
@@ -151,36 +128,6 @@ const serviceSchema = serviceDetails.map(service => ({
   .scheduling {
     &__body {
       --gap: 1.25rem;
-    }
-  }
-
-  .scope {
-    display: flex;
-    flex-direction: column;
-    /* Centres the two children as boxes — the panel matches .pro's 78rem on
-       the homepage, but the prose keeps a readable measure, so without this
-       the text stranded against the left edge of a very wide white plane.
-       The paragraphs themselves stay left-aligned; only the block is centred. */
-    align-items: center;
-    gap: 1.5rem;
-    max-width: 78rem;
-    margin-inline: auto;
-    padding: 3.5rem;
-    background: var(--qhc-surface-raised);
-    border: 1px solid var(--qhc-hairline);
-    border-radius: var(--qhc-radius-lg);
-
-    &__body {
-      --gap: 1.125rem;
-      max-width: 68ch;
-    }
-
-    @media (max-width: 990px) {
-      padding: 2.5rem 2rem;
-    }
-
-    @media (max-width: 682px) {
-      padding: 2rem 1.5rem;
     }
   }
 </style>

@@ -6,8 +6,9 @@
  *   · Caregivers give medication REMINDERS. They never administer medication
  *     and never make clinical decisions.
  *   · This is not a skilled nursing agency — no wound care, injections, or
- *     IV therapy. The "What we do not do" section on the page says so plainly
- *     and is load-bearing for trust; do not soften it.
+ *     IV therapy. (The "What we do not do" section that said so on the page
+ *     was cut in design review; the constraint still holds for any copy
+ *     written here — nothing may imply clinical services.)
  *   · Six services. The homepage shows four of them, collapsed — see
  *     `services` in homeData.ts, and keep the two lists from contradicting.
  *
