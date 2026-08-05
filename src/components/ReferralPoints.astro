@@ -1,0 +1,67 @@
+---
+/**
+ * The four referral selling points, as ruled columns.
+ *
+ * Lifted out of ForProfessionals.astro when the homepage was condensed — the
+ * homepage now carries a one-paragraph routing signal and these details belong
+ * to /for-professionals. Renders the grid only; the page supplies the wrapper.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// DATA
+import { referralPoints } from "@/data/homeData";
+---
+
+<!-- Ruled columns, credential-band rhythm: dividers between items, never stranded on a wrap -->
+<div class="points">
+  {
+    referralPoints.map(point => (
+      <div class="stack points__item">
+        <Heading tag="h3" size="xxs" fontFamily="secondary" weight="fw600" marginBottom="none">
+          {point.title}
+        </Heading>
+        <p>{point.copy}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  .points {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem 0;
+
+    &__item {
+      --gap: 0.5rem;
+      padding: 0 1.625rem;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      & + & {
+        border-left: 1px solid var(--qhc-hairline-cool);
+      }
+    }
+
+    @media (max-width: 1298px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.875rem 2.75rem;
+
+      &__item {
+        padding: 0;
+
+        & + & {
+          border-left: 0;
+        }
+      }
+    }
+
+    @media (max-width: 682px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,31 +1,25 @@
 export interface NavItem {
   title: string;
   href: string;
-  /** Hidden from the desktop header bar (too many links crowded it) but still
-   *  reachable via the mobile drawer and the footer. */
-  headerHidden?: boolean;
-  /** Shown in the mobile drawer only — keeps the desktop bar from overflowing. */
-  mobileOnly?: boolean;
 }
 
 /**
- * Single-page site: every href is an in-page anchor.
- * The drawer shows all seven; the footer shows six (everything but the
- * drawer-only "In the News"); the desktop bar shows four — see below.
+ * Multi-page site. Every entry is a real route — the homepage's own sections
+ * are reached by scrolling, not by a nav link, so nothing here is an anchor.
+ *
+ * The header bar, the mobile drawer, and the footer all render this same list.
+ * The earlier `headerHidden` / `mobileOnly` flags are gone: they existed to keep
+ * seven anchor links from overflowing the desktop bar, and four page links fit.
  */
 export const navData: NavItem[] = [
-  { title: "Services", href: "#services" },
-  { title: "Our Approach", href: "#approach" },
-  { title: "Who We Help", href: "#who", headerHidden: true },
-  { title: "How It Works", href: "#how" },
-  { title: "For Professionals", href: "#professionals", headerHidden: true },
-  { title: "About", href: "#about" },
-  { title: "In the News", href: "#news", mobileOnly: true },
+  { title: "Services", href: "/services" },
+  { title: "Our Approach", href: "/our-approach" },
+  { title: "For Professionals", href: "/for-professionals" },
+  { title: "Resources", href: "/resources" },
 ];
 
-/** Footer's Explore column — everything except the drawer-only entry. */
-export const footerNav = navData.filter(i => !i.mobileOnly);
-
-/** Desktop header bar — the shorter set; the two dropped links still live in
- *  the drawer and footer above. */
-export const desktopNav = navData.filter(i => !i.mobileOnly && !i.headerHidden);
+/**
+ * The contact block lives on the homepage, so every CTA has to be rooted —
+ * a bare "#contact" would look for the section on whatever page it was clicked.
+ */
+export const contactHref = "/#contact";

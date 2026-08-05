@@ -1,9 +1,19 @@
 ---
+/**
+ * Homepage B2B routing signal. Condensed per buildout-notes/01-home.md — the
+ * four detail cards moved to /for-professionals (see ReferralPoints.astro).
+ *
+ * Tone note from the content brief: this addresses a different audience than
+ * the rest of the page and should read efficient rather than warm. It is a
+ * routing signal, not a pitch — which is why it stays one paragraph.
+ */
+
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
 
-// DATA
-import { referralPoints } from "@/data/homeData";
+// HELPERS
+import { Icon } from "astro-icon/components";
 ---
 
 <!--
@@ -17,20 +27,15 @@ import { referralPoints } from "@/data/homeData";
       <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
         A referral partner who closes the loop.
       </Heading>
-    </div>
-
-    <!-- Ruled columns, credential-band rhythm: dividers between items, never stranded on a wrap -->
-    <div class="pro__points">
-      {
-        referralPoints.map(point => (
-          <div class="stack pro__point">
-            <Heading tag="h3" size="xxs" fontFamily="secondary" weight="fw600" marginBottom="none">
-              {point.title}
-            </Heading>
-            <p>{point.copy}</p>
-          </div>
-        ))
-      }
+      <p class="lead pro__lead">
+        Discharge planners, social workers, case managers, and elder law attorneys work with us
+        because referrals get acknowledged the same business day and homes get staffed within days,
+        not weeks.
+      </p>
+      <Links variant="inline" href="/for-professionals">
+        See how referrals work
+        <Icon name="arrow-right" aria-hidden="true" />
+      </Links>
     </div>
   </div>
 </section>
@@ -40,16 +45,13 @@ import { referralPoints } from "@/data/homeData";
     width: 100%;
     max-width: 78rem;
     margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2.75rem;
     padding: 3.5rem;
     background: var(--qhc-navy-050);
     border: 1px solid var(--qhc-navy-300);
     border-radius: var(--qhc-radius-lg);
 
     /*
-      Centered intro: eyebrow + heading.
+      Centered intro: eyebrow + heading + lead + link.
 
       align-items: center is doing the real work. .stack only sets the column
       direction, so align-items defaults to stretch — and .eyebrow is
@@ -63,40 +65,8 @@ import { referralPoints } from "@/data/homeData";
       text-align: center;
     }
 
-    &__points {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 2rem 0;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--qhc-hairline-cool);
-    }
-
-    &__point {
-      --gap: 0.5rem;
-      padding: 0 1.625rem;
-
-      &:first-child {
-        padding-left: 0;
-      }
-
-      & + & {
-        border-left: 1px solid var(--qhc-hairline-cool);
-      }
-    }
-
-    @media (max-width: 1298px) {
-      &__points {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.875rem 2.75rem;
-      }
-
-      &__point {
-        padding: 0;
-
-        & + & {
-          border-left: 0;
-        }
-      }
+    &__lead {
+      --w: 62ch;
     }
 
     @media (max-width: 990px) {
@@ -105,10 +75,6 @@ import { referralPoints } from "@/data/homeData";
 
     @media (max-width: 682px) {
       padding: 2rem 1.5rem;
-
-      &__points {
-        grid-template-columns: minmax(0, 1fr);
-      }
     }
   }
 </style>

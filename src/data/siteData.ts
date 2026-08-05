@@ -4,6 +4,12 @@ export const baseData = {
   description:
     "In-home senior care across New Jersey. Quantum Home Cares pairs everyday support with hands-on medical advocacy so aging at home stays safe and dignified.",
   phone: "732-498-2960",
+  /**
+   * PENDING: buildout-notes/01-home.md calls for a domain email here. Swapping
+   * this one value updates the contact section, the footer, and the
+   * LocalBusiness schema together — nothing else hardcodes an address.
+   * The contact form's autoresponder is also blocked on it (needs DKIM).
+   */
   email: "quantumhomecares@yahoo.com",
 
   // Statewide in-home agency — no storefront address to publish.

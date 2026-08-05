@@ -1,296 +1,138 @@
 ---
+/**
+ * Homepage Approach. Condensed per buildout-notes/01-home.md: the "Most
+ * agencies vs. Quantum" table moved to /our-approach (see
+ * ApproachComparison.astro) and Marvalyn's founder block was folded in here,
+ * replacing the standalone About section.
+ */
+
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
 
 // HELPERS
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 // DATA
-import { comparison } from "@/data/homeData";
 import { baseData } from "@/data/siteData";
 
 // IMAGES
-import mark from "@/assets/brand/quantum-mark.png";
+import portrait from "@/assets/photos/marvalyn_1.jpeg";
 ---
 
 <section id="approach" class="section" data-reveal>
-  <div class="section-header approach__header">
-    <span class="eyebrow">Our Approach</span>
-    <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-      Most agencies send help. We <span class="underscore">show up and follow through</span>.
-    </Heading>
-    <p class="lead">
-      Large agencies run on clinical quotas and insurance billing. An aide arrives, hours get
-      logged, and your family is still the one on hold with the insurance company at four in the
-      afternoon. Here is the difference, line by line.
-    </p>
-  </div>
+  <div class="split split--top split--gap-lg">
+    <div class="stack approach__copy">
+      <span class="eyebrow">Our Approach</span>
 
-  <!--
-    One grid with alternating left/right cells — NOT two columns. Independent
-    columns drift out of alignment as soon as a line wraps.
-    This is the one place the unified card style deliberately does not apply.
-  -->
-  <div class="approach__table">
-    <div class="approach__cell approach__cell--them approach__cell--head">
-      <span class="approach__label">Most agencies</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Most agencies send help. We <span class="underscore">show up and follow through</span>.
+      </Heading>
+
+      <p class="lead">
+        Large agencies run on clinical quotas and insurance billing. An aide arrives, hours get
+        logged, and your family is still the one on hold with the insurance company at four in the
+        afternoon.
+      </p>
+      <p class="lead">
+        We build the care plan, attend the appointments, handle the follow-through, and stay in
+        contact before something goes wrong rather than after.
+      </p>
+
+      <p class="approach__closer">
+        Advocacy is not an add-on service here. It is the reason this company exists.
+      </p>
+
+      <Links variant="inline" href="/our-approach" classes="approach__link">
+        Read {baseData.owner.name.split(" ")[0]}'s story and how we work
+        <Icon name="arrow-right" aria-hidden="true" />
+      </Links>
     </div>
-    <div class="approach__cell approach__cell--us approach__cell--head">
-      <span class="approach__label approach__label--brand">
-        <Image src={mark} alt="" aria-hidden="true" height={68} class="approach__mark" />
-        {baseData.title}
-      </span>
+
+    <!-- Founder block: portrait with her story directly beneath it, so the two
+         read as one unit rather than a photo floating beside the body copy. -->
+    <div class="approach__founder">
+      <div class="plate plate--lg approach__plate">
+        <Image
+          src={portrait}
+          alt={`${baseData.owner.name}, founder of ${baseData.legalName}`}
+          widths={[500, 1000]}
+          sizes="(max-width: 1078px) 92vw, 38vw"
+        />
+      </div>
+
+      <div class="stack approach__bio">
+        <p>
+          {baseData.title} was founded by {baseData.owner.name} after more than 25 years in healthcare
+          advocacy and senior housing, alongside her own experience managing care for her parents.
+          She built the company she wishes her family had.
+        </p>
+        <p class="meta--lg approach__byline">
+          {baseData.owner.name}, {baseData.owner.role} · {baseData.legalName}
+        </p>
+      </div>
     </div>
-
-    {
-      comparison.map(row => (
-        <div class="approach__group">
-          {/* Card header on mobile only — on desktop the topic sits inside each cell */}
-          <span class="approach__group-topic">{row.topic}</span>
-
-          <div class="approach__cell approach__cell--them">
-            <div class="approach__row">
-              <Icon name="cross" class="approach__glyph approach__glyph--them" aria-hidden="true" />
-              <div>
-                <span class="topic approach__scope">{row.topic}</span>
-                <span class="topic approach__side">Most agencies</span>
-                <p class="approach__line">{row.them}</p>
-              </div>
-            </div>
-          </div>
-          <div class="approach__cell approach__cell--us">
-            <div class="approach__row">
-              <Icon name="check" class="approach__glyph approach__glyph--us" aria-hidden="true" />
-              <div>
-                <span class="topic topic--accent approach__scope">{row.topic}</span>
-                <span class="topic topic--accent approach__side">{baseData.title}</span>
-                <p class="approach__line approach__line--us">{row.us}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))
-    }
   </div>
-
-  <p class="approach__closer">
-    Advocacy is not an add-on service here. It is the reason this company exists.
-  </p>
 </section>
 
 <style lang="scss">
   .approach {
-    &__header {
-      --gap: 1.125rem;
-      --mb: 3.5rem;
+    &__copy {
+      --gap: 1.25rem;
+      max-width: 58ch;
     }
 
-    &__table {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: stretch;
-    }
-
-    /* The pair wrapper exists for the mobile card. On desktop it dissolves so
-       its two cells become direct items of the table grid — without this the
-       columns would nest and stop aligning across rows. */
-    &__group {
-      display: contents;
-    }
-
-    &__group-topic {
-      display: none;
-    }
-
-    /* Inside each cell: the topic on desktop, the side it belongs to on
-       mobile (where the card header already carries the topic). */
-    &__scope {
-      display: block;
-    }
-
-    &__side {
-      display: none;
-    }
-
-    &__cell {
-      background: var(--fill);
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-      border-right: 1px solid var(--line);
-      padding: 1.375rem 2rem;
-
-      &--them {
-        --line: var(--qhc-hairline);
-        --fill: var(--qhc-paper);
-        /* The us-panel's navy edge owns the centre seam — no double line */
-        border-right: 0;
-      }
-
-      &--us {
-        --line: var(--qhc-navy-300);
-        --fill: var(--qhc-navy-050);
-      }
-
-      &--head {
-        padding: 1.875rem 2rem 1.5rem;
-      }
-
-      @media (max-width: 616px) {
-        padding: 1.25rem 1.375rem;
-
-        &--head {
-          padding: 1.625rem 1.375rem 1.25rem;
-        }
-      }
-    }
-
-    /*
-      Corners close the table, whatever the row count. These are addressed by
-      which cell they are rather than by :nth-child — the group wrapper is
-      display: contents, so the cells are grid items but their DOM parent is
-      the group, and any position-based selector would resolve inside it.
-      Clipping with overflow: hidden is not an option either: it cuts the
-      cells' own 1px borders, leaving the corners with no stroke.
-    */
-    &__cell--head#{&}__cell--them {
-      border-top-left-radius: var(--qhc-radius-lg);
-    }
-
-    &__cell--head#{&}__cell--us {
-      border-top-right-radius: var(--qhc-radius-lg);
-    }
-
-    &__group:last-child &__cell {
-      border-bottom: 1px solid var(--line);
-    }
-
-    &__group:last-child &__cell--them {
-      border-bottom-left-radius: var(--qhc-radius-lg);
-    }
-
-    &__group:last-child &__cell--us {
-      border-bottom-right-radius: var(--qhc-radius-lg);
-    }
-
-    &__label {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: var(--qhc-slate-600);
-      font-size: 1.25rem;
-      font-weight: 600;
-
-      &--brand {
-        color: var(--qhc-navy-900);
-      }
-    }
-
-    &__mark {
-      height: 2.125rem;
-      width: auto;
-    }
-
-    &__row {
-      display: grid;
-      grid-template-columns: 1.25rem 1fr;
-      gap: 0.75rem;
-      align-items: start;
-    }
-
-    &__glyph {
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-top: 0.1875rem;
-
-      &--them {
-        color: var(--qhc-slate-600);
-        opacity: 0.8;
-      }
-
-      &--us {
-        color: var(--qhc-navy-700);
-      }
-    }
-
-    &__line {
-      line-height: 1.5;
-      color: var(--qhc-slate-600);
-
-      &--us {
-        color: var(--qhc-navy-900);
-        font-weight: 600;
-      }
-    }
-
+    /* The line the section turns on — set apart from the body it follows, and
+       weighted so it reads as a conclusion rather than a third paragraph. */
     &__closer {
-      max-width: 52ch;
-      margin: 2.5rem auto 0;
+      margin-top: 0.5rem;
+      padding-left: 1.125rem;
+      border-left: 2px solid var(--qhc-navy-300);
       color: var(--qhc-navy-900);
       font-size: var(--qhc-size-body-m);
       font-weight: 600;
       line-height: 1.6;
-      text-align: center;
     }
 
-    /*
-      Stacked, the table stops being a table. Two column headers at the top
-      with eight alternating cells below them means the reader has to hold
-      "which side am I looking at" in their head while scrolling, and the
-      topic appears twice in a row with nothing saying who each one belongs
-      to. So on mobile it becomes one card per topic: the topic names itself
-      once in the header, and the two rows inside it are labelled by side.
-      Same content, no cross-referencing.
-    */
-    @media (max-width: 836px) {
-      &__table {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1rem;
-      }
+    &__link {
+      margin-top: 0.5rem;
+    }
 
-      /* Each card names both sides, so the shared headers are dead weight */
-      &__cell--head {
-        display: none;
-      }
+    &__founder {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
 
-      &__group {
-        display: block;
-        border: 1px solid var(--qhc-hairline);
-        border-radius: var(--qhc-radius-lg);
-        overflow: hidden;
-      }
+    &__plate {
+      aspect-ratio: 4 / 5;
+    }
 
-      &__group-topic {
-        display: block;
-        padding: 0.875rem 1.375rem;
-        background: var(--qhc-shell);
-        border-bottom: 1px solid var(--qhc-hairline);
-        color: var(--qhc-navy-900);
-        font-size: var(--qhc-size-label);
-        font-weight: 600;
-      }
+    &__bio {
+      --gap: 1rem;
+      padding: 1.625rem 1.75rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline);
+      border-radius: var(--qhc-radius);
+    }
 
-      /* The card owns the frame now — cells only need the seam between them */
-      &__cell {
-        border: 0;
-        border-radius: 0;
-      }
+    &__byline {
+      padding-top: 1rem;
+      border-top: 1px solid var(--qhc-hairline);
+      color: var(--qhc-slate-600);
+    }
 
-      &__cell--us {
-        border-top: 1px solid var(--qhc-navy-300);
-      }
-
-      &__group:last-child &__cell {
-        border-bottom: 0;
-      }
-
-      /* Swap the small label from topic to side */
-      &__scope {
-        display: none;
-      }
-
-      &__side {
-        display: block;
+    /* Stacked, source order is the right order: this section is about the
+       approach, and the founder block supports it. Deliberately NOT reordered
+       the way the old standalone About section was — hoisting the portrait
+       above the H2 there made sense because that section was about Marvalyn.
+       Here it would strand a photo in front of the heading it belongs to.
+       The plate goes landscape so a full-width 4:5 portrait does not eat the
+       screen between the copy and the contact block. */
+    @media (max-width: 1078px) {
+      &__plate {
+        aspect-ratio: 3 / 2;
       }
     }
   }

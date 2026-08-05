@@ -132,6 +132,15 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
         background-size: 100% 1px;
         color: var(--qhc-ink-900);
       }
+
+      /* Current page — the same underline the hover draws, parked at full
+         width. Colour carries it too, so the state does not rest on a 1px
+         line alone. */
+      &.active {
+        background-size: 100% 1px;
+        color: var(--qhc-navy-800);
+        font-weight: 600;
+      }
     }
 
     &.drawer-link {
@@ -148,6 +157,11 @@ const { href, variant = "primary", classes, ...rest } = Astro.props;
       &:hover,
       &:focus-visible {
         color: var(--qhc-navy-800);
+      }
+
+      &.active {
+        color: var(--qhc-navy-800);
+        font-weight: 600;
       }
     }
 

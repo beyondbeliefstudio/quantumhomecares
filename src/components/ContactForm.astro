@@ -24,10 +24,13 @@ import Buttons from "@/components/Buttons.astro";
 
   <p class="eyebrow">Request a free consultation</p>
 
-  <!-- Every field is required, so the asterisks need a legend to mean
-       anything. Sits above the first input so it is read before them. -->
+  <!--
+    Sits above the first input so it is read before them. This used to say "All
+    fields are required" — it no longer can, because the last field is optional,
+    so the asterisks have to be what carries the distinction.
+  -->
   <p class="meta form-legend">
-    <span class="required" aria-hidden="true">*</span> All fields are required.
+    <span class="required" aria-hidden="true">*</span> Required.
   </p>
 
   <div class="form-row">
@@ -61,17 +64,17 @@ import Buttons from "@/components/Buttons.astro";
   </div>
 
   <div class="form-group">
-    <label for="needs">
-      Tell us about your home care needs<span class="required" aria-hidden="true">*</span>
+    <label for="help-needed">
+      What kind of help are you looking for?<span class="required" aria-hidden="true">*</span>
     </label>
-    <textarea id="needs" name="needs" rows="3" required></textarea>
+    <textarea id="help-needed" name="helpNeeded" rows="3" required></textarea>
   </div>
 
   <div class="form-group">
-    <label for="questions">
-      What questions do you have for us?<span class="required" aria-hidden="true">*</span>
+    <label for="additional-info">
+      Anything else you want us to know <span class="form-optional">(optional)</span>
     </label>
-    <textarea id="questions" name="questions" rows="3" required></textarea>
+    <textarea id="additional-info" name="additionalInfo" rows="3"></textarea>
   </div>
 
   <Buttons variant="primary" classes="full">Send Request</Buttons>
@@ -81,3 +84,12 @@ import Buttons from "@/components/Buttons.astro";
     need when we speak.
   </p>
 </form>
+
+<style lang="scss">
+  /* Sheds the label's 600 weight and ink colour so "(optional)" reads as an
+     aside to the question rather than part of it. */
+  .form-optional {
+    color: var(--qhc-slate-600);
+    font-weight: 400;
+  }
+</style>

@@ -7,28 +7,46 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 // DATA
-import { navData, desktopNav } from "@/data/navData";
+import { navData, contactHref } from "@/data/navData";
 import { baseData, telHref } from "@/data/siteData";
 
 // IMAGES
 import wordmark from "@/assets/brand/quantum-wordmark.png";
 import mark from "@/assets/brand/quantum-mark.png";
+
+/**
+ * Active route. Trailing slash stripped so "/services/" and "/services" agree,
+ * and startsWith so a future "/services/respite" still lights up its parent.
+ */
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
 <header class="nav" data-nav>
   <div class="nav__bar">
     <!-- Wordmark at rest, heart mark once scrolled. Both live in the same box. -->
-    <a href="#top" class="nav__logo" aria-label={`${baseData.title} — back to top`}>
+    <a href="/" class="nav__logo" aria-label={`${baseData.title} — home`}>
       <Image src={wordmark} alt={baseData.title} height={104} class="nav__wordmark" />
       <Image src={mark} alt="" aria-hidden="true" height={108} class="nav__mark" />
     </a>
 
     <div class="nav__actions">
       <nav class="nav__links" aria-label="Main navigation">
-        {desktopNav.map(i => <Links variant="nav-link" href={i.href}>{i.title}</Links>)}
+        {
+          navData.map(i => (
+            <Links
+              variant="nav-link"
+              href={i.href}
+              classes={isActive(i.href) ? "active" : undefined}
+              aria-current={isActive(i.href) ? "page" : undefined}
+            >
+              {i.title}
+            </Links>
+          ))
+        }
       </nav>
 
-      <Links variant="primary" href="#contact" classes="sm">Request Care</Links>
+      <Links variant="primary" href={contactHref} classes="sm">Request Care</Links>
 
       <button
         type="button"
@@ -45,9 +63,21 @@ import mark from "@/assets/brand/quantum-mark.png";
 
   <div class="nav__drawer" id="nav-drawer" data-nav-drawer>
     <div class="nav__drawer-inner">
-      {navData.map(i => <Links variant="drawer-link" href={i.href} data-nav-close>{i.title}</Links>)}
+      {
+        navData.map(i => (
+          <Links
+            variant="drawer-link"
+            href={i.href}
+            classes={isActive(i.href) ? "active" : undefined}
+            aria-current={isActive(i.href) ? "page" : undefined}
+            data-nav-close
+          >
+            {i.title}
+          </Links>
+        ))
+      }
       <a href={telHref} class="nav__drawer-phone" data-nav-close>Call {baseData.phone}</a>
-      <Links variant="primary" href="#contact" classes="full" data-nav-close>Request Care</Links>
+      <Links variant="primary" href={contactHref} classes="full" data-nav-close>Request Care</Links>
     </div>
   </div>
 </header>

@@ -1,11 +1,16 @@
 /**
- * Homepage content. All copy is client-approved — see the design handoff README
- * before editing, and do not contradict these facts:
+ * Homepage content. All copy is client-approved — see the design handoff
+ * buildout-notes before editing, and do not contradict these facts:
  *   · Service area is all of New Jersey, not a single county.
  *   · Marvalyn Ellis is the sole owner; care providers deliver hands-on service.
  *     Never imply a large staff or a call center.
  *   · The "Paying for care" section (insurance/VA/Medicaid) was intentionally
  *     removed. Testimonials were removed — no approved quotes yet.
+ *
+ * The homepage was condensed per buildout-notes/01-home.md. Content that moved
+ * to interior pages is PARKED at the bottom of this file rather than deleted —
+ * it is approved copy those pages still need. Split it into per-page data files
+ * as each interior page gets built.
  */
 
 export interface Credential {
@@ -49,7 +54,7 @@ export interface Faq {
 }
 
 // ==========================================
-// 2. CREDENTIAL BAND
+// 2. TRUST BAR
 // ==========================================
 export const credentials: Credential[] = [
   {
@@ -58,7 +63,7 @@ export const credentials: Credential[] = [
   },
   {
     label: "Insured and bonded",
-    detail: "Every caregiver screened and background checked",
+    detail: "Every caregiver vetted, screened, and background checked",
   },
   {
     label: "Advocacy included",
@@ -71,44 +76,87 @@ export const credentials: Credential[] = [
 ];
 
 // ==========================================
-// 4. SERVICES
+// 4. SERVICES SNAPSHOT
+// Four cards, one line each. The full six-service detail lives on /services —
+// Transportation and Companionship appears there only, and Respite / Overnight
+// / Live-In are collapsed into a single card here.
 // ==========================================
 export const services: Service[] = [
   {
     icon: "care-plan",
     title: "Care Planning and Advocacy",
-    copy: "A custom care plan, and someone in the room at medical appointments who knows the right questions to ask. We coordinate with doctors, follow up on decisions, and make sure nothing falls through.",
+    copy: "A written plan, and someone in the room at medical appointments.",
   },
   {
     icon: "daily-living",
     title: "Daily Living Support",
-    copy: "Personal hygiene assistance, light housekeeping, and laundry. The everyday tasks that get harder over time, handled with dignity and privacy.",
+    copy: "Hygiene, housekeeping, and laundry, handled with dignity.",
   },
   {
     icon: "meals",
     title: "Meals, Nutrition, and Wellness",
-    copy: "In-home meal preparation, grocery shopping, and medication reminders. Good nutrition and consistent routines are the foundation of staying independent.",
-  },
-  {
-    icon: "transportation",
-    title: "Transportation and Companionship",
-    copy: "Errands, appointments, and time spent together. Isolation is one of the biggest risks to senior health, and one of the easiest to solve.",
+    copy: "Meal preparation, groceries, and medication reminders.",
   },
   {
     icon: "respite",
-    title: "Respite and Specialized Care",
-    copy: "Coverage so family caregivers can rest, plus closer supervision for seniors who need it. Caring for someone else should not cost you your own health.",
-  },
-  {
-    icon: "overnight",
-    title: "Overnight and Live-In Care",
-    copy: "For families worried about the hours nobody is watching. Awake overnight shifts and live-in arrangements, scheduled around how the person actually sleeps.",
+    title: "Respite, Overnight, and Live-In",
+    copy: "Coverage for the hours nobody is watching, and rest for the family.",
   },
 ];
 
 // ==========================================
-// 6. APPROACH — comparison table
+// 6. HOW IT WORKS
 // ==========================================
+export const steps: NumberedCard[] = [
+  {
+    title: "Tell us what is going on",
+    copy: "Send the form, call, or email, and we respond within one business day. We listen, ask a few questions, and tell you what would help, even if that is less care than you expected. The conversation is free.",
+  },
+  {
+    title: "We build a plan for your loved one",
+    copy: "A visit to the home, an assessment of the real needs and routines, and a written care plan you approve before anything begins.",
+  },
+  {
+    title: "Care begins, and we stay involved",
+    copy: "We match a caregiver, get started, and stay in regular contact. As needs change, the plan changes with them.",
+  },
+];
+
+// ==========================================
+// 9. FAQ
+// Rendered as an FAQPage schema node in index.astro — keep questions and
+// answers in sync with what is on screen, since search engines read both.
+// ==========================================
+export const faqs: Faq[] = [
+  {
+    question: "What is the minimum commitment?",
+    answer:
+      "There is no long contract. We start with the schedule your loved one needs and adjust month to month.",
+  },
+  {
+    question: "How quickly can care start?",
+    answer:
+      "In most cases within a few days of the assessment, and faster for hospital discharges.",
+  },
+  {
+    question: "What if my loved one refuses help?",
+    answer:
+      "Common, and expected. We start small, often with companionship or errands, and let trust build before adding personal care.",
+  },
+  {
+    question: "Will it be the same caregiver?",
+    answer: "Yes, with a named backup who already knows the care plan for vacations and sick days.",
+  },
+];
+
+// ==========================================
+// ─────────────  PARKED  ─────────────
+// Approved copy that left the homepage in the 01-home.md rewrite. Nothing below
+// is imported by the homepage. Each block names the page it belongs to; move it
+// into that page's own data file when the page is built, and delete it here.
+// ==========================================
+
+/** → /our-approach — rendered by ApproachComparison.astro */
 export const comparison: ComparisonRow[] = [
   {
     topic: "Who shows up",
@@ -132,9 +180,7 @@ export const comparison: ComparisonRow[] = [
   },
 ];
 
-// ==========================================
-// 8. WHO WE HELP
-// ==========================================
+/** → /our-approach — rendered by WhoWeHelp.astro */
 export const whoWeHelp: NumberedCard[] = [
   {
     title: "After a hospital stay",
@@ -158,27 +204,7 @@ export const whoWeHelp: NumberedCard[] = [
   },
 ];
 
-// ==========================================
-// 9. HOW IT WORKS
-// ==========================================
-export const steps: NumberedCard[] = [
-  {
-    title: "Tell us what is going on",
-    copy: "Complete the request care form, call or email us and we will respond within one day. We listen, ask a few questions, and tell you what would help, even if that is less care than you expected. The conversation is free.",
-  },
-  {
-    title: "We build a plan for your loved one",
-    copy: "A visit to the home, an assessment of the real needs and routines, and a written care plan you approve before anything begins.",
-  },
-  {
-    title: "Care begins, and we stay involved",
-    copy: "We match a caregiver, get started, and stay in regular contact. As needs change, the plan changes with them.",
-  },
-];
-
-// ==========================================
-// 10. FOR CARE PROFESSIONALS
-// ==========================================
+/** → /for-professionals — rendered by ReferralPoints.astro */
 export const referralPoints: NumberedCard[] = [
   {
     title: "Fast discharge turnaround",
@@ -198,9 +224,7 @@ export const referralPoints: NumberedCard[] = [
   },
 ];
 
-// ==========================================
-// 11. COVERAGE
-// ==========================================
+/** → /our-approach — rendered by Coverage.astro */
 export const regions: Region[] = [
   { name: "North Jersey", counties: "Bergen, Essex, Morris, Passaic, Hudson, Union" },
   { name: "Central Jersey", counties: "Somerset, Middlesex, Monmouth, Mercer, Hunterdon" },
@@ -208,9 +232,7 @@ export const regions: Region[] = [
   { name: "Western Jersey", counties: "Warren, Sussex, Salem, Gloucester, Cumberland" },
 ];
 
-// ==========================================
-// 12. CULTURE — the six C's
-// ==========================================
+/** → /our-approach — the six C's, rendered by Culture.astro */
 export const culture: Standard[] = [
   { word: "Care", copy: "Personalized attention for every client" },
   { word: "Competency", copy: "High standards of skill and medical literacy" },
@@ -220,37 +242,10 @@ export const culture: Standard[] = [
   { word: "Courage", copy: "Advocating firmly in complex medical settings" },
 ];
 
-// ==========================================
-// 14. IN THE NEWS
-// ==========================================
+/** → /our-approach — rendered by InTheNews.astro */
 export const press = {
   source: "HomeCare Magazine",
   headline: "Quantum Home Cares Opens New Jersey Location",
   dek: "HomeCare Magazine covers our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.",
   url: "https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location",
 };
-
-// ==========================================
-// 15. FAQ
-// ==========================================
-export const faqs: Faq[] = [
-  {
-    question: "What is the minimum commitment?",
-    answer:
-      "There is no long contract. We start with the schedule your loved one needs and adjust month to month.",
-  },
-  {
-    question: "How quickly can care start?",
-    answer:
-      "In most cases within a few days of the assessment, and faster for hospital discharges.",
-  },
-  {
-    question: "What if my loved one refuses help?",
-    answer:
-      "Common, and expected. We start small, often with companionship or errands, and let trust build before adding personal care.",
-  },
-  {
-    question: "Will it be the same caregiver?",
-    answer: "Yes, with a named backup who already knows the care plan for vacations and sick days.",
-  },
-];

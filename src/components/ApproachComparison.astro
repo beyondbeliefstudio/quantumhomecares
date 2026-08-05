@@ -1,0 +1,266 @@
+---
+/**
+ * The "Most agencies vs. Quantum" table.
+ *
+ * Lifted out of Approach.astro when the homepage was condensed — the table
+ * belongs to /our-approach now, and the homepage Approach section is prose plus
+ * a founder block. Renders the table only; the page supplies its own section
+ * wrapper and heading.
+ */
+
+// HELPERS
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { comparison } from "@/data/homeData";
+import { baseData } from "@/data/siteData";
+
+// IMAGES
+import mark from "@/assets/brand/quantum-mark.png";
+---
+
+<!--
+  One grid with alternating left/right cells — NOT two columns. Independent
+  columns drift out of alignment as soon as a line wraps.
+  This is the one place the unified card style deliberately does not apply.
+-->
+<div class="compare">
+  <div class="compare__cell compare__cell--them compare__cell--head">
+    <span class="compare__label">Most agencies</span>
+  </div>
+  <div class="compare__cell compare__cell--us compare__cell--head">
+    <span class="compare__label compare__label--brand">
+      <Image src={mark} alt="" aria-hidden="true" height={68} class="compare__mark" />
+      {baseData.title}
+    </span>
+  </div>
+
+  {
+    comparison.map(row => (
+      <div class="compare__group">
+        {/* Card header on mobile only — on desktop the topic sits inside each cell */}
+        <span class="compare__group-topic">{row.topic}</span>
+
+        <div class="compare__cell compare__cell--them">
+          <div class="compare__row">
+            <Icon name="cross" class="compare__glyph compare__glyph--them" aria-hidden="true" />
+            <div>
+              <span class="topic compare__scope">{row.topic}</span>
+              <span class="topic compare__side">Most agencies</span>
+              <p class="compare__line">{row.them}</p>
+            </div>
+          </div>
+        </div>
+        <div class="compare__cell compare__cell--us">
+          <div class="compare__row">
+            <Icon name="check" class="compare__glyph compare__glyph--us" aria-hidden="true" />
+            <div>
+              <span class="topic topic--accent compare__scope">{row.topic}</span>
+              <span class="topic topic--accent compare__side">{baseData.title}</span>
+              <p class="compare__line compare__line--us">{row.us}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+
+    /* The pair wrapper exists for the mobile card. On desktop it dissolves so
+       its two cells become direct items of the table grid — without this the
+       columns would nest and stop aligning across rows. */
+    &__group {
+      display: contents;
+    }
+
+    &__group-topic {
+      display: none;
+    }
+
+    /* Inside each cell: the topic on desktop, the side it belongs to on
+       mobile (where the card header already carries the topic). */
+    &__scope {
+      display: block;
+    }
+
+    &__side {
+      display: none;
+    }
+
+    &__cell {
+      background: var(--fill);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 1.375rem 2rem;
+
+      &--them {
+        --line: var(--qhc-hairline);
+        --fill: var(--qhc-paper);
+        /* The us-panel's navy edge owns the centre seam — no double line */
+        border-right: 0;
+      }
+
+      &--us {
+        --line: var(--qhc-navy-300);
+        --fill: var(--qhc-navy-050);
+      }
+
+      &--head {
+        padding: 1.875rem 2rem 1.5rem;
+      }
+
+      @media (max-width: 616px) {
+        padding: 1.25rem 1.375rem;
+
+        &--head {
+          padding: 1.625rem 1.375rem 1.25rem;
+        }
+      }
+    }
+
+    /*
+      Corners close the table, whatever the row count. These are addressed by
+      which cell they are rather than by :nth-child — the group wrapper is
+      display: contents, so the cells are grid items but their DOM parent is
+      the group, and any position-based selector would resolve inside it.
+      Clipping with overflow: hidden is not an option either: it cuts the
+      cells' own 1px borders, leaving the corners with no stroke.
+    */
+    &__cell--head#{&}__cell--them {
+      border-top-left-radius: var(--qhc-radius-lg);
+    }
+
+    &__cell--head#{&}__cell--us {
+      border-top-right-radius: var(--qhc-radius-lg);
+    }
+
+    &__group:last-child &__cell {
+      border-bottom: 1px solid var(--line);
+    }
+
+    &__group:last-child &__cell--them {
+      border-bottom-left-radius: var(--qhc-radius-lg);
+    }
+
+    &__group:last-child &__cell--us {
+      border-bottom-right-radius: var(--qhc-radius-lg);
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--qhc-slate-600);
+      font-size: 1.25rem;
+      font-weight: 600;
+
+      &--brand {
+        color: var(--qhc-navy-900);
+      }
+    }
+
+    &__mark {
+      height: 2.125rem;
+      width: auto;
+    }
+
+    &__row {
+      display: grid;
+      grid-template-columns: 1.25rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    &__glyph {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.1875rem;
+
+      &--them {
+        color: var(--qhc-slate-600);
+        opacity: 0.8;
+      }
+
+      &--us {
+        color: var(--qhc-navy-700);
+      }
+    }
+
+    &__line {
+      line-height: 1.5;
+      color: var(--qhc-slate-600);
+
+      &--us {
+        color: var(--qhc-navy-900);
+        font-weight: 600;
+      }
+    }
+
+    /*
+      Stacked, the table stops being a table. Two column headers at the top
+      with eight alternating cells below them means the reader has to hold
+      "which side am I looking at" in their head while scrolling, and the
+      topic appears twice in a row with nothing saying who each one belongs
+      to. So on mobile it becomes one card per topic: the topic names itself
+      once in the header, and the two rows inside it are labelled by side.
+      Same content, no cross-referencing.
+    */
+    @media (max-width: 836px) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+
+      /* Each card names both sides, so the shared headers are dead weight */
+      &__cell--head {
+        display: none;
+      }
+
+      &__group {
+        display: block;
+        border: 1px solid var(--qhc-hairline);
+        border-radius: var(--qhc-radius-lg);
+        overflow: hidden;
+      }
+
+      &__group-topic {
+        display: block;
+        padding: 0.875rem 1.375rem;
+        background: var(--qhc-shell);
+        border-bottom: 1px solid var(--qhc-hairline);
+        color: var(--qhc-navy-900);
+        font-size: var(--qhc-size-label);
+        font-weight: 600;
+      }
+
+      /* The card owns the frame now — cells only need the seam between them */
+      &__cell {
+        border: 0;
+        border-radius: 0;
+      }
+
+      &__cell--us {
+        border-top: 1px solid var(--qhc-navy-300);
+      }
+
+      &__group:last-child &__cell {
+        border-bottom: 0;
+      }
+
+      /* Swap the small label from topic to side */
+      &__scope {
+        display: none;
+      }
+
+      &__side {
+        display: block;
+      }
+    }
+  }
+</style>

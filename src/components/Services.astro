@@ -1,6 +1,13 @@
 ---
+/**
+ * Homepage services snapshot. Four one-line cards per
+ * buildout-notes/01-home.md — the six full descriptions, including
+ * Transportation and Companionship, live on /services.
+ */
+
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
 
 // HELPERS
 import { Icon } from "astro-icon/components";
@@ -22,7 +29,8 @@ import { services } from "@/data/homeData";
       </p>
     </div>
 
-    <div class="auto-grid">
+    <!-- 16rem min holds all four on one row at page-max, pairs at tablet, stacks on phones -->
+    <div class="auto-grid services__grid">
       {
         services.map(s => (
           <article class="card">
@@ -37,5 +45,24 @@ import { services } from "@/data/homeData";
         ))
       }
     </div>
+
+    <div class="btn-wrapper btn-wrapper--center services__more">
+      <Links variant="inline" href="/services">
+        See everything we provide
+        <Icon name="arrow-right" aria-hidden="true" />
+      </Links>
+    </div>
   </div>
 </section>
+
+<style lang="scss">
+  .services {
+    &__grid {
+      --min: 16rem;
+    }
+
+    &__more {
+      margin-top: 3rem;
+    }
+  }
+</style>

@@ -6,7 +6,7 @@ import Links from "@/components/Links.astro";
 import { Image } from "astro:assets";
 
 // DATA
-import { footerNav } from "@/data/navData";
+import { navData, contactHref } from "@/data/navData";
 import { baseData, telHref, mailHref } from "@/data/siteData";
 
 // IMAGES
@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
     <div class="footer__grid">
       <!-- Brand — the full lockup anchors the footer -->
       <div class="stack footer__brand">
-        <a href="#top" aria-label={`${baseData.title} — back to top`}>
+        <a href="/" aria-label={`${baseData.title} — home`}>
           <Image src={lockup} alt={baseData.title} widths={[200, 400]} class="footer__lockup" />
         </a>
         <p class="meta--lg">Advocacy-led in-home senior care, serving all of New Jersey.</p>
@@ -30,8 +30,8 @@ const year = new Date().getFullYear();
       <div class="footer__links-group">
         <nav class="stack footer__col" aria-label="Footer navigation">
           <span class="topic">Explore</span>
-          {footerNav.map(i => <Links variant="footer-link" href={i.href}>{i.title}</Links>)}
-          <Links variant="footer-link" href="#contact">Request Care</Links>
+          {navData.map(i => <Links variant="footer-link" href={i.href}>{i.title}</Links>)}
+          <Links variant="footer-link" href={contactHref}>Request Care</Links>
         </nav>
 
         <!-- Contact — same footer-link treatment as Explore, so nothing here drifts -->

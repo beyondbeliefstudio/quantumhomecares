@@ -7,7 +7,17 @@ import AhrefsAnalytics from "@/components/AhrefsAnalytics.astro";
 import { baseData, telHref } from "@/data/siteData";
 
 // PROPS
-const { pageTitle = baseData.title, description = baseData.description } = Astro.props;
+/**
+ * `schemaNodes` lets a page append its own structured-data nodes to the shared
+ * graph — the homepage passes an FAQPage built from the same data the FAQ
+ * section renders. Everything is emitted as one @graph rather than several
+ * script tags so the nodes can reference each other by @id.
+ */
+const {
+  pageTitle = baseData.title,
+  description = baseData.description,
+  schemaNodes = [],
+} = Astro.props;
 
 const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const AHREFS_DATA_KEY = import.meta.env.PUBLIC_AHREFS_DATA_KEY;
@@ -16,18 +26,39 @@ const AHREFS_DATA_KEY = import.meta.env.PUBLIC_AHREFS_DATA_KEY;
 const ogImage = new URL("/og-image.png", Astro.site).toString();
 const ogUrl = Astro.url.toString();
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "MedicalBusiness"],
+// Stable @ids so the business and the founder can point at each other, and so
+// page-level nodes can attach to the business rather than redeclaring it.
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "";
+const businessId = `${siteUrl}/#business`;
+const founderId = `${siteUrl}/#founder`;
+
+const business = {
+  "@type": ["LocalBusiness", "HomeHealthCareService"],
+  "@id": businessId,
   name: baseData.legalName,
+  alternateName: baseData.title,
   description: baseData.description,
-  url: Astro.site?.toString(),
+  url: siteUrl,
   telephone: telHref.replace("tel:", ""),
   email: baseData.email,
   areaServed: { "@type": "State", name: baseData.serviceArea.state },
+  // In-home agency — no storefront to publish, so region only.
   address: { "@type": "PostalAddress", addressRegion: "NJ", addressCountry: "US" },
-  founder: { "@type": "Person", name: baseData.owner.name },
+  founder: { "@id": founderId },
   hasCredential: baseData.credentials.license,
+};
+
+const founder = {
+  "@type": "Person",
+  "@id": founderId,
+  name: baseData.owner.name,
+  jobTitle: baseData.owner.role,
+  worksFor: { "@id": businessId },
+};
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [business, founder, ...schemaNodes],
 };
 ---
 

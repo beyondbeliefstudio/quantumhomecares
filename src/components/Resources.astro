@@ -1,0 +1,45 @@
+---
+/**
+ * Homepage Resources teaser — new in buildout-notes/01-home.md.
+ *
+ * Sits between the navy Professionals panel and the FAQ split, so it stays
+ * open paper and centred: three text blocks in a row would blur together if
+ * this one also carried a frame.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+---
+
+<section id="resources" class="section" data-reveal>
+  <div class="section-header resources__header">
+    <span class="eyebrow">Resources</span>
+    <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+      Most families do not know what is available to them.
+    </Heading>
+    <p class="lead">
+      Medicare, Medicaid, VA benefits, county programs, caregiver support. We put together the
+      guidance we give families on the phone, whether or not they ever hire us.
+    </p>
+    <Links variant="inline" href="/resources">
+      Browse resources for families
+      <Icon name="arrow-right" aria-hidden="true" />
+    </Links>
+  </div>
+</section>
+
+<style lang="scss">
+  .resources {
+    &__header {
+      --gap: 1.125rem;
+      --w: 60ch;
+      /* Nothing follows inside this section, so the header carries no bottom
+         space of its own — the next section's own top rhythm handles it. */
+      --mb: 0;
+    }
+  }
+</style>
