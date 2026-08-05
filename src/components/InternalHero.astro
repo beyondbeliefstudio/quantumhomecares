@@ -1,0 +1,133 @@
+---
+/**
+ * The internal-page hero — every page except the homepage opens with this, so
+ * the interior pages all land the same way: eyebrow, Gambetta H1, lead copy in
+ * the slot, and a photo riding the same tinted wash the homepage sections use.
+ *
+ * Deliberately a smaller statement than the homepage hero: no inset photo, no
+ * stacked CTAs. Interior pages earn the click further down; the hero's job is
+ * to confirm the reader landed in the right place.
+ *
+ *   <InternalHero eyebrow="What We Do" title="..." image={img} imageAlt="...">
+ *     <p class="lead">First paragraph…</p>
+ *   </InternalHero>
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  image: ImageMetadata;
+  imageAlt: string;
+}
+
+const { eyebrow, title, image, imageAlt } = Astro.props;
+---
+
+<section class="ihero">
+  <!-- Same corner glow as the homepage hero, so the pages open as siblings -->
+  <div class="ihero__glow" aria-hidden="true"></div>
+
+  <div class="ihero__inner">
+    <div class="split split--top ihero__split">
+      <div class="stack ihero__copy">
+        <span class="eyebrow ihero__eyebrow">{eyebrow}</span>
+
+        <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+          {title}
+        </Heading>
+
+        <slot />
+      </div>
+
+      <div class="plate plate--lg ihero__plate">
+        <Image src={image} alt={imageAlt} widths={[600, 1200]} sizes="(max-width: 1078px) 92vw, 42vw" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Hairline closes the wash the way .band's bottom rule does -->
+  <div class="ihero__rule" aria-hidden="true"></div>
+</section>
+
+<style lang="scss">
+  .ihero {
+    position: relative;
+    background: var(--qhc-band-down);
+
+    &__glow {
+      position: absolute;
+      top: -8.75rem;
+      right: -11.25rem;
+      width: 40rem;
+      height: 40rem;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 50%,
+        var(--qhc-navy-100) 0%,
+        rgba(214, 231, 246, 0.45) 46%,
+        rgba(214, 231, 246, 0) 72%
+      );
+      pointer-events: none;
+    }
+
+    &__inner {
+      position: relative;
+      max-width: var(--qhc-page-max);
+      margin-inline: auto;
+      padding: 4.5rem var(--qhc-gutter) var(--qhc-band-pad);
+    }
+
+    &__split {
+      /* Copy gets the wider share — the H1 needs the room more than the photo */
+      grid-template-columns: 7fr 5fr;
+      align-items: center;
+
+      @media (max-width: 1078px) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* On the wash the navy-100 pill melts into the backdrop — same hairline
+       fix the homepage hero uses over its glow. */
+    &__eyebrow {
+      border-color: var(--qhc-navy-300);
+    }
+
+    &__copy {
+      --gap: 1.375rem;
+      max-width: 60ch;
+      /* Same load-in as the homepage hero — these animate on arrival, not on scroll */
+      animation: qhc-rise 700ms var(--qhc-ease-out) both;
+    }
+
+    &__plate {
+      aspect-ratio: 4 / 3;
+      animation: qhc-rise 900ms var(--qhc-ease-out) 120ms both;
+    }
+
+    &__rule {
+      position: absolute;
+      inset-inline: 0;
+      bottom: 0;
+      height: 1px;
+      background: var(--qhc-hairline);
+    }
+
+    @media (max-width: 1078px) {
+      &__inner {
+        padding-top: 3rem;
+      }
+
+      &__plate {
+        aspect-ratio: 3 / 2;
+      }
+    }
+  }
+</style>

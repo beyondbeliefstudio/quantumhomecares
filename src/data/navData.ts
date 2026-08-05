@@ -19,7 +19,9 @@ export const navData: NavItem[] = [
 ];
 
 /**
- * The contact block lives on the homepage, so every CTA has to be rooted —
- * a bare "#contact" would look for the section on whatever page it was clicked.
+ * Layout.astro renders the contact band at the bottom of every page, so a
+ * bare anchor resolves wherever it is clicked — no cross-page hop, the reader
+ * just scrolls down the page they are already on. (The post-submit thank-you
+ * hides the band, but nothing links to #contact from there.)
  */
-export const contactHref = "/#contact";
+export const contactHref = "#contact";

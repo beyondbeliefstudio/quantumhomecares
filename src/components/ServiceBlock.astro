@@ -1,7 +1,7 @@
 ---
 /**
- * One service on /services: prose on the left, its "what this includes"
- * checklist on the right.
+ * One service on /services: prose on the left, the service's photo with its
+ * "what this includes" checklist on the right.
  *
  * Six of these run back to back, so alternating blocks sit on a cool wash —
  * the rhythm has to come from the surface, because flipping the columns would
@@ -12,6 +12,7 @@
 import Heading from "@/components/Heading.astro";
 
 // HELPERS
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 // TYPES
@@ -60,18 +61,29 @@ const { service, alt = false } = Astro.props;
         {service.bodyAfter?.map(paragraph => <p>{paragraph}</p>)}
       </div>
 
-      <div class="svc__includes">
-        <span class="topic">What this includes</span>
-        <ul class="svc__list">
-          {
-            service.includes.map(item => (
-              <li class="svc__item">
-                <Icon name="check" class="svc__check" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))
-          }
-        </ul>
+      <div class="svc__side">
+        <div class="plate plate--lg svc__photo">
+          <Image
+            src={service.photo}
+            alt={service.photoAlt}
+            widths={[600, 1200]}
+            sizes="(max-width: 1078px) 92vw, 38vw"
+          />
+        </div>
+
+        <div class="svc__includes">
+          <span class="topic">What this includes</span>
+          <ul class="svc__list">
+            {
+              service.includes.map(item => (
+                <li class="svc__item">
+                  <Icon name="check" class="svc__check" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -135,6 +147,16 @@ const { service, alt = false } = Astro.props;
       }
     }
 
+    &__side {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    &__photo {
+      aspect-ratio: 3 / 2;
+    }
+
     &__includes {
       display: flex;
       flex-direction: column;
@@ -144,10 +166,12 @@ const { service, alt = false } = Astro.props;
       border: 1px solid var(--qhc-hairline);
       border-radius: var(--qhc-radius);
 
-      /* The prose column is much taller than this list, so on desktop the card
-         rides along instead of stranding a screen of whitespace beside
-         paragraph four. Falls back to static wherever position: sticky is not
-         supported, which is the layout below anyway. */
+      /* The prose column is much taller than photo + list, so on desktop the
+         card rides along under the photo instead of stranding a screen of
+         whitespace beside paragraph four. Sticky is relative to the column,
+         so the photo scrolls away first and the checklist follows the prose.
+         Falls back to static wherever position: sticky is not supported,
+         which is the layout below anyway. */
       position: sticky;
       top: 8.5rem;
 

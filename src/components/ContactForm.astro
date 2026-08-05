@@ -1,6 +1,11 @@
 ---
 // COMPONENTS
 import Buttons from "@/components/Buttons.astro";
+
+// The form renders on every page now, so the source tag comes from the URL
+// rather than a hardcoded "homepage-contact" — submissions say where they
+// actually came from.
+const source = Astro.url.pathname;
 ---
 
 <form
@@ -20,7 +25,7 @@ import Buttons from "@/components/Buttons.astro";
   </p>
 
   <!-- Tags the submission with the page it came from -->
-  <input type="hidden" name="source" value="homepage-contact" />
+  <input type="hidden" name="source" value={source} />
 
   <p class="eyebrow">Request a free consultation</p>
 

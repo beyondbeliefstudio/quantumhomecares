@@ -3,10 +3,21 @@
 import BaseHead from "@/layouts/BaseHead.astro";
 import Nav from "@/layouts/Nav.astro";
 import Footer from "@/layouts/Footer.astro";
+import Contact from "@/components/Contact.astro";
 import UserBack from "@/components/UserBack.astro";
 
 // STYLES
 import "@/styles/global.scss";
+
+// PROPS
+/**
+ * Every page closes on the contact band — the form is the site's one
+ * conversion, so it travels with the layout rather than being re-added page by
+ * page. `contactTitle` / `contactLead` let a page re-frame the ask for where
+ * the reader just was; `hideCTA` is for pages where a form makes no sense
+ * (the post-submit thank-you).
+ */
+const { contactTitle, contactLead, hideCTA = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -26,6 +37,7 @@ import "@/styles/global.scss";
 
       <main>
         <slot />
+        {!hideCTA && <Contact title={contactTitle} lead={contactLead} />}
       </main>
 
       <Footer />

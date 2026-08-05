@@ -11,6 +11,22 @@ import { baseData, telHref, mailHref } from "@/data/siteData";
 
 // IMAGES
 import portrait from "@/assets/photos/contact.jpg";
+
+// PROPS
+/**
+ * Rendered on every page by Layout.astro. Pages can retitle the band so the
+ * ask fits where the reader just was — /services closes with "Not sure what
+ * your family needs?" — while the form itself stays identical sitewide.
+ */
+interface Props {
+  title?: string;
+  lead?: string;
+}
+
+const {
+  title = "Tell us about your situation.",
+  lead = "Send us the situation and we will respond within one business day. Families, seniors, and referring professionals all use this form. It costs nothing to ask, and there is nothing to sign.",
+} = Astro.props;
 ---
 
 <section id="contact" class="band band--cool contact" data-reveal>
@@ -18,14 +34,10 @@ import portrait from "@/assets/photos/contact.jpg";
     <div class="split split--gap-lg split--top">
       <div class="stack contact__intro">
         <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
-          Tell us about your situation.
+          {title}
         </Heading>
 
-        <p class="lead contact__lead">
-          Send us the situation and we will respond within one business day. Families, seniors, and
-          referring professionals all use this form. It costs nothing to ask, and there is nothing
-          to sign.
-        </p>
+        <p class="lead contact__lead">{lead}</p>
 
         <div class="plate plate--lg contact__plate">
           <Image

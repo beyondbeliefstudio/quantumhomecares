@@ -4,13 +4,16 @@ import Layout from "@/layouts/Layout.astro";
 
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
-import Links from "@/components/Links.astro";
+import InternalHero from "@/components/InternalHero.astro";
 import ServiceBlock from "@/components/ServiceBlock.astro";
 import PhotoStrip from "@/components/PhotoStrip.astro";
 
 // DATA
 import { serviceDetails } from "@/data/servicesData";
-import { baseData, telHref, schemaIds } from "@/data/siteData";
+import { baseData, schemaIds } from "@/data/siteData";
+
+// IMAGES
+import heroPhoto from "@/assets/photos/newStock/dominik-lange-VUOiQW4OeLI-unsplash.jpg";
 
 /**
  * One Service node per block, each pointing at the single LocalBusiness node
@@ -41,35 +44,31 @@ const serviceSchema = serviceDetails.map(service => ({
   pageTitle="Senior Home Care Services in New Jersey | Quantum Home Cares"
   description="In-home care across New Jersey: personal care, meals, transportation, respite, overnight and live-in support, plus advocacy at medical appointments."
   schemaNodes={serviceSchema}
+  contactTitle="Not sure what your family needs?"
+  contactLead="That is the most common place people start. Tell us what is going on and we will help you sort out what would actually help, even if that turns out to be less care than you expected. The conversation is free and there is nothing to sign."
 >
   <!-- ===== 1. PAGE INTRO ===== -->
-  <section id="intro" class="section" data-reveal>
-    <div class="section-header intro__header">
-      <span class="eyebrow">What We Do</span>
-      <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
-        Care that fits the person, not a package.
-      </Heading>
-    </div>
-
-    <!-- Three paragraphs, so they read left-aligned in a centred measure
-         rather than centre-set like the heading above them. -->
-    <div class="stack intro__body">
-      <p class="lead">
-        Most agencies hand you a tier. Bronze, silver, gold, pick one. It is easier to sell that
-        way, but it has almost nothing to do with what any particular person actually needs.
-      </p>
-      <p class="lead">
-        We start the other direction. We visit the home, we talk to your loved one and to you, and
-        we build a written plan around the real situation. Someone recovering from a hip replacement
-        needs something completely different from someone in the early stages of dementia, and both
-        of those change over time.
-      </p>
-      <p class="lead">
-        Below is everything we provide. Most families start with two or three of these and add more
-        as things shift. Nothing here is locked in.
-      </p>
-    </div>
-  </section>
+  <InternalHero
+    eyebrow="What We Do"
+    title="Care that fits the person, not a package."
+    image={heroPhoto}
+    imageAlt="A caregiver walking a senior woman in a wheelchair across a sunlit field at golden hour"
+  >
+    <p class="lead">
+      Most agencies hand you a tier. Bronze, silver, gold, pick one. It is easier to sell that way,
+      but it has almost nothing to do with what any particular person actually needs.
+    </p>
+    <p class="lead">
+      We start the other direction. We visit the home, we talk to your loved one and to you, and we
+      build a written plan around the real situation. Someone recovering from a hip replacement
+      needs something completely different from someone in the early stages of dementia, and both of
+      those change over time.
+    </p>
+    <p class="lead">
+      Below is everything we provide. Most families start with two or three of these and add more as
+      things shift. Nothing here is locked in.
+    </p>
+  </InternalHero>
 
   <!-- ===== 2–7. THE SIX SERVICES ===== -->
   {serviceDetails.map((service, i) => <ServiceBlock service={service} alt={i % 2 === 1} />)}
@@ -139,46 +138,13 @@ const serviceSchema = serviceDetails.map(service => ({
     </div>
   </section>
 
-  <!-- ===== 10. PAGE CTA ===== -->
-  <section id="cta" class="band band--cool" data-reveal>
-    <div class="band__inner">
-      <div class="section-header cta__header">
-        <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
-          Not sure what your family needs?
-        </Heading>
-        <p class="lead">
-          That is the most common place people start. Tell us what is going on and we will help you
-          sort out what would actually help, even if that turns out to be less care than you
-          expected. The conversation is free and there is nothing to sign.
-        </p>
-        <div class="btn-wrapper btn-wrapper--center">
-          <Links variant="primary" href="/#contact" classes="lg">Request a Free Consultation</Links>
-          <Links variant="outline" href={telHref}>Call {baseData.phone}</Links>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- ===== 10. PAGE CTA ===== is the sitewide contact band, retitled via the
+       contactTitle / contactLead props on Layout above. The 02-services.md CTA
+       copy lives there, and the reader gets the form itself instead of a
+       button that would only have carried them to it. -->
 </Layout>
 
 <style lang="scss">
-  .intro {
-    &__header {
-      --gap: 1.125rem;
-      --mb: 2.5rem;
-      /* rem, not ch. `ch` on this container resolves against the container's
-         own font-size (~17.6px), not the h1's ~62px, so a "24ch" measure came
-         out near 200px and broke the headline into five words-per-line. Cap
-         the box in rem and let the display type wrap inside it. */
-      --w: 46rem;
-    }
-
-    &__body {
-      --gap: 1.25rem;
-      max-width: 68ch;
-      margin-inline: auto;
-    }
-  }
-
   .scheduling {
     &__body {
       --gap: 1.25rem;
@@ -212,14 +178,6 @@ const serviceSchema = serviceDetails.map(service => ({
 
     @media (max-width: 682px) {
       padding: 2rem 1.5rem;
-    }
-  }
-
-  .cta {
-    &__header {
-      --gap: 1.25rem;
-      --mb: 0;
-      --w: 60ch;
     }
   }
 </style>

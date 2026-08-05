@@ -10,7 +10,20 @@
  *     and is load-bearing for trust; do not soften it.
  *   · Six services. The homepage shows four of them, collapsed — see
  *     `services` in homeData.ts, and keep the two lists from contradicting.
+ *
+ * Each block carries its own photo. Chosen to avoid repeating anything the
+ * page's PhotoStrip shows (strip-medical/love/hug/outdoors) — six blocks plus
+ * a four-photo strip means one duplicate would read as running out of film.
  */
+
+import type { ImageMetadata } from "astro";
+
+import photoAdvocacy from "@/assets/photos/newStock/pexels-vlada-karpovich-5790810.jpg";
+import photoDailyLiving from "@/assets/photos/strip-hands.jpg";
+import photoNutrition from "@/assets/photos/aging-at-home.jpg";
+import photoCompanionship from "@/assets/photos/strip-chess.jpg";
+import photoRespite from "@/assets/photos/newStock/pexels-kampus-7551627.jpg";
+import photoOvernight from "@/assets/photos/newStock/pexels-kampus-7551683.jpg";
 
 export interface ServiceDefinition {
   term: string;
@@ -23,6 +36,8 @@ export interface ServiceDetail {
   /** Filename in src/icons/, without the extension. */
   icon: string;
   title: string;
+  photo: ImageMetadata;
+  photoAlt: string;
   /** One line under the heading — the reason a family cares about this. */
   lead: string;
   body: string[];
@@ -38,6 +53,8 @@ export const serviceDetails: ServiceDetail[] = [
     id: "advocacy",
     icon: "care-plan",
     title: "Care Planning and Advocacy",
+    photo: photoAdvocacy,
+    photoAlt: "A caregiver checking a senior man's blood pressure at home and recording the reading",
     lead: "This is the part most agencies do not do at all, and it is the reason many families call us in the first place.",
     body: [
       "An aide showing up is only half of what a family needs. The other half is the appointments, the specialists who do not talk to each other, the prescription that changed and nobody explained why, and the insurance company that puts you on hold for forty minutes and then transfers you.",
@@ -60,6 +77,8 @@ export const serviceDetails: ServiceDetail[] = [
     id: "daily-living",
     icon: "daily-living",
     title: "Daily Living Support",
+    photo: photoDailyLiving,
+    photoAlt: "A caregiver's hands gently holding a senior's hand",
     lead: "The everyday things that get harder, handled in a way that protects your loved one's dignity.",
     body: [
       "Personal care is the hardest conversation most families have. A parent who has been independent for eighty years does not want their daughter helping them shower, and the daughter does not want to be the one asking. That resistance is normal and we expect it.",
@@ -81,6 +100,8 @@ export const serviceDetails: ServiceDetail[] = [
     id: "nutrition",
     icon: "meals",
     title: "Meals, Nutrition, and Wellness",
+    photo: photoNutrition,
+    photoAlt: "A caregiver sharing time with seniors around a table at home",
     lead: "Nutrition is where decline usually starts, and it is one of the easiest things to catch early.",
     body: [
       "When someone lives alone, cooking stops being worth the effort. Appetite fades. Meals turn into toast and coffee, then just coffee. Dehydration follows, and dehydration in an older adult can look like confusion, weakness, or a fall.",
@@ -102,6 +123,8 @@ export const serviceDetails: ServiceDetail[] = [
     id: "companionship",
     icon: "transportation",
     title: "Transportation and Companionship",
+    photo: photoCompanionship,
+    photoAlt: "Two senior men playing chess together outdoors",
     lead: "Isolation is one of the biggest risks to senior health, and one of the easiest to solve.",
     body: [
       "Giving up the car keys is one of the hardest transitions a person goes through. It is not really about driving. It is about the grocery store, the hair appointment, church on Sunday, and lunch with the same three friends they have had for forty years. When the driving stops, all of that quietly stops with it.",
@@ -122,6 +145,8 @@ export const serviceDetails: ServiceDetail[] = [
     id: "respite",
     icon: "respite",
     title: "Respite and Specialized Care",
+    photo: photoRespite,
+    photoAlt: "A caregiver guiding a senior man through gentle stretching exercises at home",
     lead: "Caring for someone else should not cost you your own health.",
     body: [
       "Family caregivers are the ones we worry about most. They skip their own doctor appointments. They stop seeing friends. They tell themselves they will rest once things settle down, and things do not settle down.",
@@ -142,6 +167,8 @@ export const serviceDetails: ServiceDetail[] = [
     id: "overnight",
     icon: "overnight",
     title: "Overnight and Live-In Care",
+    photo: photoOvernight,
+    photoAlt: "Two caregivers settling a senior man comfortably into bed",
     lead: "For families worried about the hours nobody is watching.",
     body: [
       "Most of what families fear happens at night. The three in the morning bathroom trip in the dark. Sundowning that gets worse after dinner. A parent who wakes up disoriented, or who gets up and goes outside and nobody knows for hours.",
