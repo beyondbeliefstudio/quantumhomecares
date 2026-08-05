@@ -5,7 +5,7 @@
  * Lifted out of Approach.astro when the homepage was condensed — the table
  * belongs to /our-approach now, and the homepage Approach section is prose plus
  * a founder block. Renders the table only; the page supplies its own section
- * wrapper and heading.
+ * wrapper and heading. Rows cascade in behind the section's reveal.
  */
 
 // HELPERS
@@ -13,7 +13,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 // DATA
-import { comparison } from "@/data/homeData";
+import { comparison } from "@/data/approachData";
 import { baseData } from "@/data/siteData";
 
 // IMAGES
@@ -37,12 +37,14 @@ import mark from "@/assets/brand/quantum-mark.png";
   </div>
 
   {
-    comparison.map(row => (
+    comparison.map((row, i) => (
       <div class="compare__group">
-        {/* Card header on mobile only — on desktop the topic sits inside each cell */}
+        {/* Card header on mobile only — on desktop the topic sits inside each cell.
+            The stagger rides the cells, not this wrapper — it is display: contents
+            on desktop, and opacity/transform do nothing on a dissolved box. */}
         <span class="compare__group-topic">{row.topic}</span>
 
-        <div class="compare__cell compare__cell--them">
+        <div class="compare__cell compare__cell--them" data-stagger style={`--i: ${i + 1}`}>
           <div class="compare__row">
             <Icon name="cross" class="compare__glyph compare__glyph--them" aria-hidden="true" />
             <div>
@@ -52,7 +54,7 @@ import mark from "@/assets/brand/quantum-mark.png";
             </div>
           </div>
         </div>
-        <div class="compare__cell compare__cell--us">
+        <div class="compare__cell compare__cell--us" data-stagger style={`--i: ${i + 1}`}>
           <div class="compare__row">
             <Icon name="check" class="compare__glyph compare__glyph--us" aria-hidden="true" />
             <div>

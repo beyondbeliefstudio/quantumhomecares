@@ -25,22 +25,11 @@ export interface Service {
   copy: string;
 }
 
-export interface ComparisonRow {
-  topic: string;
-  them: string;
-  us: string;
-}
-
 export interface NumberedCard {
   title: string;
   copy: string;
   /** astro-icon name from src/icons/ — only Who We Help cards carry one */
   icon?: string;
-}
-
-export interface Standard {
-  word: string;
-  copy: string;
 }
 
 export interface Region {
@@ -154,55 +143,10 @@ export const faqs: Faq[] = [
 // Approved copy that left the homepage in the 01-home.md rewrite. Nothing below
 // is imported by the homepage. Each block names the page it belongs to; move it
 // into that page's own data file when the page is built, and delete it here.
+// (comparison, whoWeHelp, culture, and press moved to approachData.ts when
+// /our-approach was built — 03-our-approach.md revised their copy, so that
+// file is now the source of truth for them.)
 // ==========================================
-
-/** → /our-approach — rendered by ApproachComparison.astro */
-export const comparison: ComparisonRow[] = [
-  {
-    topic: "Who shows up",
-    them: "Whoever is available that day",
-    us: "A caregiver matched to your loved one, kept consistent",
-  },
-  {
-    topic: "The care plan",
-    them: "Hours logged, then on to the next client",
-    us: "A written plan we build, maintain, and update as needs change",
-  },
-  {
-    topic: "The paperwork",
-    them: "Insurance calls and coordination left to you",
-    us: "We handle the calls, the forms, and the follow-through",
-  },
-  {
-    topic: "Communication",
-    them: "You hear from them once something goes wrong",
-    us: "We check in before it does, and keep you posted either way",
-  },
-];
-
-/** → /our-approach — rendered by WhoWeHelp.astro */
-export const whoWeHelp: NumberedCard[] = [
-  {
-    title: "After a hospital stay",
-    copy: "Discharge paperwork, new medications, and follow-up appointments arriving all at once. We manage the coordination and get the home ready before they walk back in.",
-    icon: "after-hospital-stay",
-  },
-  {
-    title: "When memory starts changing",
-    copy: "Early dementia and Alzheimer's support built on routine and familiarity, with caregivers trained to redirect and engage.",
-    icon: "memory-changing",
-  },
-  {
-    title: "When the family caregiver is worn down",
-    copy: "Respite coverage by the shift, the week, or ongoing, so whoever is holding everything together can sleep, travel, and be a family member again.",
-    icon: "caregiver-worn-down",
-  },
-  {
-    title: "When you live too far away",
-    copy: "Eyes in the home and a person you and your loved one can trust to care for them and provide timely updates to bridge the distance.",
-    icon: "live-too-far-away",
-  },
-];
 
 /** → /for-professionals — rendered by ReferralPoints.astro */
 export const referralPoints: NumberedCard[] = [
@@ -224,28 +168,11 @@ export const referralPoints: NumberedCard[] = [
   },
 ];
 
-/** → /our-approach — rendered by Coverage.astro */
+/** → county coverage grid — 03-our-approach.md did not include this section,
+ *  so it stays parked until a page claims it (possibly /resources). */
 export const regions: Region[] = [
   { name: "North Jersey", counties: "Bergen, Essex, Morris, Passaic, Hudson, Union" },
   { name: "Central Jersey", counties: "Somerset, Middlesex, Monmouth, Mercer, Hunterdon" },
   { name: "South Jersey", counties: "Ocean, Burlington, Camden, Atlantic, Cape May" },
   { name: "Western Jersey", counties: "Warren, Sussex, Salem, Gloucester, Cumberland" },
 ];
-
-/** → /our-approach — the six C's, rendered by Culture.astro */
-export const culture: Standard[] = [
-  { word: "Care", copy: "Personalized attention for every client" },
-  { word: "Competency", copy: "High standards of skill and medical literacy" },
-  { word: "Commitment", copy: "Focused on long-term wellness, not billable hours" },
-  { word: "Communication", copy: "Transparent dialogs between families and providers" },
-  { word: "Compassion", copy: "Every senior treated with the empathy they deserve" },
-  { word: "Courage", copy: "Advocating firmly in complex medical settings" },
-];
-
-/** → /our-approach — rendered by InTheNews.astro */
-export const press = {
-  source: "HomeCare Magazine",
-  headline: "Quantum Home Cares Opens New Jersey Location",
-  dek: "HomeCare Magazine covers our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.",
-  url: "https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location",
-};

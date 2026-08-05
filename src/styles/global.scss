@@ -777,4 +777,24 @@ select {
       opacity 700ms var(--qhc-ease-out),
       transform 700ms var(--qhc-ease-out);
   }
+
+  /*
+    STAGGER — children cascade behind their section's reveal.
+
+    Mark any descendant of a [data-reveal] section with data-stagger and give
+    it an index: <li data-stagger style="--i: 3">. Each item trails the
+    section's own rise by 70ms × its index. Gated on .js-reveal exactly like
+    the section rule above, so no-JS readers always see everything.
+  */
+  .js-reveal [data-reveal]:not(.is-visible) [data-stagger] {
+    opacity: 0;
+    transform: translateY(0.625rem);
+  }
+
+  [data-stagger] {
+    transition:
+      opacity 600ms var(--qhc-ease-out),
+      transform 600ms var(--qhc-ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
 }

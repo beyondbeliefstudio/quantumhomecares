@@ -1,4 +1,9 @@
 ---
+/**
+ * The four moments families reach out — /our-approach section 5.
+ * Cards cascade in behind the section reveal; the icon circle warms on hover.
+ */
+
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
 
@@ -6,7 +11,7 @@ import Heading from "@/components/Heading.astro";
 import { Icon } from "astro-icon/components";
 
 // DATA
-import { whoWeHelp } from "@/data/homeData";
+import { moments } from "@/data/approachData";
 ---
 
 <section id="who" class="section" data-reveal>
@@ -16,15 +21,15 @@ import { whoWeHelp } from "@/data/homeData";
       Families reach us at one of four moments.
     </Heading>
     <p class="lead who__lead">
-      Requests for care come from all directions: the person who needs it, a spouse, a son or
-      daughter, a friend, a social worker, a discharge planner. We welcome all of them.
+      Requests come from all directions. The person who needs care, a spouse, a son or daughter, a
+      friend, a social worker, a discharge planner. We welcome all of them.
     </p>
   </div>
 
   <div class="auto-grid who__grid">
     {
-      whoWeHelp.map(item => (
-        <article class="card who__card">
+      moments.map((item, i) => (
+        <article class="card who__card" data-stagger style={`--i: ${i}`}>
           <span class="icon-circle">
             <Icon name={item.icon} aria-hidden="true" />
           </span>
@@ -55,6 +60,26 @@ import { whoWeHelp } from "@/data/homeData";
 
     &__card {
       --gap: 0.75rem;
+      transition:
+        border-color var(--qhc-duration-base) var(--qhc-ease-out),
+        opacity 600ms var(--qhc-ease-out),
+        transform 600ms var(--qhc-ease-out);
+
+      /* Micro: the card's edge and its icon warm together. No lift, no shadow. */
+      .icon-circle {
+        transition:
+          background var(--qhc-duration-base) var(--qhc-ease-out),
+          border-color var(--qhc-duration-base) var(--qhc-ease-out);
+      }
+
+      &:hover {
+        border-color: var(--qhc-navy-300);
+
+        .icon-circle {
+          background: var(--qhc-navy-200);
+          border-color: var(--qhc-navy-300);
+        }
+      }
     }
   }
 </style>
