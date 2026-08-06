@@ -8,18 +8,18 @@ import InternalHero from "@/components/InternalHero.astro";
 import ApproachComparison from "@/components/ApproachComparison.astro";
 import WhoWeHelp from "@/components/WhoWeHelp.astro";
 import Culture from "@/components/Culture.astro";
+import About from "@/components/About.astro";
 import InTheNews from "@/components/InTheNews.astro";
 
 // HELPERS
 import { Image } from "astro:assets";
 
 // DATA
-import { story, carePlanIntro, carePlanSteps, credentials } from "@/data/approachData";
-import { baseData, schemaIds } from "@/data/siteData";
+import { carePlanIntro, carePlanSteps, credentials } from "@/data/approachData";
+import { schemaIds } from "@/data/siteData";
 
 // IMAGES
-import heroPortrait from "@/assets/photos/marvalyn_2.jpg";
-import letterPortrait from "@/assets/photos/marvalyn_1.jpeg";
+import heroPhoto from "@/assets/photos/quote-path.jpg";
 import planPhoto from "@/assets/photos/how-it-works.jpg";
 
 // SCHEMA — AboutPage hanging off the graph BaseHead already emits: the page
@@ -35,6 +35,13 @@ const aboutSchema = {
 };
 ---
 
+<!--
+  Page order is deliberate (design review 2026-08-05): the business case
+  leads — difference, who we help, how plans work, the six Cs — and Marvalyn
+  arrives afterwards, as the person behind the standard rather than the
+  subject of the page. Her section is the original homepage About block,
+  restored verbatim (client-provided copy).
+-->
 <Layout
   pageTitle="Our Approach and Founder's Story | Quantum Home Cares New Jersey"
   description="Marvalyn Ellis founded Quantum Home Cares after 25 years managing her own parents' care. Advocacy-led senior home care built around one family at a time."
@@ -42,105 +49,29 @@ const aboutSchema = {
   contactTitle="Let's talk about your family."
   contactLead="One conversation, no cost, nothing to sign. Tell us what is going on and we will give you an honest read on what would help."
 >
-  <!-- ===== 1. PAGE INTRO ===== -->
+  <!-- ===== 1. PAGE INTRO — the pitch is the hero ===== -->
   <InternalHero
     eyebrow="Our Approach"
-    title="One owner. One standard. Every family."
-    image={heroPortrait}
-    imageAlt={`${baseData.owner.name}, founder of ${baseData.legalName}`}
+    title="Most agencies send help. We show up and follow through."
+    image={heroPhoto}
+    imageAlt="An older couple sitting together looking out over a vineyard"
   >
     <p class="lead">
-      Most home care companies are built from a business plan. This one was built from twenty five
-      years of doing it for her own parents.
+      Large home care agencies run on clinical quotas and insurance billing. An aide is assigned,
+      hours are logged, the visit closes, and the family is still the one on hold with the
+      insurance company at four in the afternoon.
+    </p>
+    <p class="lead">
+      We work the other way. We build the care plan and we maintain it. We go to the appointments.
+      We follow up on referrals and test results. We handle the calls and the forms. And we stay in
+      touch before something goes wrong, not after.
+    </p>
+    <p class="lead hero-strong">
+      Advocacy is not an add-on service here. It is the reason this company exists.
     </p>
   </InternalHero>
 
-  <!-- ===== 2. MARVALYN'S STORY — the letter ===== -->
-  <section id="story" class="section" data-reveal>
-    <div class="split split--5-6 split--top split--gap-lg">
-      <!-- Portrait rides along as the letter scrolls — she stays present for
-           the whole read. -->
-      <div class="story__media">
-        <div class="plate plate--lg story__plate">
-          <Image
-            src={letterPortrait}
-            alt={`${baseData.owner.name} at work with a family`}
-            widths={[600, 1200]}
-            sizes="(max-width: 1078px) 92vw, 40vw"
-          />
-        </div>
-      </div>
-
-      <div class="stack story__letter">
-        <span class="eyebrow">Meet Marvalyn</span>
-
-        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-          I learned this system the hard way, from the inside.
-        </Heading>
-
-        <p class="lead story__opening">{story.opening}</p>
-
-        {story.paragraphs.map(paragraph => <p class="lead">{paragraph}</p>)}
-
-        <p class="story__beat">{story.beat}</p>
-
-        {story.lessons.map(paragraph => <p class="lead">{paragraph}</p>)}
-
-        <!-- No .underscore here — at statement size inside running prose the
-             blue underline reads as a hyperlink, not a highlight. -->
-        <Heading tag="p" size="statement" fontFamily="primary" weight="fw400" marginBottom="none">
-          {story.closer}
-        </Heading>
-
-        <div class="story__sig">
-          <span class="story__sig-name">{baseData.owner.name}</span>
-          <span class="meta">Founder, {baseData.legalName}</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 3. WHY THIS COMPANY EXISTS ===== -->
-  <section id="why" class="section" data-reveal>
-    <div class="section-header why__header">
-      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-        Most agencies send help. We show up and follow through.
-      </Heading>
-    </div>
-
-    <div class="stack why__body">
-      <p class="lead">
-        Large home care agencies run on clinical quotas and insurance billing. That is not a
-        criticism of the people who work there. It is how the business model works. An aide is
-        assigned, hours are logged, the visit closes, and the family is still the one on hold with
-        the insurance company at four in the afternoon.
-      </p>
-
-      <!-- The line the section turns on, set apart as an editorial pull -->
-      <Heading
-        tag="p"
-        size="l"
-        fontFamily="primary"
-        weight="fw400"
-        marginBottom="none"
-        class="why__pull"
-      >
-        The gap is not care. It is everything around the care.
-      </Heading>
-
-      <p class="lead">
-        We work the other way. We build the care plan and we maintain it. We go to the appointments.
-        We follow up on referrals and test results. We handle the calls and the forms. And we stay
-        in touch before something goes wrong, not after.
-      </p>
-
-      <p class="why__closer">
-        Advocacy is not an add-on service here. It is the reason this company exists.
-      </p>
-    </div>
-  </section>
-
-  <!-- ===== 4. THE DIFFERENCE, LINE BY LINE ===== -->
+  <!-- ===== 2. THE DIFFERENCE, LINE BY LINE ===== -->
   <section id="comparison" class="section" data-reveal>
     <div class="section-header comparison__header">
       <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
@@ -151,10 +82,10 @@ const aboutSchema = {
     <ApproachComparison />
   </section>
 
-  <!-- ===== 5. WHO WE HELP ===== -->
+  <!-- ===== 3. WHO WE HELP ===== -->
   <WhoWeHelp />
 
-  <!-- ===== 6. HOW CARE PLANS GET BUILT ===== -->
+  <!-- ===== 4. HOW CARE PLANS GET BUILT ===== -->
   <section id="care-plans" class="section" data-reveal>
     <div class="split split--5-6 split--top split--gap-lg">
       <div class="plan__aside">
@@ -189,10 +120,14 @@ const aboutSchema = {
     </div>
   </section>
 
-  <!-- ===== 7. THE SIX Cs ===== -->
+  <!-- ===== 5. THE SIX Cs ===== -->
   <Culture />
 
-  <!-- ===== 8. CREDENTIALS AND COMPLIANCE ===== -->
+  <!-- ===== 6. MEET MARVALYN — the original homepage About block, restored
+       verbatim. She closes the argument the page has already made. -->
+  <About />
+
+  <!-- ===== 7. CREDENTIALS AND COMPLIANCE ===== -->
   <section id="credentials" class="section" data-reveal>
     <div class="cred">
       <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
@@ -212,117 +147,25 @@ const aboutSchema = {
     </div>
   </section>
 
-  <!-- ===== 9. IN THE NEWS ===== -->
+  <!-- ===== 8. IN THE NEWS ===== -->
   <InTheNews />
 
-  <!-- ===== 10. TESTIMONIALS — deliberately not built. Held until real
+  <!-- ===== 9. TESTIMONIALS — deliberately not built. Held until real
        quotes are collected with written permission (03-our-approach.md);
        never launch this section with placeholder or invented quotes. -->
 
-  <!-- ===== 11. PAGE CTA ===== is the sitewide contact band, retitled via
+  <!-- ===== 10. PAGE CTA ===== is the sitewide contact band, retitled via
        contactTitle / contactLead on Layout above. -->
 </Layout>
 
 <style lang="scss">
-  // ---- 2. The letter ----
-  .story {
-    &__media {
-      /* .split--top sets align-items: start, which would shrinkwrap this cell
-         and leave the sticky plate no track to travel — stretch it back. */
-      align-self: stretch;
-    }
-
-    &__plate {
-      position: sticky;
-      top: 8.5rem;
-      aspect-ratio: 4 / 5;
-      overflow: hidden;
-
-      /* The portrait breathes a few percent as the letter scrolls past —
-         same scroll-driven drift as the services cards, same gates. */
-      @media (prefers-reduced-motion: no-preference) {
-        @supports (animation-timeline: view()) {
-          :global(img) {
-            scale: 1.1;
-            animation: story-drift linear both;
-            animation-timeline: view();
-          }
-        }
-      }
-
-      @media (max-width: 1078px) {
-        position: static;
-        aspect-ratio: 3 / 2;
-      }
-    }
-
-    &__letter {
-      --gap: 1.25rem;
-      max-width: 58ch;
-    }
-
-    &__opening {
-      color: var(--qhc-navy-900);
-      font-weight: 500;
-    }
-
-    /* The turn of the letter — a beat, not a heading */
-    &__beat {
-      margin-top: 0.375rem;
-      color: var(--qhc-navy-700);
-      font-size: var(--qhc-size-body-m);
-      font-weight: 600;
-    }
-
-    &__sig {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      margin-top: 0.75rem;
-      padding-top: 1.375rem;
-      border-top: 1px solid var(--qhc-hairline);
-    }
-
-    &__sig-name {
-      font-family: var(--qhc-font-display);
-      font-size: 1.75rem;
-      line-height: 1.1;
-      color: var(--qhc-navy-900);
-    }
+  /* Emphasis without a callout frame — weight and colour only */
+  .hero-strong {
+    color: var(--qhc-navy-900);
+    font-weight: 600;
   }
 
-  // ---- 3. Why ----
-  .why {
-    &__header {
-      --mb: 2.75rem;
-      --w: 52rem;
-    }
-
-    &__body {
-      --gap: 1.5rem;
-      max-width: 66ch;
-      margin-inline: auto;
-    }
-
-    /* Editorial pull — ruled above and below, centred between prose blocks */
-    :global(.why__pull) {
-      padding: 1.625rem 0;
-      border-block: 1px solid var(--qhc-hairline);
-      color: var(--qhc-navy-700);
-      text-align: center;
-    }
-
-    &__closer {
-      padding-left: 1.125rem;
-      border-left: 2px solid var(--qhc-navy-300);
-      color: var(--qhc-navy-900);
-      font-size: var(--qhc-size-body-m);
-      font-weight: 600;
-      line-height: 1.6;
-    }
-  }
-
-  // ---- 4. Comparison ----
+  // ---- 2. Comparison ----
   .comparison {
     &__header {
       --mb: 3rem;
@@ -330,7 +173,7 @@ const aboutSchema = {
     }
   }
 
-  // ---- 6. Care plans ----
+  // ---- 4. Care plans ----
   .plan {
     &__aside {
       display: flex;
@@ -389,7 +232,7 @@ const aboutSchema = {
     }
   }
 
-  // ---- 8. Credentials ----
+  // ---- 7. Credentials ----
   .cred {
     display: flex;
     flex-direction: column;
@@ -452,15 +295,6 @@ const aboutSchema = {
       &__grid {
         grid-template-columns: minmax(0, 1fr);
       }
-    }
-  }
-
-  @keyframes story-drift {
-    from {
-      transform: translateY(-3%);
-    }
-    to {
-      transform: translateY(3%);
     }
   }
 </style>

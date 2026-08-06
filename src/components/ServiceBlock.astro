@@ -169,12 +169,12 @@ const { service, flip = false } = Astro.props;
       line-height: 1.55;
     }
 
+    /* No accent bar — that callout style was retired sitewide. The inline
+       bold terms carry the structure on their own. */
     &__defs {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      padding-left: 1.125rem;
-      border-left: 2px solid var(--qhc-navy-300);
     }
 
     &__def {

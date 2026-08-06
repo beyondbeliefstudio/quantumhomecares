@@ -3,14 +3,16 @@
  * design_handoff_quantum_homepage/buildout-notes/03-our-approach.md.
  *
  * Facts that must not drift:
- *   · Marvalyn's story is FIRST PERSON, in her voice, and flagged in the
- *     handoff for her personal review — do not paraphrase or "improve" it.
- *     Career facts as reconciled there: a Verizon career (Associate Director)
- *     running alongside 25+ years managing her own parents' care.
  *   · Testimonials are HELD until real ones are collected, with written
  *     permission. Never fill that section with placeholder or invented quotes.
  *   · Sole owner; "the owner, directly" is a differentiator — never imply a
  *     call center or large staff.
+ *
+ * Note: 03's first-person letter ("I learned this system the hard way…") was
+ * cut in the 2026-08-05 design review — the client wants the ORIGINAL
+ * homepage About block (About.astro) as the Marvalyn section instead, placed
+ * late in the page so the business case leads. The letter copy lives in git
+ * history and 03-our-approach.md if it is ever revived.
  */
 
 export interface ComparisonRow {
@@ -35,27 +37,6 @@ export interface Standard {
   word: string;
   copy: string;
 }
-
-// ==========================================
-// 2. MARVALYN'S STORY — first person, verbatim
-// ==========================================
-export const story = {
-  /** Opening line — set larger than the rest of the letter. */
-  opening: "I am Marvalyn Ellis, and I started Quantum Home Cares because I lived it first.",
-  paragraphs: [
-    "For more than twenty five years, while building a career at Verizon and eventually serving as an Associate Director, I was also managing care for my parents. Appointments. Medications. Insurance appeals. Discharge instructions handed to me in a hallway by someone already walking toward the next room.",
-    "I did that at night and on weekends and on lunch breaks, the way most people do. And I learned the healthcare system the only way you really can, which is by fighting your way through it on behalf of someone you love.",
-  ],
-  /** The turn — a beat on its own line between the two halves of the letter. */
-  beat: "Here is what I learned.",
-  lessons: [
-    "The system is not built for families. It is built for billing cycles and thirty day readmission windows. If you do not have someone who knows how to ask the right question at the right moment, things fall through. Not because anyone is careless, but because nobody's job is to look at the whole picture. Everybody owns a piece.",
-    "I also learned what good care actually looks like, and how rare it is. It is not a checklist of tasks. It is somebody who notices that my mother had stopped finishing her meals two weeks before anyone else did.",
-    "When I left the corporate world, I looked at what was available to families in New Jersey and I kept finding the same thing. Plenty of agencies willing to send an aide and log the hours. Almost nobody willing to sit in the appointment, read the discharge paperwork, and follow up on the referral that would otherwise sit for three weeks.",
-  ],
-  /** The letter's last line — rendered as the section's statement. */
-  closer: "So I built the company I wish my family had.",
-};
 
 // ==========================================
 // 4. THE DIFFERENCE, LINE BY LINE
