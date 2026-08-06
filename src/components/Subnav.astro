@@ -1,26 +1,30 @@
 ---
 /**
- * Sticky pill rail for /services — six anchors, one per chapter card, riding
- * just below the site header on a glass bar. app.js's scrollspy
- * (initScrollSpy) marks whichever service is currently on screen.
+ * Sticky glass pill rail for long in-page navigation — one anchor per
+ * section, riding just below the site header. app.js's scrollspy
+ * (initScrollSpy) marks whichever section is currently on screen.
+ *
+ * Generalized from the /services rail so any chaptered page can carry one:
+ *
+ *   <Subnav ariaLabel="Services on this page"
+ *           items={things.map(t => ({ href: `#${t.id}`, label: t.short }))} />
  *
  * Overlaps the hero's bottom seam by half its height, so the rail reads as a
- * fixture of the page rather than the first line of content.
+ * fixture of the page rather than the first line of content. Sections it
+ * points at need scroll-margin-top for the header + rail stack (~12rem).
  */
 
-// DATA
-import { serviceDetails } from "@/data/servicesData";
+interface Props {
+  items: { href: string; label: string }[];
+  ariaLabel: string;
+}
+
+const { items, ariaLabel } = Astro.props;
 ---
 
-<nav class="subnav" aria-label="Services on this page" data-subnav>
+<nav class="subnav" aria-label={ariaLabel} data-subnav>
   <div class="subnav__rail">
-    {
-      serviceDetails.map(service => (
-        <a href={`#${service.id}`} class="subnav__pill">
-          {service.shortTitle}
-        </a>
-      ))
-    }
+    {items.map(item => <a href={item.href} class="subnav__pill">{item.label}</a>)}
   </div>
 </nav>
 

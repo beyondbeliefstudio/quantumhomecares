@@ -1,0 +1,315 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import InternalHero from "@/components/InternalHero.astro";
+import Subnav from "@/components/Subnav.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { topics, stuck } from "@/data/resourcesData";
+
+// IMAGES
+import heroPhoto from "@/assets/photos/strip-walking.jpg";
+import caregiverPhoto from "@/assets/photos/strip-hug.jpg";
+
+// The rail: one pill per topic, plus the five-things band at the end
+const railItems = [
+  ...topics.map(topic => ({ href: `#${topic.id}`, label: topic.shortTitle })),
+  { href: "#stuck", label: "Five Things" },
+];
+
+/** tel: href from a printed number — "1-800-272-3900" → tel:18002723900 */
+const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
+---
+
+<Layout
+  pageTitle="Senior Care Resources for New Jersey Families | Quantum Home Cares"
+  description="Medicare, Medicaid, VA benefits, county programs, and caregiver support in New Jersey, with plain guidance on what actually applies and where families get stuck."
+  contactTitle="Not sure where to start?"
+  contactLead="Call us. We will help you figure out what applies to your situation and who to talk to, whether or not you ever become a client. Most of the families we help this way never hire us, and that is fine."
+>
+  <!-- ===== 1. PAGE INTRO ===== -->
+  <InternalHero
+    eyebrow="Resources"
+    title="Most families do not know what is available to them."
+    image={heroPhoto}
+    imageAlt="An older couple walking together down a sunlit garden path"
+  >
+    <p class="lead">
+      There is a lot of help out there for New Jersey seniors. Benefits programs, county services,
+      free counseling, respite funding, legal protections. Most of it goes unused, not because
+      families do not qualify, but because nobody ever told them it existed.
+    </p>
+    <p class="lead">
+      This is the guidance we give families on the phone. It is here whether you ever hire us or
+      not.
+    </p>
+    <p class="lead">
+      If you are in the middle of something and cannot make sense of where to start, call us. We
+      will help you sort it out. That is not a sales pitch, it is most of what we do anyway.
+    </p>
+  </InternalHero>
+
+  <Subnav ariaLabel="Resource topics on this page" items={railItems} />
+
+  <!-- ===== 2–7. THE TOPICS ===== -->
+  {
+    topics.map(topic => (
+      <section id={topic.id} class="section rsc" data-reveal>
+        <div class="split split--4-7 split--top split--gap-lg">
+          <!-- Topic header rides along while its entries scroll -->
+          <div class="rsc__aside">
+            <div class="stack rsc__head">
+              <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+                {topic.title}
+              </Heading>
+              {topic.intro && <p class="lead rsc__intro">{topic.intro}</p>}
+
+              {/* The one photo aside on the page — the section written to the
+                  caregiver personally is the one that earns warmth */}
+              {topic.id === "caregiver-support" && (
+                <div class="plate plate--lg rsc__plate">
+                  <Image
+                    src={caregiverPhoto}
+                    alt="Two older adults embracing, one smiling over the other's shoulder"
+                    widths={[500, 1000]}
+                    sizes="(max-width: 1078px) 92vw, 30vw"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div class="rsc__entries">
+            {topic.entries.map((entry, i) => (
+              <article class="rsc__entry" data-stagger style={`--i: ${i}`}>
+                <Heading tag="h3" size="xs" fontFamily="secondary" weight="fw600" marginBottom="none">
+                  {entry.url ? (
+                    <a href={entry.url} target="_blank" rel="noopener" class="rsc__link">
+                      {entry.name}
+                      <Icon name="arrow-right" class="rsc__ext" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    entry.name
+                  )}
+                </Heading>
+
+                {(entry.urlLabel || entry.phone) && (
+                  <p class="meta rsc__contact">
+                    {entry.urlLabel && (
+                      <a href={entry.url} target="_blank" rel="noopener">
+                        {entry.urlLabel}
+                      </a>
+                    )}
+                    {entry.urlLabel && entry.phone && <span aria-hidden="true"> · </span>}
+                    {entry.phone && <a href={telFor(entry.phone)}>{entry.phone}</a>}
+                  </p>
+                )}
+
+                {entry.paragraphs.map(paragraph => (
+                  <p class="rsc__copy">{paragraph}</p>
+                ))}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- ===== 8. WHERE FAMILIES GET STUCK ===== -->
+  <section id="stuck" class="band band--down rsc-stuck" data-reveal>
+    <div class="band__inner">
+      <div class="section-header rsc-stuck__header">
+        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+          The five things families learn too late
+        </Heading>
+      </div>
+
+      <ol class="rsc-stuck__list">
+        {
+          stuck.map((item, i) => (
+            <li class="rsc-stuck__item" data-stagger style={`--i: ${i}`}>
+              <span class="rsc-stuck__marker" aria-hidden="true">{i + 1}</span>
+              <div class="rsc-stuck__body">
+                <p class="rsc-stuck__claim">{item.claim}</p>
+                <p class="rsc-stuck__note">{item.note}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== 9. PAGE CTA ===== is the sitewide contact band, retitled "Not
+       sure where to start?" via the Layout props above — the reader gets the
+       form plus the call line rather than a button to them. -->
+</Layout>
+
+<style lang="scss">
+  // ---- Topic blocks ----
+  .rsc {
+    /* Anchor jumps from the rail have to clear header + rail */
+    scroll-margin-top: 12rem;
+
+    &__aside {
+      align-self: stretch;
+    }
+
+    &__head {
+      --gap: 1.125rem;
+      position: sticky;
+      top: 10.5rem;
+
+      @media (max-width: 1078px) {
+        position: static;
+      }
+    }
+
+    &__intro {
+      --w: 38ch;
+    }
+
+    &__plate {
+      aspect-ratio: 4 / 5;
+      margin-top: 0.75rem;
+
+      @media (max-width: 1078px) {
+        aspect-ratio: 3 / 2;
+      }
+    }
+
+    /* Ruled entries — a reference document, not a card wall */
+    &__entries {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-block: 1.875rem;
+      border-top: 1px solid var(--qhc-hairline);
+
+      &:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+
+    /* External resource — the name is the link, arrow angled outward */
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--qhc-navy-900);
+      text-decoration: none;
+      transition: color var(--qhc-duration-fast) var(--qhc-ease-out);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-navy-700);
+
+        :global(svg) {
+          transform: rotate(-45deg) translate(0.125rem, 0);
+        }
+      }
+    }
+
+    &__ext {
+      width: 1.125rem;
+      height: 1.125rem;
+      color: var(--qhc-navy-700);
+      transform: rotate(-45deg);
+      transition: transform var(--qhc-duration-fast) var(--qhc-ease-out);
+    }
+
+    &__contact {
+      a {
+        font-weight: 600;
+      }
+    }
+
+    &__copy {
+      max-width: 62ch;
+      color: var(--qhc-ink-700);
+      line-height: 1.65;
+    }
+  }
+
+  // ---- The five things ----
+  .rsc-stuck {
+    scroll-margin-top: 12rem;
+
+    &__header {
+      --mb: 3rem;
+      --w: 52rem;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      max-width: 56rem;
+      margin-inline: auto;
+      list-style: none;
+    }
+
+    &__item {
+      display: grid;
+      grid-template-columns: 2.75rem 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      padding-block: 1.625rem;
+      border-top: 1px solid var(--qhc-hairline-cool);
+
+      &:first-child {
+        border-top: 0;
+      }
+    }
+
+    &__marker {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius-circle);
+      color: var(--qhc-navy-800);
+      font-family: var(--qhc-font-display);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-top: 0.375rem;
+    }
+
+    &__claim {
+      color: var(--qhc-navy-900);
+      font-size: var(--qhc-size-body-m);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    &__note {
+      color: var(--qhc-ink-700);
+      line-height: 1.6;
+    }
+  }
+</style>

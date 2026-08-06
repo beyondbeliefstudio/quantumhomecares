@@ -5,7 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
 import InternalHero from "@/components/InternalHero.astro";
-import ServicesSubnav from "@/components/ServicesSubnav.astro";
+import Subnav from "@/components/Subnav.astro";
 import ServiceBlock from "@/components/ServiceBlock.astro";
 import PhotoStrip from "@/components/PhotoStrip.astro";
 
@@ -71,7 +71,10 @@ const serviceSchema = serviceDetails.map(service => ({
     </p>
   </InternalHero>
 
-  <ServicesSubnav />
+  <Subnav
+    ariaLabel="Services on this page"
+    items={serviceDetails.map(s => ({ href: `#${s.id}`, label: s.shortTitle }))}
+  />
 
   <!-- ===== 2–7. THE SIX SERVICES ===== -->
   {serviceDetails.map((service, i) => <ServiceBlock service={service} flip={i % 2 === 1} />)}
