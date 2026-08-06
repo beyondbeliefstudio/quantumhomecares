@@ -1,0 +1,43 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// DATA
+import { baseData, telHref } from "@/data/siteData";
+---
+
+<Layout
+  pageTitle={`Referral Received | ${baseData.title}`}
+  description="Thank you for your referral. We acknowledge every referral the same business day."
+  hideCTA
+>
+  <section class="section notice" aria-label="Referral received">
+    <div class="section-header">
+      <span class="eyebrow">Referral Received</span>
+
+      <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Thank you. We have your referral.
+      </Heading>
+
+      <p class="lead">
+        We acknowledge every referral the same business day. If the discharge is time-sensitive,
+        call <a href={telHref}>{baseData.phone}</a> and you will reach the owner directly.
+      </p>
+
+      <Links variant="primary" href="/for-professionals">Back To For Professionals</Links>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .notice {
+    display: flex;
+    align-items: center;
+    min-height: 60vh;
+    padding-bottom: var(--qhc-section-gap);
+  }
+</style>

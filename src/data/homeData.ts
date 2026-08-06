@@ -32,11 +32,6 @@ export interface NumberedCard {
   icon?: string;
 }
 
-export interface Region {
-  name: string;
-  counties: string;
-}
-
 export interface Faq {
   question: string;
   answer: string;
@@ -138,41 +133,9 @@ export const faqs: Faq[] = [
   },
 ];
 
-// ==========================================
-// ─────────────  PARKED  ─────────────
-// Approved copy that left the homepage in the 01-home.md rewrite. Nothing below
-// is imported by the homepage. Each block names the page it belongs to; move it
-// into that page's own data file when the page is built, and delete it here.
-// (comparison, whoWeHelp, culture, and press moved to approachData.ts when
-// /our-approach was built — 03-our-approach.md revised their copy, so that
-// file is now the source of truth for them.)
-// ==========================================
-
-/** → /for-professionals — rendered by ReferralPoints.astro */
-export const referralPoints: NumberedCard[] = [
-  {
-    title: "Fast discharge turnaround",
-    copy: "We can assess and staff a home within days of a discharge date, including same-week starts when the situation calls for it.",
-  },
-  {
-    title: "One point of contact",
-    copy: "You reach the owner directly, not a regional call center. Referrals are acknowledged the same business day.",
-  },
-  {
-    title: "Reduced readmission risk",
-    copy: "Medication reminders, follow-up appointments, and nutrition handled in the home, so your discharge plan actually gets carried out.",
-  },
-  {
-    title: "Licensed and documented",
-    copy: "NJ Health Care Service Firm HP0426700. Insured, bonded, background-checked providers, with written care plans on file.",
-  },
-];
-
-/** → county coverage grid — 03-our-approach.md did not include this section,
- *  so it stays parked until a page claims it (possibly /resources). */
-export const regions: Region[] = [
-  { name: "North Jersey", counties: "Bergen, Essex, Morris, Passaic, Hudson, Union" },
-  { name: "Central Jersey", counties: "Somerset, Middlesex, Monmouth, Mercer, Hunterdon" },
-  { name: "South Jersey", counties: "Ocean, Burlington, Camden, Atlantic, Cape May" },
-  { name: "Western Jersey", counties: "Warren, Sussex, Salem, Gloucester, Cumberland" },
-];
+// The parked blocks that lived here after the 01-home.md condensation have all
+// been claimed by their pages: comparison/whoWeHelp/culture/press by
+// approachData.ts, and regions plus the referral content by
+// professionalsData.ts (04-for-professionals.md rewrote the referral points —
+// note it deliberately DROPPED the old "Reduced readmission risk" card: the
+// handoff rules out readmission claims as indefensible without data).

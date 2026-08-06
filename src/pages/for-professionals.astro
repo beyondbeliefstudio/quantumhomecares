@@ -1,0 +1,579 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import InternalHero from "@/components/InternalHero.astro";
+import Links from "@/components/Links.astro";
+import ReferralForm from "@/components/ReferralForm.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// DATA
+import {
+  expectations,
+  proServices,
+  scopeNote,
+  regions,
+  coverageTypes,
+  credentials,
+  referralSteps,
+} from "@/data/professionalsData";
+import { baseData, telHref } from "@/data/siteData";
+
+// IMAGES
+import heroPhoto from "@/assets/photos/strip-medical.jpg";
+import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unsplash.jpg";
+---
+
+<!--
+  B2B page. Tone per the handoff: efficient and factual — this reader has
+  minutes, not patience. It carries its own referral form (a separate Netlify
+  form from the family one) and its own closing CTA, so the sitewide family
+  contact band is hidden.
+-->
+<Layout
+  pageTitle="Home Care Referral Partner in New Jersey | Quantum Home Cares"
+  description="A New Jersey home care partner for discharge planners, social workers, and elder law attorneys. Same-day referral response, assessments within days, one point of contact."
+  hideCTA
+>
+  <!-- ===== 1. PAGE INTRO ===== -->
+  <InternalHero
+    eyebrow="For Care Professionals"
+    title="A referral partner who closes the loop."
+    image={heroPhoto}
+    imageAlt="A caregiver taking a health reading for a senior client at home"
+  >
+    <p class="lead">
+      When you refer a patient or client to a home care agency, your name goes with them. If the
+      agency takes three days to call back, or staffs the case and then goes quiet, that comes back
+      to you.
+    </p>
+    <p class="lead">
+      We built our referral process around that. Same business day acknowledgment on every referral,
+      an assessment within days, and communication back to you on what happened.
+    </p>
+    <div class="btn-wrapper">
+      <Links variant="primary" href="#referral" classes="lg">Make a Referral</Links>
+      <Links variant="outline" href={telHref}>Call {baseData.phone}</Links>
+    </div>
+  </InternalHero>
+
+  <!-- ===== 2. WHAT PARTNERS CAN EXPECT — term sheet rows ===== -->
+  <section id="expectations" class="section" data-reveal>
+    <div class="section-header exp__header">
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        What you can expect from us.
+      </Heading>
+    </div>
+
+    <dl class="exp__sheet">
+      {
+        expectations.map((item, i) => (
+          <div class="exp__row" data-stagger style={`--i: ${i}`}>
+            <dt>{item.label}</dt>
+            <dd>{item.copy}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- ===== 3. SUPPORT THAT HOLDS AFTER DISCHARGE ===== -->
+  <section id="discharge" class="section" data-reveal>
+    <div class="split split--4-7 split--top">
+      <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+        Discharge plans only work if somebody carries them out.
+      </Heading>
+
+      <div class="stack discharge__body">
+        <p class="lead">
+          The instructions leave the hospital with the patient. What happens next depends on whether
+          anyone is in the home to act on them.
+        </p>
+        <p class="lead">
+          That is the part we handle. Medication reminders on schedule. Follow-up appointments
+          attended, not just scheduled. Meals and hydration monitored. Home safety addressed before
+          the fall rather than after it. And someone in the house who notices when something has
+          changed and reports it up.
+        </p>
+        <p class="lead">
+          We also attend medical appointments and coordinate with providers on the family's behalf,
+          which means the plan you wrote gets followed rather than filed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. SERVICES AVAILABLE TO YOUR CLIENTS ===== -->
+  <section id="services" class="band band--down" data-reveal>
+    <div class="band__inner">
+      <div class="section-header svc-list__header">
+        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+          What we can put in place.
+        </Heading>
+      </div>
+
+      <ul class="svc-list__grid">
+        {
+          proServices.map((item, i) => (
+            <li class="svc-list__item" data-stagger style={`--i: ${i}`}>
+              <Icon name="check" class="svc-list__check" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="svc-list__foot">
+        <Links variant="inline" href="/services">
+          Full service detail
+          <Icon name="arrow-right" aria-hidden="true" />
+        </Links>
+
+        <!-- The honesty note — framed so it cannot be mistaken for fine print -->
+        <p class="svc-list__scope">
+          <span class="topic topic--accent">Scope</span>
+          {scopeNote}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. COVERAGE AND CAPACITY ===== -->
+  <section id="coverage" class="section" data-reveal>
+    <div class="split split--5-6 split--top split--gap-lg">
+      <div class="cov__media">
+        <div class="plate plate--lg cov__plate">
+          <Image
+            src={coveragePhoto}
+            alt="A tree-lined main street of a New Jersey downtown"
+            widths={[600, 1200]}
+            sizes="(max-width: 1078px) 92vw, 40vw"
+          />
+        </div>
+      </div>
+
+      <div class="stack cov__body">
+        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+          Where we can staff.
+        </Heading>
+        <p class="lead">We serve families across New Jersey.</p>
+
+        <div class="cov__regions">
+          {
+            regions.map((region, i) => (
+              <p class="pair" data-stagger style={`--i: ${i}`}>
+                <strong>{region.name}</strong>
+                {region.counties}
+              </p>
+            ))
+          }
+        </div>
+
+        <p class="pair cov__types" data-stagger style="--i: 4">
+          <strong>Coverage types</strong>
+          {coverageTypes}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. CREDENTIALS ===== -->
+  <section id="credentials" class="section" data-reveal>
+    <div class="cred">
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Licensed and documented.
+      </Heading>
+
+      <div class="cred__grid">
+        {
+          credentials.map((item, i) => (
+            <p class="pair cred__item" data-stagger style={`--i: ${i}`}>
+              <strong>{item.label}</strong>
+              {item.detail}
+            </p>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. HOW TO MAKE A REFERRAL ===== -->
+  <section id="how" class="section" data-reveal>
+    <div class="section-header how__header">
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Three steps.
+      </Heading>
+    </div>
+
+    <ol class="how__steps">
+      {
+        referralSteps.map((step, i) => (
+          <li class="how__step" data-stagger style={`--i: ${i}`}>
+            <span class="how__marker" aria-hidden="true">{i + 1}</span>
+            <div class="stack how__body">
+              <Heading tag="h3" size="xs" fontFamily="secondary" weight="fw600" marginBottom="none">
+                {step.title}
+              </Heading>
+              <p>{step.copy}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- ===== 8. REFERRAL FORM ===== -->
+  <section id="referral" class="band band--cool referral" data-reveal>
+    <div class="band__inner">
+      <div class="split split--gap-lg split--top">
+        <div class="stack referral__intro">
+          <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+            Make a referral
+          </Heading>
+          <p class="lead referral__lead">
+            For urgent discharges, please call <a href={telHref}>{baseData.phone}</a> rather than
+            using this form.
+          </p>
+          <p class="meta--lg referral__direct">
+            Every referral is acknowledged the same business day, and the person who answers can
+            make decisions.
+          </p>
+        </div>
+
+        <ReferralForm />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9. LEAVE-BEHIND — deliberately not built. The one-page referral
+       PDF does not exist yet (04: "PDF to be produced. Not required for
+       launch."); linking to a file that is not there would 404. Add this
+       section when the PDF is real. -->
+
+  <!-- ===== 10. PAGE CTA ===== -->
+  <section id="cta" class="section" data-reveal>
+    <div class="section-header cta__header">
+      <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Have a client who needs support at home?
+      </Heading>
+      <p class="lead">
+        Call and you will reach the owner. If we can help, we will tell you what the timeline looks
+        like. If we cannot, we will tell you that too.
+      </p>
+      <div class="btn-wrapper btn-wrapper--center">
+        <Links variant="primary" href={telHref} classes="lg">Call {baseData.phone}</Links>
+        <Links variant="outline" href="#referral">Make a Referral</Links>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  // ---- 2. The term sheet ----
+  .exp {
+    &__header {
+      --mb: 2.75rem;
+      --w: 52rem;
+    }
+
+    &__sheet {
+      max-width: 62rem;
+      margin-inline: auto;
+    }
+
+    &__row {
+      display: grid;
+      grid-template-columns: minmax(12rem, 18rem) 1fr;
+      gap: 1rem 3rem;
+      padding-block: 1.5rem;
+      border-top: 1px solid var(--qhc-hairline);
+
+      &:last-child {
+        border-bottom: 1px solid var(--qhc-hairline);
+      }
+
+      dt {
+        color: var(--qhc-navy-900);
+        font-weight: 600;
+        line-height: 1.45;
+      }
+
+      dd {
+        margin: 0;
+        color: var(--qhc-ink-700);
+        line-height: 1.6;
+      }
+
+      @media (max-width: 836px) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.375rem;
+      }
+    }
+  }
+
+  // ---- 3. Discharge ----
+  .discharge {
+    &__body {
+      --gap: 1.25rem;
+    }
+  }
+
+  // ---- 4. Services checklist ----
+  .svc-list {
+    &__header {
+      --mb: 3rem;
+      --w: 52rem;
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));
+      gap: 1rem 3rem;
+      max-width: 68rem;
+      margin-inline: auto;
+      list-style: none;
+    }
+
+    &__item {
+      display: grid;
+      grid-template-columns: 1.125rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      padding-block: 0.375rem;
+      font-size: var(--qhc-size-body-s);
+      line-height: 1.55;
+      color: var(--qhc-ink-700);
+    }
+
+    &__check {
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-top: 0.25rem;
+      color: var(--qhc-navy-700);
+    }
+
+    &__foot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.75rem;
+      max-width: 68rem;
+      margin: 2.75rem auto 0;
+    }
+
+    /* The non-medical scope note — a framed aside, read before referring */
+    &__scope {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.5rem 1.75rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline);
+      border-radius: var(--qhc-radius);
+      max-width: 62rem;
+      color: var(--qhc-ink-700);
+      font-size: var(--qhc-size-label);
+      line-height: 1.6;
+    }
+  }
+
+  // ---- 5. Coverage ----
+  .cov {
+    &__media {
+      align-self: stretch;
+    }
+
+    &__plate {
+      position: sticky;
+      top: 8.5rem;
+      aspect-ratio: 4 / 5;
+
+      @media (max-width: 1078px) {
+        position: static;
+        aspect-ratio: 3 / 2;
+      }
+    }
+
+    &__body {
+      --gap: 1.25rem;
+    }
+
+    &__regions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem 2.5rem;
+      margin-top: 0.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--qhc-hairline);
+
+      @media (max-width: 616px) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    &__types {
+      margin-top: 0.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--qhc-hairline);
+    }
+  }
+
+  // ---- 6. Credentials — same panel as /our-approach ----
+  .cred {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.75rem;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding: 3.5rem;
+    background: var(--qhc-navy-050);
+    border: 1px solid var(--qhc-navy-300);
+    border-radius: var(--qhc-radius-lg);
+    text-align: center;
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.75rem 0;
+      width: 100%;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--qhc-hairline-cool);
+      text-align: left;
+    }
+
+    &__item {
+      padding: 0 1.5rem;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      & + & {
+        border-left: 1px solid var(--qhc-hairline-cool);
+      }
+    }
+
+    @media (max-width: 1298px) {
+      &__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.875rem 2.75rem;
+      }
+
+      &__item {
+        padding: 0;
+
+        & + & {
+          border-left: 0;
+        }
+      }
+    }
+
+    @media (max-width: 990px) {
+      padding: 2.5rem 2rem;
+    }
+
+    @media (max-width: 682px) {
+      padding: 2rem 1.5rem;
+
+      &__grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+
+  // ---- 7. Three steps — the homepage HowItWorks rhythm ----
+  .how {
+    &__header {
+      --mb: 3.5rem;
+    }
+
+    &__steps {
+      --gap: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap);
+      list-style: none;
+    }
+
+    &__step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.125rem;
+      text-align: center;
+
+      /* Connector — this marker's edge to the next, across the gap */
+      &:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        top: 1.75rem;
+        left: calc(50% + 2.625rem);
+        right: calc(-50% - var(--gap) + 2.625rem);
+        height: 1px;
+        background: var(--qhc-navy-300);
+      }
+    }
+
+    &__marker {
+      display: grid;
+      place-items: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius-circle);
+      color: var(--qhc-navy-800);
+      font-family: var(--qhc-font-display);
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    &__body {
+      --gap: 0.5rem;
+    }
+
+    @media (max-width: 990px) {
+      &__steps {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2.25rem;
+      }
+
+      &__step:not(:last-child)::before {
+        content: none;
+      }
+    }
+  }
+
+  // ---- 8. Referral band ----
+  .referral {
+    scroll-margin-top: 7.25rem;
+
+    &__intro {
+      --gap: 1.5rem;
+    }
+
+    &__lead {
+      --w: 46ch;
+    }
+
+    &__direct {
+      color: var(--qhc-slate-600);
+    }
+  }
+
+  // ---- 10. CTA ----
+  .cta {
+    &__header {
+      --gap: 1.25rem;
+      --mb: 0;
+      --w: 56ch;
+    }
+  }
+</style>

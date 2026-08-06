@@ -1,0 +1,146 @@
+---
+/**
+ * The professional referral form — deliberately a SEPARATE Netlify form from
+ * the family "contact" form, so referral volume and response time can be
+ * tracked independently (04-for-professionals.md technical note).
+ *
+ * No PHI: the under-form note asks partners to keep diagnoses and records out
+ * of it, and the fields only collect a first name or initials.
+ */
+
+// COMPONENTS
+import Buttons from "@/components/Buttons.astro";
+
+// DATA
+import { supportOptions, urgencyOptions } from "@/data/professionalsData";
+
+const source = Astro.url.pathname;
+---
+
+<form
+  class="form-panel"
+  name="referral"
+  method="POST"
+  action="/submit-referral"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <!-- Honeypot — hidden from users, visible to bots -->
+  <p class="hidden">
+    <label>
+      Don't fill this out:
+      <input name="bot-field" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+
+  <input type="hidden" name="source" value={source} />
+
+  <p class="eyebrow">Professional referral</p>
+
+  <p class="meta form-legend">
+    <span class="required" aria-hidden="true">*</span> Required.
+  </p>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="ref-name">
+        Your name<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="ref-name" name="name" type="text" autocomplete="name" required />
+    </div>
+    <div class="form-group">
+      <label for="ref-org">
+        Organization<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="ref-org" name="organization" type="text" autocomplete="organization" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ref-role">
+      Your role<span class="required" aria-hidden="true">*</span>
+    </label>
+    <input id="ref-role" name="role" type="text" autocomplete="organization-title" required />
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="ref-phone">
+        Your phone<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="ref-phone" name="phone" type="tel" autocomplete="tel" required />
+    </div>
+    <div class="form-group">
+      <label for="ref-email">
+        Your email<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="ref-email" name="email" type="email" autocomplete="email" required />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="ref-client">
+        Client first name or initials<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="ref-client" name="clientName" type="text" autocomplete="off" required />
+    </div>
+    <div class="form-group">
+      <label for="ref-location">
+        Client town or county<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="ref-location" name="clientLocation" type="text" autocomplete="off" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ref-date">
+      Anticipated discharge or start date <span class="form-optional">(optional)</span>
+    </label>
+    <input id="ref-date" name="startDate" type="date" />
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="ref-support">
+        Type of support needed<span class="required" aria-hidden="true">*</span>
+      </label>
+      <select id="ref-support" name="supportType" required>
+        <option value="" disabled selected>Select one</option>
+        {supportOptions.map(option => <option value={option}>{option}</option>)}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="ref-urgency">
+        Urgency<span class="required" aria-hidden="true">*</span>
+      </label>
+      <select id="ref-urgency" name="urgency" required>
+        <option value="" disabled selected>Select one</option>
+        {urgencyOptions.map(option => <option value={option}>{option}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ref-notes">
+      Anything else we should know <span class="form-optional">(optional)</span>
+    </label>
+    <textarea id="ref-notes" name="notes" rows="3"></textarea>
+  </div>
+
+  <Buttons variant="primary" classes="full">Send Referral</Buttons>
+
+  <p class="meta">
+    We acknowledge every referral the same business day. Please do not include diagnoses, medical
+    records, or other protected health information in this form. We will collect what we need by
+    phone.
+  </p>
+</form>
+
+<style lang="scss">
+  /* Same treatment as the contact form's optional marker */
+  .form-optional {
+    color: var(--qhc-slate-600);
+    font-weight: 400;
+  }
+</style>
