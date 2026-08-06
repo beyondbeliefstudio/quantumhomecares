@@ -65,17 +65,35 @@ export const expectations: Expectation[] = [
 
 // ==========================================
 // 4. SERVICES AVAILABLE TO YOUR CLIENTS
+// Icons from src/icons/ — each capability reuses its service's glyph.
 // ==========================================
-export const proServices: string[] = [
-  "Care planning and family advocacy, including appointment attendance and provider coordination",
-  "Personal care: bathing, dressing, grooming, toileting, mobility and transfer assistance",
-  "Meal preparation, grocery shopping, hydration monitoring, and medication reminders",
-  "Transportation to appointments, with a caregiver who stays through the visit",
-  "Companionship and social engagement",
-  "Respite coverage, short term or ongoing",
-  "Memory care support for early dementia and Alzheimer's",
-  "Post-hospital and post-surgical support at home",
-  "Awake overnight shifts and live-in arrangements",
+export interface ProService {
+  icon: string;
+  copy: string;
+}
+
+export const proServices: ProService[] = [
+  {
+    icon: "care-plan",
+    copy: "Care planning and family advocacy, including appointment attendance and provider coordination",
+  },
+  {
+    icon: "daily-living",
+    copy: "Personal care: bathing, dressing, grooming, toileting, mobility and transfer assistance",
+  },
+  {
+    icon: "meals",
+    copy: "Meal preparation, grocery shopping, hydration monitoring, and medication reminders",
+  },
+  {
+    icon: "transportation",
+    copy: "Transportation to appointments, with a caregiver who stays through the visit",
+  },
+  { icon: "live-too-far-away", copy: "Companionship and social engagement" },
+  { icon: "respite", copy: "Respite coverage, short term or ongoing" },
+  { icon: "memory-changing", copy: "Memory care support for early dementia and Alzheimer's" },
+  { icon: "after-hospital-stay", copy: "Post-hospital and post-surgical support at home" },
+  { icon: "overnight", copy: "Awake overnight shifts and live-in arrangements" },
 ];
 
 export const scopeNote =
