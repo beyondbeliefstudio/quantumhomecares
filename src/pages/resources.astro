@@ -132,15 +132,15 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
         </Heading>
       </div>
 
-      <ol class="rsc-stuck__list">
+      <!-- Five ruled columns — the credentials-panel grammar, one symmetric
+           object under the centred header rather than a left-hanging list -->
+      <ol class="rsc-stuck__grid">
         {
           stuck.map((item, i) => (
             <li class="rsc-stuck__item" data-stagger style={`--i: ${i}`}>
-              <span class="rsc-stuck__marker" aria-hidden="true">{i + 1}</span>
-              <div class="rsc-stuck__body">
-                <p class="rsc-stuck__claim">{item.claim}</p>
-                <p class="rsc-stuck__note">{item.note}</p>
-              </div>
+              <span class="rsc-stuck__num" aria-hidden="true">{i + 1}</span>
+              <p class="rsc-stuck__claim">{item.claim}</p>
+              <p class="rsc-stuck__note">{item.note}</p>
             </li>
           ))
         }
@@ -258,49 +258,38 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
       --w: 52rem;
     }
 
-    &__list {
-      display: flex;
-      flex-direction: column;
-      max-width: 56rem;
+    /* Five ruled columns — same responsive contract as the credentials
+       panel: dividers drop before they can strand on a wrapped row, and
+       come back horizontal when the list stacks to one column. */
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      max-width: 78rem;
       margin-inline: auto;
       list-style: none;
     }
 
     &__item {
-      display: grid;
-      grid-template-columns: 2.75rem 1fr;
-      gap: 1.5rem;
-      align-items: start;
-      padding-block: 1.625rem;
-      border-top: 1px solid var(--qhc-hairline-cool);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 0 1.625rem;
 
       &:first-child {
-        border-top: 0;
+        padding-left: 0;
+      }
+
+      & + & {
+        border-left: 1px solid var(--qhc-hairline-cool);
       }
     }
 
-    &__marker {
-      display: grid;
-      place-items: center;
-      width: 2.75rem;
-      height: 2.75rem;
-      background: var(--qhc-white);
-      border: 1px solid var(--qhc-navy-300);
-      border-radius: var(--qhc-radius-circle);
-      color: var(--qhc-navy-800);
-      font-family: var(--qhc-font-text);
-      font-size: 1rem;
+    /* Sans numeral, set large — the row's landmark, not a badge */
+    &__num {
+      color: var(--qhc-navy-700);
+      font-size: 2rem;
       font-weight: 600;
       line-height: 1;
-    }
-
-    &__body {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      /* Centres the claim's first line box (1.125rem × 1.45 ≈ 1.63rem)
-         against the 2.75rem marker: (2.75 − 1.63) / 2. */
-      padding-top: 0.5625rem;
     }
 
     &__claim {
@@ -312,7 +301,46 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
 
     &__note {
       color: var(--qhc-ink-700);
+      font-size: var(--qhc-size-label);
       line-height: 1.6;
+    }
+
+    @media (max-width: 1298px) {
+      &__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2.25rem 2.75rem;
+      }
+
+      &__item {
+        padding: 0;
+
+        & + & {
+          border-left: 0;
+        }
+      }
+    }
+
+    @media (max-width: 682px) {
+      &__grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+      }
+
+      &__item {
+        padding-block: 1.75rem;
+
+        &:first-child {
+          padding-top: 0;
+        }
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+
+        & + & {
+          border-top: 1px solid var(--qhc-hairline-cool);
+        }
+      }
     }
   }
 </style>
