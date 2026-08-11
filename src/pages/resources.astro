@@ -284,10 +284,19 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
       }
     }
 
-    /* Sans numeral, set large — the row's landmark, not a badge */
+    /* Same circled marker as HowItWorks / the referral steps — the one
+       number treatment sitewide (client call 2026-08-11) */
     &__num {
-      color: var(--qhc-navy-700);
-      font-size: 2rem;
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius-circle);
+      color: var(--qhc-navy-800);
+      font-family: var(--qhc-font-text);
+      font-size: 1rem;
       font-weight: 600;
       line-height: 1;
     }
