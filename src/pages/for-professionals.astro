@@ -84,27 +84,26 @@ import referralPhoto from "@/assets/photos/strip-hug.jpg";
     </dl>
   </section>
 
-  <!-- ===== 3. SUPPORT THAT HOLDS AFTER DISCHARGE ===== -->
+  <!-- ===== 3. SUPPORT THAT HOLDS AFTER DISCHARGE — hero-grammar split:
+       photo filling the left column, heading and copy together on the
+       right (client call 2026-08-11). ===== -->
   <section id="discharge" class="section" data-reveal>
-    <div class="split split--4-7 split--top">
-      <!-- Photo rides the aside under the heading — the only visual between
-           the hero and the coverage plate (client call 2026-08-11) -->
-      <div class="stack discharge__aside">
-        <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
-          Discharge plans only work if somebody carries them out.
-        </Heading>
-
+    <div class="split split--gap-lg">
+      <div class="discharge__media">
         <div class="plate plate--lg discharge__plate" data-drift="4">
           <Image
             src={dischargePhoto}
             alt="A caregiver and a senior woman reviewing information on a phone together at home"
-            widths={[500, 1000]}
-            sizes="(max-width: 1078px) 92vw, 30vw"
+            widths={[600, 1200]}
+            sizes="(max-width: 1078px) 92vw, 48vw"
           />
         </div>
       </div>
 
       <div class="stack discharge__body">
+        <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+          Discharge plans only work if somebody carries them out.
+        </Heading>
         <p class="lead">
           The instructions leave the hospital with the patient. What happens next depends on whether
           anyone is in the home to act on them.
@@ -331,20 +330,31 @@ import referralPhoto from "@/assets/photos/strip-hug.jpg";
 
   // ---- 3. Discharge ----
   .discharge {
-    &__aside {
-      --gap: 1.75rem;
+    /* Same contract as the homepage Approach figure: the photo runs the
+       full height of the copy beside it, and the copy centres against it. */
+    &__media {
+      align-self: stretch;
+      min-height: 26rem;
     }
 
     &__plate {
-      aspect-ratio: 4 / 5;
-
-      @media (max-width: 1078px) {
-        aspect-ratio: 3 / 2;
-      }
+      height: 100%;
     }
 
     &__body {
       --gap: 1.25rem;
+      max-width: 58ch;
+    }
+
+    @media (max-width: 1078px) {
+      &__media {
+        min-height: 0;
+      }
+
+      &__plate {
+        height: auto;
+        aspect-ratio: 3 / 2;
+      }
     }
   }
 
