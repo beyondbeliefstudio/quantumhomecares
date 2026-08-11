@@ -140,6 +140,9 @@ const { eyebrow, title, image, imageAlt } = Astro.props;
 
       &__plate {
         aspect-ratio: 3 / 2;
+        /* The desktop floor transfers through the aspect ratio into a
+           36rem min-WIDTH, pushing the plate past the phone viewport. */
+        min-height: 0;
       }
     }
   }

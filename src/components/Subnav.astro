@@ -45,6 +45,9 @@ const { items, ariaLabel } = Astro.props;
     display: flex;
     gap: 0.25rem;
     max-width: 100%;
+    /* Flex items refuse to shrink below content (min-width: auto), which
+       defeated overflow-x and dragged the page sideways on phones. */
+    min-width: 0;
     padding: 0.375rem;
     overflow-x: auto;
     background: var(--qhc-glass-light);
