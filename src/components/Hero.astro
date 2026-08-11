@@ -8,15 +8,14 @@ import { Image } from "astro:assets";
 
 // IMAGES
 import primary from "@/assets/photos/hero-help.jpg";
-import inset from "@/assets/photos/hero-small.jpg";
 ---
 
 <section id="hero" class="section hero">
   <!-- Blue glow bleeding off the top-right corner, behind the imagery -->
-  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__glow" aria-hidden="true" data-parallax="24"></div>
 
   <div class="split split--gap-sm">
-    <div class="stack hero__copy">
+    <div class="stack hero__copy" data-intro>
       <span class="eyebrow">In-Home Senior Care Across New Jersey</span>
 
       <Heading tag="h1" size="display" fontFamily="primary" weight="fw400" marginBottom="none">
@@ -34,21 +33,13 @@ import inset from "@/assets/photos/hero-small.jpg";
       </div>
     </div>
 
-    <div class="hero__media">
-      <div class="plate plate--lg hero__portrait">
+    <div class="hero__media" data-intro-media>
+      <div class="plate plate--lg hero__portrait" data-drift="5">
         <Image
           src={primary}
           alt="A caregiver walking arm in arm with a smiling senior woman"
           widths={[600, 1200]}
           sizes="(max-width: 980px) 92vw, 40vw"
-        />
-      </div>
-      <!-- Paper-coloured border cuts the square out of the page -->
-      <div class="plate plate--lg hero__inset">
-        <Image
-          src={inset}
-          alt="Senior man sorting his medication at home"
-          widths={[400, 800]}
         />
       </div>
     </div>
@@ -59,9 +50,18 @@ import inset from "@/assets/photos/hero-small.jpg";
   .hero {
     padding-top: 5.25rem;
     padding-bottom: 2.5rem;
+    /* The glow sits at z-index -1; isolation keeps that "behind the
+       content" instead of "behind the section" — without a stacking
+       context here a negative z-index sinks below the page itself. */
+    isolation: isolate;
 
     &__glow {
       position: absolute;
+      /* Behind the copy always. As a positioned element the glow painted
+         above the static text column, which never showed while it stayed
+         parked in the corner — the parallax drift moved it down over the
+         copy, and on mobile the veil landed on the headline. */
+      z-index: -1;
       top: -8.75rem;
       right: -11.25rem;
       width: 45rem;
@@ -86,66 +86,21 @@ import inset from "@/assets/photos/hero-small.jpg";
       border-color: var(--qhc-navy-300);
     }
 
-    /* The hero animates on load rather than on scroll */
+    /* The hero animates on load rather than on scroll — GSAP cascades the
+       copy stack element by element (see initHeroIntro), keyed off the
+       data-intro / data-intro-media attributes in the markup above. */
     &__copy {
       --gap: 1.5rem;
-      animation: qhc-rise 700ms var(--qhc-ease-out) both;
     }
 
     &__media {
       position: relative;
-      animation: qhc-rise 900ms var(--qhc-ease-out) 120ms both;
     }
 
+    /* The inset thumbnail was removed in review; the portrait now fills its
+       column rather than being indented to make room for it. */
     &__portrait {
       aspect-ratio: 4 / 5;
-      margin-left: 12%;
-    }
-
-    &__inset {
-      position: absolute;
-      left: -12%;
-      bottom: -2.5rem;
-      width: 42%;
-      aspect-ratio: 1 / 1;
-      border: 8px solid var(--qhc-paper);
-
-      /*
-        Source is a 2:3 portrait in a 1:1 plate, so only the middle ~67% of the
-        image height is ever visible and this picks which band. His eyes sit at
-        roughly 49% down the source; at the old 15% that put them ~66% down the
-        square, which read as the head sinking to the bottom. 72% lifts the
-        window so they land near the upper third and the pill organiser on the
-        table still makes the crop.
-      */
-      img {
-        object-position: center 72%;
-      }
-    }
-
-    /* Stacked: pull the portrait back to full width and re-seat the inset */
-    @media (max-width: 1078px) {
-      &__portrait {
-        margin-left: 0;
-      }
-
-      &__inset {
-        left: auto;
-        right: 0;
-        bottom: -2rem;
-        width: 34%;
-      }
-    }
-
-    /* Narrow phones: the inset stays, but 34% of a 350px column is a ~120px
-       thumbnail, so it gains width and gives back some of its overhang and
-       border to stay legible against the portrait behind it. */
-    @media (max-width: 616px) {
-      &__inset {
-        width: 44%;
-        bottom: -1.5rem;
-        border-width: 6px;
-      }
     }
   }
 </style>

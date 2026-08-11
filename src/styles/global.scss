@@ -28,7 +28,9 @@
 //   · Corners are rounded. Softness is a brand value here.
 //   · Blue and white only. No warm accent — the blue ramp carries
 //     both hierarchy and conversion. Never gold, never clay.
-//   · No drop shadows. The only shadow is the sticky header.
+//   · No drop shadows, anywhere — the sticky header's lift was the one
+//     exception and it was removed in review. Depth comes from hairlines,
+//     washes, and glass.
 // ==========================================
 :root {
   /* ---------- 1. BLUE — pulled from the logo heart ------------- */
@@ -76,7 +78,9 @@
   --qhc-text-heading: var(--qhc-navy-900);
   --qhc-text-accent: var(--qhc-navy-700);
   --qhc-text-link: var(--qhc-navy-800);
-  --qhc-text-link-hover: var(--qhc-navy-800);
+  /* 900, not 800 — hover was defined as the same value as rest, so prose
+     links had no visible hover state at all. */
+  --qhc-text-link-hover: var(--qhc-navy-900);
   --qhc-surface-page: var(--qhc-paper);
   --qhc-surface-raised: var(--qhc-white);
   --qhc-surface-cool: var(--qhc-navy-050);
@@ -153,16 +157,8 @@
   --qhc-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes qhc-rise {
-  from {
-    opacity: 0;
-    transform: translateY(1.125rem);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
+/* The qhc-rise keyframes that lived here died with the CSS hero load-in —
+   GSAP owns the hero intro now (initHeroIntro in app.js). */
 
 @media (prefers-reduced-motion: reduce) {
   :root {
@@ -283,11 +279,18 @@ svg {
 a {
   color: var(--qhc-text-link);
   font-family: inherit;
+  /* Rest: a quiet tinted underline. Hover: the text deepens and the
+     underline fills to full ink — two cues moving together. */
   text-underline-offset: 0.25rem;
-  transition: color var(--qhc-duration-fast) var(--qhc-ease-out);
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--qhc-navy-300);
+  transition:
+    color var(--qhc-duration-fast) var(--qhc-ease-out),
+    text-decoration-color var(--qhc-duration-fast) var(--qhc-ease-out);
 
   &:hover {
     color: var(--qhc-text-link-hover);
+    text-decoration-color: currentColor;
   }
 }
 
@@ -344,6 +347,21 @@ summary:focus-visible,
   &--cool {
     background: var(--qhc-surface-cool);
     border-bottom: 0;
+  }
+
+  /* Directly after a full-bleed image (the quote banner): the section gap
+     has no job there — the band's own top rule and inner padding are the
+     spacing, and doubling them read as a dead slab between the sections. */
+  &--flush {
+    margin-top: 0;
+  }
+
+  /* Two bands back to back (e.g. the resources five-things band into the
+     contact band): both already carry generous inner padding, so the section
+     gap between them stacked a third spacing unit and read as dead space.
+     Their hairlines meet and the washes hand off directly. */
+  & + & {
+    margin-top: 0;
   }
 
   &__inner {
@@ -558,6 +576,13 @@ summary:focus-visible,
   a {
     color: var(--qhc-navy-800);
     font-weight: 600;
+
+    /* This rule outranks the base a:hover in the cascade (equal specificity,
+       later in the file), so the hover has to be restated here or meta links
+       stay frozen at their rest colour. */
+    &:hover {
+      color: var(--qhc-text-link-hover);
+    }
   }
 }
 
@@ -592,7 +617,20 @@ summary:focus-visible,
   /* navy-700, not navy-800 — the surrounding headline is navy-900, and 800 is
      too close to it to read as a highlight. */
   color: var(--qhc-navy-700);
-  border-bottom: 2px solid var(--qhc-navy-300);
+
+  /*
+    text-decoration, not border-bottom. A border hangs off the bottom of the
+    inline box — with display type that box is much taller than the letters,
+    so the rule floated well clear of the words. An underline is positioned
+    from the baseline instead, so the offset below is the actual gap you see.
+    Both values are in em so they track the fluid heading size, and skip-ink
+    stays on (default) so the rule breaks around the p and g descenders
+    rather than striking through them.
+  */
+  text-decoration: underline;
+  text-decoration-color: var(--qhc-navy-300);
+  text-decoration-thickness: 0.045em;
+  text-underline-offset: 0.14em;
 }
 
 // ==========================================
@@ -763,38 +801,33 @@ select {
 
 // ==========================================
 // SCROLL REVEAL
-// The hiding rule is gated on .js-reveal (set by app.js
-// before paint) so content is never stranded without JS.
+// Pre-JS hidden state only — the motion itself is GSAP's (initScrollReveal
+// in app.js), which staggers [data-stagger] children in DOM order. Gated on
+// .js-reveal (set before paint, removed by the BaseHead fallback if app.js
+// never runs) so content is never stranded without JS.
+//
+// Deliberately no transitions here: .is-visible unhides and gsap.from()
+// re-hides in the same tick, then animates inline — a CSS transition on the
+// same properties would interpolate toward every GSAP frame and turn the
+// tween to mush.
 // ==========================================
 @media (prefers-reduced-motion: no-preference) {
   .js-reveal [data-reveal]:not(.is-visible) {
     opacity: 0;
-    transform: translateY(1.375rem);
+    transform: translateY(2.75rem);
   }
 
-  [data-reveal] {
-    transition:
-      opacity 700ms var(--qhc-ease-out),
-      transform 700ms var(--qhc-ease-out);
+  .js-reveal [data-reveal]:not(.is-visible) [data-stagger] {
+    opacity: 0;
+    transform: translateY(1.75rem);
   }
 
   /*
-    STAGGER — children cascade behind their section's reveal.
-
-    Mark any descendant of a [data-reveal] section with data-stagger and give
-    it an index: <li data-stagger style="--i: 3">. Each item trails the
-    section's own rise by 70ms × its index. Gated on .js-reveal exactly like
-    the section rule above, so no-JS readers always see everything.
+    HERO INTRO — same contract as above; GSAP owns the animation
+    (initHeroIntro in app.js) and .is-in is its "armed" class.
   */
-  .js-reveal [data-reveal]:not(.is-visible) [data-stagger] {
+  .js-reveal [data-intro]:not(.is-in) > *,
+  .js-reveal [data-intro-media]:not(.is-in) {
     opacity: 0;
-    transform: translateY(0.625rem);
-  }
-
-  [data-stagger] {
-    transition:
-      opacity 600ms var(--qhc-ease-out),
-      transform 600ms var(--qhc-ease-out);
-    transition-delay: calc(var(--i, 0) * 70ms);
   }
 }

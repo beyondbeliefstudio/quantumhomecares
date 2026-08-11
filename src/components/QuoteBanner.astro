@@ -9,7 +9,7 @@ import { Image } from "astro:assets";
 import backdrop from "@/assets/photos/aging-at-home.jpg";
 ---
 
-<section class="quote" data-reveal>
+<section class="quote" data-reveal data-drift="8">
   <Image
     src={backdrop}
     alt="A caregiver spending time with seniors during an in-home visit"
@@ -18,7 +18,9 @@ import backdrop from "@/assets/photos/aging-at-home.jpg";
   />
   <div class="quote__scrim" aria-hidden="true"></div>
 
-  <div class="quote__plate">
+  <!-- Negative parallax: the plate rises against the backdrop's downward
+       drift, so the two planes visibly separate as the banner crosses. -->
+  <div class="quote__plate" data-parallax="-12">
     <Heading
       tag="p"
       size="quote"
@@ -38,6 +40,9 @@ import backdrop from "@/assets/photos/aging-at-home.jpg";
     position: relative;
     display: flex;
     align-items: flex-end;
+    /* The clip for the data-drift parallax — the backdrop is overscaled and
+       slides through this frame as the banner crosses the viewport. */
+    overflow: hidden;
     min-height: 38.75rem;
     margin-top: var(--qhc-section-gap);
 

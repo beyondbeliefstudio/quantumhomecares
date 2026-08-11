@@ -102,16 +102,16 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     border-bottom: 1px solid transparent;
     transition:
       background var(--qhc-duration-slow) var(--qhc-ease-out),
-      box-shadow var(--qhc-duration-slow) var(--qhc-ease-out),
       border-color var(--qhc-duration-slow) var(--qhc-ease-out);
 
-    /* Past the 40px sentinel — thinner glass, a hairline, and a soft lift */
+    /* Past the 40px sentinel — thinner glass and a hairline. No shadow:
+       the house rule ("the only shadow is the sticky header") lost its one
+       exception in review, so depth is glass + hairline alone now. */
     &[data-scrolled] {
       background: rgba(249, 246, 241, 0.55);
       backdrop-filter: saturate(1.6) blur(1.5rem);
       -webkit-backdrop-filter: saturate(1.6) blur(1.5rem);
       border-bottom-color: rgba(10, 44, 76, 0.1);
-      box-shadow: 0 1.125rem 2.5rem -1.875rem rgba(10, 44, 76, 0.55);
     }
 
     &__bar {

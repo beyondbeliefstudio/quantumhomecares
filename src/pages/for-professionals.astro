@@ -27,6 +27,7 @@ import { baseData, telHref } from "@/data/siteData";
 // IMAGES
 import heroPhoto from "@/assets/photos/strip-medical.jpg";
 import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unsplash.jpg";
+import referralPhoto from "@/assets/photos/strip-hug.jpg";
 ---
 
 <!--
@@ -109,14 +110,17 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
   </section>
 
   <!-- ===== 4. SERVICES AVAILABLE TO YOUR CLIENTS — the capability matrix.
-       One object, not a floating list: nine icon cells in a hairline grid,
-       with the non-medical scope note built in as the panel's footer. ===== -->
+       One object, not a floating list: nine icon cells in a hairline grid.
+       The non-medical scope note reads as subtext under the heading. ===== -->
   <section id="services" class="band band--down" data-reveal>
     <div class="band__inner">
       <div class="matrix__head">
-        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-          What we can put in place.
-        </Heading>
+        <div class="stack matrix__intro">
+          <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+            What we can put in place.
+          </Heading>
+          <p class="matrix__scope">{scopeNote}</p>
+        </div>
         <Links variant="inline" href="/services">
           Full service detail
           <Icon name="arrow-right" aria-hidden="true" />
@@ -136,12 +140,6 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
             ))
           }
         </ul>
-
-        <!-- The honesty note — part of the object, not fine print below it -->
-        <p class="matrix__scope">
-          <span class="topic topic--accent">Scope</span>
-          <span>{scopeNote}</span>
-        </p>
       </div>
     </div>
   </section>
@@ -234,6 +232,9 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
   <section id="referral" class="band band--cool referral" data-reveal>
     <div class="band__inner">
       <div class="split split--gap-lg split--top">
+        <!-- Same intro grammar as the sitewide contact band (which this page
+             hides): heading, lead, photo plate, direct line — the plate is
+             what keeps the column from collapsing against the tall form. -->
         <div class="stack referral__intro">
           <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
             Make a referral
@@ -242,6 +243,14 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
             For urgent discharges, please call <a href={telHref}>{baseData.phone}</a> rather than
             using this form.
           </p>
+          <div class="plate plate--lg referral__plate" data-drift="4">
+            <Image
+              src={referralPhoto}
+              alt="Two older adults embracing, one smiling over the other's shoulder"
+              widths={[600, 1200]}
+              sizes="(max-width: 1078px) 92vw, 42vw"
+            />
+          </div>
           <p class="meta--lg referral__direct">
             Every referral is acknowledged the same business day, and the person who answers can
             make decisions.
@@ -258,22 +267,9 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
        launch."); linking to a file that is not there would 404. Add this
        section when the PDF is real. -->
 
-  <!-- ===== 10. PAGE CTA ===== -->
-  <section id="cta" class="section" data-reveal>
-    <div class="section-header cta__header">
-      <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
-        Have a client who needs support at home?
-      </Heading>
-      <p class="lead">
-        Call and you will reach the owner. If we can help, we will tell you what the timeline looks
-        like. If we cannot, we will tell you that too.
-      </p>
-      <div class="btn-wrapper btn-wrapper--center">
-        <Links variant="primary" href={telHref} classes="lg">Call {baseData.phone}</Links>
-        <Links variant="outline" href="#referral">Make a Referral</Links>
-      </div>
-    </div>
-  </section>
+  <!-- The closing "Have a client…" CTA was removed in review: the referral
+       band directly above is this page's conversion moment, and a second
+       ask right after it read as noise. -->
 </Layout>
 
 <style lang="scss">
@@ -333,7 +329,7 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
     border: 1px solid var(--qhc-hairline);
     border-radius: var(--qhc-radius-lg);
 
-    /* H2 left, link right — a working header row, not a centred billboard */
+    /* H2 + scope subtext left, link right — a working header row */
     &__head {
       display: flex;
       flex-wrap: wrap;
@@ -341,6 +337,20 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
       justify-content: space-between;
       gap: 1rem 2rem;
       margin-bottom: 2.5rem;
+    }
+
+    &__intro {
+      --gap: 1rem;
+      max-width: 62rem;
+    }
+
+    /* A quiet aside, not a second lead — small, italic, muted */
+    &__scope {
+      max-width: 72ch;
+      color: var(--qhc-slate-600);
+      font-size: var(--qhc-size-label);
+      font-style: italic;
+      line-height: 1.6;
     }
 
     /*
@@ -395,24 +405,6 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
       :global(svg) {
         width: 1.5rem;
         height: 1.5rem;
-      }
-    }
-
-    /* Scope rides the panel as its footer strip */
-    &__scope {
-      display: flex;
-      align-items: baseline;
-      gap: 1.25rem;
-      padding: 1.375rem 1.625rem;
-      background: var(--qhc-navy-050);
-      border-top: 1px solid var(--qhc-hairline);
-      color: var(--qhc-ink-700);
-      font-size: var(--qhc-size-label);
-      line-height: 1.6;
-
-      @media (max-width: 616px) {
-        flex-direction: column;
-        gap: 0.5rem;
       }
     }
   }
@@ -565,8 +557,10 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
       border: 1px solid var(--qhc-navy-300);
       border-radius: var(--qhc-radius-circle);
       color: var(--qhc-navy-800);
-      font-family: var(--qhc-font-display);
-      font-size: 1.5rem;
+      /* Sans numerals sitewide — the serif figures were retired in review */
+      font-family: var(--qhc-font-text);
+      font-size: 1.125rem;
+      font-weight: 600;
       line-height: 1;
     }
 
@@ -598,17 +592,15 @@ import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unspla
       --w: 46ch;
     }
 
+    /* Same frame as the contact band's plate */
+    &__plate {
+      aspect-ratio: 16 / 10;
+      margin-top: 0.5rem;
+    }
+
     &__direct {
       color: var(--qhc-slate-600);
     }
   }
 
-  // ---- 10. CTA ----
-  .cta {
-    &__header {
-      --gap: 1.25rem;
-      --mb: 0;
-      --w: 56ch;
-    }
-  }
 </style>

@@ -19,8 +19,10 @@ const photos = [
 ];
 ---
 
+<!-- data-weave: alternate plates drift in opposite directions on scroll
+     (initStripWeave), so the row breathes instead of passing as one slab. -->
 <section class="section section--bleed" data-reveal>
-  <div class="fixed-grid strip">
+  <div class="fixed-grid strip" data-weave>
     {
       photos.map(p => (
         <div class="plate strip__plate">

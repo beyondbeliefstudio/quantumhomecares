@@ -11,16 +11,12 @@ import Culture from "@/components/Culture.astro";
 import About from "@/components/About.astro";
 import InTheNews from "@/components/InTheNews.astro";
 
-// HELPERS
-import { Image } from "astro:assets";
-
 // DATA
-import { carePlanIntro, carePlanSteps, credentials } from "@/data/approachData";
+import { credentials } from "@/data/approachData";
 import { schemaIds } from "@/data/siteData";
 
 // IMAGES
 import heroPhoto from "@/assets/photos/quote-path.jpg";
-import planPhoto from "@/assets/photos/how-it-works.jpg";
 
 // SCHEMA — AboutPage hanging off the graph BaseHead already emits: the page
 // is about the business, and its main entity is the founder.
@@ -85,40 +81,9 @@ const aboutSchema = {
   <!-- ===== 3. WHO WE HELP ===== -->
   <WhoWeHelp />
 
-  <!-- ===== 4. HOW CARE PLANS GET BUILT ===== -->
-  <section id="care-plans" class="section" data-reveal>
-    <div class="split split--5-6 split--top split--gap-lg">
-      <div class="plan__aside">
-        <div class="stack plan__intro">
-          <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-            The plan is the product.
-          </Heading>
-          <p class="lead">{carePlanIntro}</p>
-        </div>
-
-        <div class="plate plate--lg plan__plate">
-          <Image
-            src={planPhoto}
-            alt="A caregiver and a senior woman looking at a phone together and smiling"
-            widths={[600, 1200]}
-            sizes="(max-width: 1078px) 92vw, 38vw"
-          />
-        </div>
-      </div>
-
-      <!-- The five beats of a plan, drawn as one path -->
-      <ol class="plan__steps">
-        {
-          carePlanSteps.map((step, i) => (
-            <li class="plan__step" data-stagger style={`--i: ${i}`}>
-              <span class="plan__marker" aria-hidden="true">{i + 1}</span>
-              <p class="lead">{step}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
+  <!-- ===== 4. HOW CARE PLANS GET BUILT — temporarily pulled (client call
+       2026-08-11). Markup and .plan styles live in git history; the
+       carePlanIntro / carePlanSteps data remains in approachData.ts. -->
 
   <!-- ===== 5. THE SIX Cs ===== -->
   <Culture />
@@ -170,65 +135,6 @@ const aboutSchema = {
     &__header {
       --mb: 3rem;
       --w: 52rem;
-    }
-  }
-
-  // ---- 4. Care plans ----
-  .plan {
-    &__aside {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    &__intro {
-      --gap: 1.125rem;
-    }
-
-    &__plate {
-      aspect-ratio: 4 / 3;
-    }
-
-    &__steps {
-      list-style: none;
-    }
-
-    &__step {
-      position: relative;
-      padding-left: 4.25rem;
-      padding-bottom: 2.25rem;
-
-      /* The path — marker centre to the next marker */
-      &:not(:last-child)::before {
-        content: "";
-        position: absolute;
-        left: 1.375rem;
-        top: 3.25rem;
-        bottom: 0.375rem;
-        width: 1px;
-        background: var(--qhc-navy-300);
-      }
-
-      &:last-child {
-        padding-bottom: 0;
-      }
-    }
-
-    &__marker {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: grid;
-      place-items: center;
-      width: 2.75rem;
-      height: 2.75rem;
-      background: var(--qhc-white);
-      border: 1px solid var(--qhc-navy-300);
-      border-radius: var(--qhc-radius-circle);
-      color: var(--qhc-navy-800);
-      font-family: var(--qhc-font-display);
-      font-size: 1.25rem;
-      line-height: 1;
     }
   }
 

@@ -1,10 +1,11 @@
 ---
 /**
- * Homepage Resources teaser — new in buildout-notes/01-home.md.
+ * Homepage Resources teaser — content per buildout-notes/01-home.md.
  *
- * Sits between the navy Professionals panel and the FAQ split, so it stays
- * open paper and centred: three text blocks in a row would blur together if
- * this one also carried a frame.
+ * Split with the photo running the copy's full height on the right — the
+ * same photo that opens /resources, so the teaser previews the page it
+ * links to. Sides alternate with the sections above (Why L, Approach R,
+ * Professionals L, this R).
  */
 
 // COMPONENTS
@@ -12,34 +13,64 @@ import Heading from "@/components/Heading.astro";
 import Links from "@/components/Links.astro";
 
 // HELPERS
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+
+// IMAGES
+import photo from "@/assets/photos/strip-walking.jpg";
 ---
 
 <section id="resources" class="section" data-reveal>
-  <div class="section-header resources__header">
-    <span class="eyebrow">Resources</span>
-    <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-      Most families do not know what is available to them.
-    </Heading>
-    <p class="lead">
-      Medicare, Medicaid, VA benefits, county programs, caregiver support. We put together the
-      guidance we give families on the phone, whether or not they ever hire us.
-    </p>
-    <Links variant="inline" href="/resources">
-      Browse resources for families
-      <Icon name="arrow-right" aria-hidden="true" />
-    </Links>
+  <div class="split split--gap-lg resources__split">
+    <div class="stack resources__copy">
+      <span class="eyebrow">Resources</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Most families do not know what is available to them.
+      </Heading>
+      <p class="lead">
+        Medicare, Medicaid, VA benefits, county programs, caregiver support. We put together the
+        guidance we give families on the phone, whether or not they ever hire us.
+      </p>
+      <Links variant="inline" href="/resources">
+        Browse resources for families
+        <Icon name="arrow-right" aria-hidden="true" />
+      </Links>
+    </div>
+
+    <div class="plate plate--lg resources__plate" data-drift="5">
+      <Image
+        src={photo}
+        alt="An older couple walking together down a sunlit garden path"
+        widths={[600, 1200]}
+        sizes="(max-width: 1078px) 92vw, 42vw"
+      />
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   .resources {
-    &__header {
-      --gap: 1.125rem;
-      --w: 60ch;
-      /* Nothing follows inside this section, so the header carries no bottom
-         space of its own — the next section's own top rhythm handles it. */
-      --mb: 0;
+    /* Photo runs the exact height of the copy beside it */
+    &__split {
+      align-items: stretch;
+    }
+
+    &__copy {
+      --gap: 1.25rem;
+      max-width: 56ch;
+      align-self: center;
+    }
+
+    &__plate {
+      min-height: 24rem;
+      overflow: hidden;
+      /* Scroll drift comes from data-drift (initPhotoDrift in app.js) —
+         GSAP, not animation-timeline, so Safari and Firefox drift too. */
+
+      @media (max-width: 1078px) {
+        min-height: 0;
+        aspect-ratio: 3 / 2;
+      }
     }
   }
 </style>

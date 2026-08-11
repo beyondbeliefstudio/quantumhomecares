@@ -26,11 +26,15 @@ import { faqs } from "@/data/homeData";
       </Links>
     </div>
 
-    <!-- Native <details> — no JS. All closed by default; multiple can be open at once -->
+    <!-- Native <details>, progressively enhanced: data-accordion lets app.js
+       ease the answers open/closed (initFaqAccordion). One question open at
+       a time — the shared name attribute enforces that natively for no-JS
+       and reduced-motion readers; the JS path strips it and animates the
+       sibling shut instead, because the native grouping can only snap. -->
     <div class="stack faq__list">
       {
         faqs.map(faq => (
-          <details class="faq__item">
+          <details class="faq__item" data-accordion name="faq">
             <summary class="faq__question">
               {faq.question}
               <span class="faq__glyph" aria-hidden="true" />
@@ -137,6 +141,8 @@ import { faqs } from "@/data/homeData";
 
     &__answer {
       max-width: 62ch;
+      /* Clips the text while the accordion tween runs the height */
+      overflow: hidden;
       padding-bottom: 1.25rem;
       color: var(--qhc-ink-700);
       font-size: var(--qhc-size-label);

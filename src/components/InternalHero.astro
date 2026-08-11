@@ -32,11 +32,11 @@ const { eyebrow, title, image, imageAlt } = Astro.props;
 
 <section class="ihero">
   <!-- Same corner glow as the homepage hero, so the pages open as siblings -->
-  <div class="ihero__glow" aria-hidden="true"></div>
+  <div class="ihero__glow" aria-hidden="true" data-parallax="24"></div>
 
   <div class="ihero__inner">
     <div class="split split--top ihero__split">
-      <div class="stack ihero__copy">
+      <div class="stack ihero__copy" data-intro>
         <span class="eyebrow ihero__eyebrow">{eyebrow}</span>
 
         <Heading tag="h1" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
@@ -46,7 +46,7 @@ const { eyebrow, title, image, imageAlt } = Astro.props;
         <slot />
       </div>
 
-      <div class="plate plate--lg ihero__plate">
+      <div class="plate plate--lg ihero__plate" data-intro-media data-drift="5">
         <Image src={image} alt={imageAlt} widths={[600, 1200]} sizes="(max-width: 1078px) 92vw, 42vw" />
       </div>
     </div>
@@ -60,9 +60,16 @@ const { eyebrow, title, image, imageAlt } = Astro.props;
   .ihero {
     position: relative;
     background: var(--qhc-band-down);
+    /* Same contract as the homepage hero: the glow rides at z-index -1,
+       and isolation keeps "behind the content" from becoming "behind the
+       section's wash". */
+    isolation: isolate;
 
     &__glow {
       position: absolute;
+      /* Behind the copy always — see Hero.astro; the parallax drift can
+         carry the glow over the text column on stacked layouts. */
+      z-index: -1;
       top: -8.75rem;
       right: -11.25rem;
       width: 40rem;
@@ -108,15 +115,14 @@ const { eyebrow, title, image, imageAlt } = Astro.props;
       /* Centres against the plate's min-height when the copy is the shorter
          column; when the copy is taller it defines the row and this is moot. */
       align-self: center;
-      /* Same load-in as the homepage hero — these animate on arrival, not on scroll */
-      animation: qhc-rise 700ms var(--qhc-ease-out) both;
+      /* Same load-in as the homepage hero — GSAP cascades these on arrival,
+         not on scroll, via the data-intro attributes in the markup above. */
     }
 
     /* Full height of the copy column — no aspect box on desktop. The floor
        keeps the photo from collapsing on a page whose hero copy is short. */
     &__plate {
       min-height: 24rem;
-      animation: qhc-rise 900ms var(--qhc-ease-out) 120ms both;
     }
 
     &__rule {

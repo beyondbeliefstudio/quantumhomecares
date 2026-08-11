@@ -6,8 +6,8 @@
  *     one half inside the frame, text the other, sides alternating per
  *     service (`flip`).
  *   · The photo drifts a few percent as the card crosses the viewport
- *     (CSS scroll-driven animation; browsers without animation-timeline, and
- *     anyone preferring reduced motion, get a still image).
+ *     (data-drift → GSAP ScrollTrigger in app.js; anyone preferring
+ *     reduced motion gets a still image).
  *   · "What this includes" is the card's footer strip: a cool wash with each
  *     item as a check chip, staggering in once the section reveals.
  */
@@ -34,7 +34,7 @@ const { service, flip = false } = Astro.props;
 <section id={service.id} class:list={["svc", flip && "svc--flip"]} data-reveal>
   <article class="svc__card">
     <div class="svc__split">
-      <div class="svc__media">
+      <div class="svc__media" data-drift="6">
         <Image
           src={service.photo}
           alt={service.photoAlt}
@@ -75,11 +75,13 @@ const { service, flip = false } = Astro.props;
 
     <div class="svc__footer">
       <span class="topic topic--accent">What this includes</span>
-      <ul class="svc__chips">
+      <ul class="svc__list">
         {
           service.includes.map((item, i) => (
-            <li class="svc__chip" style={`--i: ${i}`}>
-              <Icon name="check" class="svc__check" aria-hidden="true" />
+            <li class="svc__item" data-stagger style={`--i: ${i}`}>
+              <span class="svc__badge" aria-hidden="true">
+                <Icon name="check" />
+              </span>
               <span>{item}</span>
             </li>
           ))
@@ -130,22 +132,8 @@ const { service, flip = false } = Astro.props;
       order: 2;
     }
 
-    /*
-      Scroll drift. The image is overscaled ~12% and slides through that
-      headroom as the card crosses the viewport, so the crop never runs out
-      of pixels. Scroll-driven animations ignore duration, so the global
-      reduced-motion duration override cannot stop this one — hence the
-      explicit no-preference gate on top of @supports.
-    */
-    @media (prefers-reduced-motion: no-preference) {
-      @supports (animation-timeline: view()) {
-        &__media img {
-          scale: 1.12;
-          animation: svc-drift linear both;
-          animation-timeline: view();
-        }
-      }
-    }
+    /* Scroll drift comes from data-drift (initPhotoDrift in app.js) —
+       GSAP, not animation-timeline, so Safari and Firefox drift too. */
 
     &__panel {
       display: flex;
@@ -205,35 +193,55 @@ const { service, flip = false } = Astro.props;
       border-top: 1px solid var(--qhc-hairline-cool);
     }
 
-    &__chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.625rem;
+    /*
+      Two quiet columns, no boxes — the earlier pill chips put nine bordered
+      shapes in the strip and it read as clutter. Alignment carries the
+      structure now; the only ornament is the small tinted badge.
+    */
+    /*
+      Multi-column, not grid: columns fill top-to-bottom and balance
+      themselves, so a two-line item just pushes its own column down. The
+      old row-major grid synced row heights across columns, and every
+      wrapped line left a hole beside it. 24rem is the same column floor
+      the grid used — below it the list collapses to one column.
+    */
+    &__list {
+      columns: 24rem 2;
+      column-gap: 3.5rem;
+      list-style: none;
+      /* Swallows the last row's item margin so the footer's own padding
+         still sets the bottom spacing, like the grid's gap did. */
+      margin-bottom: -1rem;
     }
 
-    &__chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5625rem 1rem 0.5625rem 0.875rem;
-      background: var(--qhc-white);
-      border: 1px solid var(--qhc-navy-200);
-      border-radius: var(--qhc-radius-pill);
-      font-size: var(--qhc-size-meta);
-      line-height: 1.35;
+    &__item {
+      display: grid;
+      grid-template-columns: 1.5rem 1fr;
+      gap: 0.875rem;
+      align-items: start;
+      /* Rhythm between items — column boxes ignore row gap */
+      margin-bottom: 1rem;
+      /* Never split one item's two lines across the column break */
+      break-inside: avoid;
+      font-size: var(--qhc-size-label);
+      line-height: 1.5;
       color: var(--qhc-ink-700);
-      /* Staggered entrance — each chip trails the reveal by its index */
-      transition:
-        opacity 500ms var(--qhc-ease-out),
-        transform 500ms var(--qhc-ease-out);
-      transition-delay: calc(var(--i) * 55ms);
     }
 
-    &__check {
-      flex: 0 0 auto;
-      width: 1rem;
-      height: 1rem;
-      color: var(--qhc-navy-700);
+    &__badge {
+      display: grid;
+      place-items: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-top: 0.0625rem;
+      background: var(--qhc-navy-100);
+      border-radius: var(--qhc-radius-circle);
+      color: var(--qhc-navy-800);
+
+      :global(svg) {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
     }
 
     /* ---- Stacked ---- */
@@ -281,20 +289,5 @@ const { service, flip = false } = Astro.props;
     }
   }
 
-  /* Chips hold until the section's own reveal fires, then cascade. The
-     hiding is gated on .js-reveal exactly like the global reveal styles, so
-     no-JS readers always see the chips. */
-  :global(.js-reveal) .svc:not(.is-visible) .svc__chip {
-    opacity: 0;
-    transform: translateY(0.5rem);
-  }
-
-  @keyframes svc-drift {
-    from {
-      transform: translateY(-3.5%);
-    }
-    to {
-      transform: translateY(3.5%);
-    }
-  }
+  /* The list items cascade via the global [data-stagger] utility. */
 </style>

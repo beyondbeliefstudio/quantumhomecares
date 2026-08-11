@@ -11,7 +11,8 @@ import { steps } from "@/data/homeData";
   right. Markers follow the tinted-band chip rule — white with a navy-300
   edge — so they hold against the wash.
 -->
-<section id="how" class="band band--up" data-reveal>
+<!-- --flush: this band sits directly under the full-bleed quote banner -->
+<section id="how" class="band band--up band--flush" data-reveal>
   <div class="band__inner">
     <div class="section-header how__header">
       <span class="eyebrow eyebrow--band">Getting Started</span>
@@ -23,7 +24,7 @@ import { steps } from "@/data/homeData";
     <ol class="how__steps">
       {
         steps.map((step, i) => (
-          <li class="how__step">
+          <li class="how__step" data-stagger style={`--i: ${i}`}>
             <span class="how__marker" aria-hidden="true">{i + 1}</span>
             <div class="stack how__body">
               <Heading tag="h3" size="xs" fontFamily="secondary" weight="fw600" marginBottom="none">
@@ -73,6 +74,23 @@ import { steps } from "@/data/homeData";
       }
     }
 
+    /*
+      The connectors draw left→right once the section reveals, trailing the
+      steps' own cascade. Hidden state is gated on .js-reveal exactly like
+      the global reveal rules, so a no-JS reader sees them already drawn.
+      The delay clears the last step's stagger (2 × 70ms) plus a beat.
+    */
+    @media (prefers-reduced-motion: no-preference) {
+      &__step:not(:last-child)::before {
+        transform-origin: 0 50%;
+        transition: transform 900ms var(--qhc-ease-out) 300ms;
+      }
+
+      :global(.js-reveal) #how:not(.is-visible) &__step:not(:last-child)::before {
+        transform: scaleX(0);
+      }
+    }
+
     &__marker {
       display: grid;
       place-items: center;
@@ -82,8 +100,10 @@ import { steps } from "@/data/homeData";
       border: 1px solid var(--qhc-navy-300);
       border-radius: var(--qhc-radius-circle);
       color: var(--qhc-navy-800);
-      font-family: var(--qhc-font-display);
-      font-size: 1.5rem;
+      /* Sans numerals sitewide — the serif figures were retired in review */
+      font-family: var(--qhc-font-text);
+      font-size: 1.125rem;
+      font-weight: 600;
       line-height: 1;
     }
 

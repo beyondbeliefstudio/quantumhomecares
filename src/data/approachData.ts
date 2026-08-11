@@ -123,9 +123,6 @@ export const culture: Standard[] = [
   { word: "Courage", copy: "Advocating firmly in complex medical settings." },
 ];
 
-export const cultureCloser =
-  "Every caregiver who enters one of our homes is screened against this standard. If someone is skilled but not compassionate, they are not a fit here.";
-
 // ==========================================
 // 8. CREDENTIALS AND COMPLIANCE
 // ==========================================

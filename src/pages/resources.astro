@@ -288,8 +288,9 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
       border: 1px solid var(--qhc-navy-300);
       border-radius: var(--qhc-radius-circle);
       color: var(--qhc-navy-800);
-      font-family: var(--qhc-font-display);
-      font-size: 1.25rem;
+      font-family: var(--qhc-font-text);
+      font-size: 1rem;
+      font-weight: 600;
       line-height: 1;
     }
 
@@ -297,7 +298,9 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      padding-top: 0.375rem;
+      /* Centres the claim's first line box (1.125rem × 1.45 ≈ 1.63rem)
+         against the 2.75rem marker: (2.75 − 1.63) / 2. */
+      padding-top: 0.5625rem;
     }
 
     &__claim {

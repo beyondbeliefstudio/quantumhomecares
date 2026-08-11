@@ -1,11 +1,14 @@
 ---
 /**
  * Homepage B2B routing signal. Condensed per buildout-notes/01-home.md — the
- * four detail cards moved to /for-professionals (see ReferralPoints.astro).
+ * detail lives on /for-professionals.
+ *
+ * One framed panel, photo filling its left half — the same object grammar as
+ * the news card. The photo is the /for-professionals hero image, so the
+ * teaser previews the page it routes to.
  *
  * Tone note from the content brief: this addresses a different audience than
- * the rest of the page and should read efficient rather than warm. It is a
- * routing signal, not a pitch — which is why it stays one paragraph.
+ * the rest of the page and should read efficient rather than warm.
  */
 
 // COMPONENTS
@@ -13,21 +16,30 @@ import Heading from "@/components/Heading.astro";
 import Links from "@/components/Links.astro";
 
 // HELPERS
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+
+// IMAGES
+import photo from "@/assets/photos/strip-medical.jpg";
 ---
 
-<!--
-  The one B2B moment on the page, so it gets its own plane: the navy-050 /
-  navy-300 "Quantum" surface from the comparison table, framed as a module.
--->
 <section id="professionals" class="section" data-reveal>
   <div class="pro">
-    <div class="stack pro__intro">
+    <div class="pro__media" data-drift="5">
+      <Image
+        src={photo}
+        alt="A caregiver taking a health reading for a senior client at home"
+        widths={[600, 1200]}
+        sizes="(max-width: 836px) 92vw, 34vw"
+      />
+    </div>
+
+    <div class="stack pro__body">
       <span class="eyebrow eyebrow--band">For Care Professionals</span>
       <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
         A referral partner who closes the loop.
       </Heading>
-      <p class="lead pro__lead">
+      <p class="lead">
         Discharge planners, social workers, case managers, and elder law attorneys work with us
         because referrals get acknowledged the same business day and homes get staffed within days,
         not weeks.
@@ -41,40 +53,52 @@ import { Icon } from "astro-icon/components";
 </section>
 
 <style lang="scss">
+  /* The one B2B moment on the page keeps its own plane — the navy-050 panel —
+     now with the photo owning its left half, news-card style. */
   .pro {
-    width: 100%;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    align-items: stretch;
+    overflow: hidden;
     max-width: 78rem;
     margin-inline: auto;
-    padding: 3.5rem;
     background: var(--qhc-navy-050);
     border: 1px solid var(--qhc-navy-300);
     border-radius: var(--qhc-radius-lg);
 
-    /*
-      Centered intro: eyebrow + heading + lead + link.
+    &__media {
+      position: relative;
+      /* Clips the overscaled data-drift image to this half of the panel —
+         the panel's own overflow only clips at the rounded outer edge. */
+      overflow: hidden;
+      min-height: 21.25rem;
 
-      align-items: center is doing the real work. .stack only sets the column
-      direction, so align-items defaults to stretch — and .eyebrow is
-      width: fit-content, which cannot stretch, so it fell to flex-start and
-      sat on the heading's left edge instead of centred under it. text-align
-      alone does not fix that: the pill is a flex item, not inline text.
-    */
-    &__intro {
+      :global(img) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__body {
       --gap: 1.25rem;
-      align-items: center;
-      text-align: center;
+      align-content: center;
+      padding: 3rem 3.25rem;
+      max-width: 58ch;
     }
 
-    &__lead {
-      --w: 62ch;
-    }
+    @media (max-width: 836px) {
+      grid-template-columns: minmax(0, 1fr);
 
-    @media (max-width: 990px) {
-      padding: 2.5rem 2rem;
-    }
+      &__media {
+        min-height: 15rem;
+      }
 
-    @media (max-width: 682px) {
-      padding: 2rem 1.5rem;
+      &__body {
+        padding: 2rem 1.75rem;
+      }
     }
   }
 </style>
