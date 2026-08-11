@@ -22,8 +22,8 @@ import type { ImageMetadata } from "astro";
 import photoAdvocacy from "@/assets/photos/newStock/pexels-vlada-karpovich-5790810.jpg";
 import photoDailyLiving from "@/assets/photos/strip-hands.jpg";
 import photoNutrition from "@/assets/photos/aging-at-home.jpg";
-import photoCompanionship from "@/assets/photos/strip-chess.jpg";
-import photoRespite from "@/assets/photos/newStock/pexels-kampus-7551627.jpg";
+import photoCompanionship from "@/assets/photos/newStock/pexels-cottonbro-7232038.jpg";
+import photoRespite from "@/assets/photos/newStock/pexels-cottonbro-7086034.jpg";
 import photoOvernight from "@/assets/photos/newStock/pexels-kampus-7551683.jpg";
 
 export interface ServiceDefinition {
@@ -131,7 +131,7 @@ export const serviceDetails: ServiceDetail[] = [
     title: "Transportation and Companionship",
     shortTitle: "Companionship",
     photo: photoCompanionship,
-    photoAlt: "Two senior men playing chess together outdoors",
+    photoAlt: "A caregiver and a senior woman laughing together over a magazine at home",
     lead: "Isolation is one of the biggest risks to senior health, and one of the easiest to solve.",
     body: [
       "Giving up the car keys is one of the hardest transitions a person goes through. It is not really about driving. It is about the grocery store, the hair appointment, church on Sunday, and lunch with the same three friends they have had for forty years. When the driving stops, all of that quietly stops with it.",
@@ -154,7 +154,7 @@ export const serviceDetails: ServiceDetail[] = [
     title: "Respite and Specialized Care",
     shortTitle: "Respite",
     photo: photoRespite,
-    photoAlt: "A caregiver guiding a senior man through gentle stretching exercises at home",
+    photoAlt: "A senior man and his caregiver sharing a laugh outdoors in the sunshine",
     lead: "Caring for someone else should not cost you your own health.",
     body: [
       "Family caregivers are the ones we worry about most. They skip their own doctor appointments. They stop seeing friends. They tell themselves they will rest once things settle down, and things do not settle down.",
