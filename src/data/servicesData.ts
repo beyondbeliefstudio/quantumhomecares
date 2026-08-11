@@ -23,7 +23,7 @@ import photoAdvocacy from "@/assets/photos/newStock/pexels-vlada-karpovich-57908
 import photoDailyLiving from "@/assets/photos/strip-hands.jpg";
 import photoNutrition from "@/assets/photos/aging-at-home.jpg";
 import photoCompanionship from "@/assets/photos/newStock/pexels-cottonbro-7232038.jpg";
-import photoRespite from "@/assets/photos/newStock/pexels-cottonbro-7086034.jpg";
+import photoRespite from "@/assets/photos/why-senior.jpg";
 import photoOvernight from "@/assets/photos/newStock/pexels-kampus-7551683.jpg";
 
 export interface ServiceDefinition {
@@ -154,7 +154,7 @@ export const serviceDetails: ServiceDetail[] = [
     title: "Respite and Specialized Care",
     shortTitle: "Respite",
     photo: photoRespite,
-    photoAlt: "A senior man and his caregiver sharing a laugh outdoors in the sunshine",
+    photoAlt: "A senior woman smiling, relaxed and at ease at home",
     lead: "Caring for someone else should not cost you your own health.",
     body: [
       "Family caregivers are the ones we worry about most. They skip their own doctor appointments. They stop seeing friends. They tell themselves they will rest once things settle down, and things do not settle down.",
