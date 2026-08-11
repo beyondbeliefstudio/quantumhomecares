@@ -26,6 +26,7 @@ import { baseData, telHref } from "@/data/siteData";
 
 // IMAGES
 import heroPhoto from "@/assets/photos/strip-medical.jpg";
+import dischargePhoto from "@/assets/photos/how-it-works.jpg";
 import coveragePhoto from "@/assets/photos/newStock/jimmy-woo-bgBzB13ek8w-unsplash.jpg";
 import referralPhoto from "@/assets/photos/strip-hug.jpg";
 ---
@@ -86,9 +87,22 @@ import referralPhoto from "@/assets/photos/strip-hug.jpg";
   <!-- ===== 3. SUPPORT THAT HOLDS AFTER DISCHARGE ===== -->
   <section id="discharge" class="section" data-reveal>
     <div class="split split--4-7 split--top">
-      <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
-        Discharge plans only work if somebody carries them out.
-      </Heading>
+      <!-- Photo rides the aside under the heading — the only visual between
+           the hero and the coverage plate (client call 2026-08-11) -->
+      <div class="stack discharge__aside">
+        <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+          Discharge plans only work if somebody carries them out.
+        </Heading>
+
+        <div class="plate plate--lg discharge__plate" data-drift="4">
+          <Image
+            src={dischargePhoto}
+            alt="A caregiver and a senior woman reviewing information on a phone together at home"
+            widths={[500, 1000]}
+            sizes="(max-width: 1078px) 92vw, 30vw"
+          />
+        </div>
+      </div>
 
       <div class="stack discharge__body">
         <p class="lead">
@@ -317,6 +331,18 @@ import referralPhoto from "@/assets/photos/strip-hug.jpg";
 
   // ---- 3. Discharge ----
   .discharge {
+    &__aside {
+      --gap: 1.75rem;
+    }
+
+    &__plate {
+      aspect-ratio: 4 / 5;
+
+      @media (max-width: 1078px) {
+        aspect-ratio: 3 / 2;
+      }
+    }
+
     &__body {
       --gap: 1.25rem;
     }
