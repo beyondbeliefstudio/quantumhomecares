@@ -212,6 +212,13 @@ html {
   */
   font-size: 110%;
   scroll-behavior: smooth;
+
+  /* On phones the +10% reads as oversized (client review 2026-08-11) — step
+     the root back to the 16px spec so the whole design compacts together.
+     Breakpoints are px-based, so they are unaffected by this change. */
+  @media (max-width: 616px) {
+    font-size: 100%;
+  }
 }
 
 body {
@@ -511,6 +518,14 @@ summary:focus-visible,
   letter-spacing: 0.08em;
   line-height: 1.2;
   text-transform: uppercase;
+
+  /* The hero's pill ("In-Home Senior Care Across New Jersey") wraps inside a
+     390px viewport — step the size and tracking down so the longest label
+     stays on one line on phones. */
+  @media (max-width: 616px) {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
 
   /* On the tinted blue bands the navy pill disappears — go white + outline */
   &--band {
