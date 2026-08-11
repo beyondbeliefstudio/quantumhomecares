@@ -62,6 +62,12 @@ const {
   .contact {
     &__inner {
       --pad: 6rem;
+
+      /* Same call as the hero (2026-08-11): the desktop padding read as
+         dead air on phones — pull the band's breathing room in. */
+      @media (max-width: 616px) {
+        --pad: 3rem;
+      }
     }
 
     &__intro {
