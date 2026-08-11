@@ -50,6 +50,12 @@ import primary from "@/assets/photos/hero-help.jpg";
   .hero {
     padding-top: 5.25rem;
     padding-bottom: 2.5rem;
+
+    /* This overrides .section's gap, so it IS the whole nav-to-eyebrow
+       distance — the desktop 5.25rem read as dead air on phones. */
+    @media (max-width: 616px) {
+      padding-top: 2.5rem;
+    }
     /* The glow sits at z-index -1; isolation keeps that "behind the
        content" instead of "behind the section" — without a stacking
        context here a negative z-index sinks below the page itself. */
