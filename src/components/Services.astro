@@ -29,8 +29,8 @@ import { services } from "@/data/homeData";
       </p>
     </div>
 
-    <!-- 16rem min holds all four on one row at page-max, pairs at tablet, stacks on phones -->
-    <div class="auto-grid services__grid">
+    <!-- Four across, pairs at tablet, stacked on phones — never 3+1 -->
+    <div class="auto-grid auto-grid--four services__grid">
       {
         services.map(s => (
           <article class="card">
@@ -57,10 +57,6 @@ import { services } from "@/data/homeData";
 
 <style lang="scss">
   .services {
-    &__grid {
-      --min: 16rem;
-    }
-
     &__more {
       margin-top: 3rem;
     }

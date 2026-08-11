@@ -443,6 +443,20 @@ summary:focus-visible,
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(var(--min, 18.75rem), 100%), 1fr));
   gap: var(--gap, 1.5rem);
+
+  /* Four-card grids skip auto-fit's 3+1 orphan state: four across, then
+     pairs, then stacked (client call 2026-08-11). */
+  &--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    @media (max-width: 1298px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 682px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 }
 
 /* Fixed-column grid — sections set --cols and --gap */

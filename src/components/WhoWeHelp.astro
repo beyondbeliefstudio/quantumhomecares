@@ -26,7 +26,7 @@ import { moments } from "@/data/approachData";
     </p>
   </div>
 
-  <div class="auto-grid who__grid">
+  <div class="auto-grid auto-grid--four who__grid">
     {
       moments.map((item, i) => (
         <article class="card who__card" data-stagger style={`--i: ${i}`}>
@@ -52,10 +52,6 @@ import { moments } from "@/data/approachData";
 
     &__lead {
       --w: 62ch;
-    }
-
-    &__grid {
-      --min: 17.5rem;
     }
 
     &__card {
