@@ -281,27 +281,34 @@ export const topics: ResourceTopic[] = [
 export interface StuckItem {
   claim: string;
   note: string;
+  /** Icon name from src/icons/ */
+  icon: string;
 }
 
 export const stuck: StuckItem[] = [
   {
     claim: "Medicare will not pay for ongoing home care.",
     note: "Confirm this early so you can plan around it instead of waiting on it.",
+    icon: "insurance-card",
   },
   {
     claim: "Moving money to qualify for Medicaid can backfire.",
     note: "There is a five year lookback. Talk to an elder law attorney before making any transfers.",
+    icon: "lookback-clock",
   },
   {
     claim: "Surviving spouses can qualify for VA benefits.",
     note: "The veteran does not have to still be living.",
+    icon: "benefits-shield",
   },
   {
     claim: "Powers of attorney have to be signed while the person still can.",
     note: "Once capacity is gone, the option is guardianship, and that is a different and much harder road.",
+    icon: "signature-doc",
   },
   {
     claim: "Your county's ADRC is free and knows more than any website.",
     note: "Including this one. Call them.",
+    icon: "phone-call",
   },
 ];

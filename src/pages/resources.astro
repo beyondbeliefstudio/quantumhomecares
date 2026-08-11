@@ -132,19 +132,21 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
         </Heading>
       </div>
 
-      <!-- Five ruled columns — the credentials-panel grammar, one symmetric
-           object under the centred header rather than a left-hanging list -->
-      <ol class="rsc-stuck__grid">
+      <!-- Icon cards, three across with the last two centred beneath —
+           flex-wrap centres the short row on its own -->
+      <ul class="rsc-stuck__cards">
         {
           stuck.map((item, i) => (
-            <li class="rsc-stuck__item" data-stagger style={`--i: ${i}`}>
-              <span class="rsc-stuck__num" aria-hidden="true">{i + 1}</span>
+            <li class="card rsc-stuck__card" data-stagger style={`--i: ${i}`}>
+              <span class="icon-circle">
+                <Icon name={item.icon} aria-hidden="true" />
+              </span>
               <p class="rsc-stuck__claim">{item.claim}</p>
               <p class="rsc-stuck__note">{item.note}</p>
             </li>
           ))
         }
-      </ol>
+      </ul>
     </div>
   </section>
 
@@ -258,47 +260,24 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
       --w: 52rem;
     }
 
-    /* Five ruled columns — same responsive contract as the credentials
-       panel: dividers drop before they can strand on a wrapped row, and
-       come back horizontal when the list stacks to one column. */
-    &__grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      max-width: 78rem;
+    /* Flex-wrap, not grid: three cards to a row, and when the last two wrap
+       they centre themselves under the row above. */
+    &__cards {
+      --card-gap: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--card-gap);
+      max-width: 72rem;
       margin-inline: auto;
       list-style: none;
     }
 
-    &__item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      padding: 0 1.625rem;
-
-      &:first-child {
-        padding-left: 0;
-      }
-
-      & + & {
-        border-left: 1px solid var(--qhc-hairline-cool);
-      }
-    }
-
-    /* Same circled marker as HowItWorks / the referral steps — the one
-       number treatment sitewide (client call 2026-08-11) */
-    &__num {
-      display: grid;
-      place-items: center;
-      width: 2.75rem;
-      height: 2.75rem;
-      background: var(--qhc-white);
-      border: 1px solid var(--qhc-navy-300);
-      border-radius: var(--qhc-radius-circle);
-      color: var(--qhc-navy-800);
-      font-family: var(--qhc-font-text);
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1;
+    &__card {
+      --gap: 1rem;
+      --pad: 2rem 1.875rem 2.125rem;
+      flex: 0 1 calc((100% - 2 * var(--card-gap)) / 3);
+      min-width: 17.5rem;
     }
 
     &__claim {
@@ -314,41 +293,10 @@ const telFor = (printed: string) => `tel:${printed.replace(/\D/g, "")}`;
       line-height: 1.6;
     }
 
-    @media (max-width: 1298px) {
-      &__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2.25rem 2.75rem;
-      }
-
-      &__item {
-        padding: 0;
-
-        & + & {
-          border-left: 0;
-        }
-      }
-    }
-
     @media (max-width: 682px) {
-      &__grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 0;
-      }
-
-      &__item {
-        padding-block: 1.75rem;
-
-        &:first-child {
-          padding-top: 0;
-        }
-
-        &:last-child {
-          padding-bottom: 0;
-        }
-
-        & + & {
-          border-top: 1px solid var(--qhc-hairline-cool);
-        }
+      &__card {
+        flex-basis: 100%;
+        min-width: 0;
       }
     }
   }
