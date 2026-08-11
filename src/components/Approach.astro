@@ -153,19 +153,23 @@ import portrait from "@/assets/photos/marvalyn_1.jpeg";
         /* Stacked, Marvalyn leads: the portrait reads first, then the
            argument. Desktop keeps copy-left / figure-right DOM order. */
         order: -1;
+        /* Capped and centred — a full-bleed portrait would swallow the
+           viewport at this ratio. */
+        width: 100%;
+        max-width: 34rem;
+        margin-inline: auto;
       }
 
       &__plate {
         height: auto;
-        aspect-ratio: 3 / 2;
+        /* The photo's own ratio (3648×4864) — any other box crops her.
+           The 3/2 landscape this carried cut the portrait to a mouth-and-
+           chin band on tablets. */
+        aspect-ratio: 3 / 4;
       }
     }
 
     @media (max-width: 616px) {
-      &__plate {
-        aspect-ratio: 4 / 5;
-      }
-
       &__caption {
         inset-inline: 0.75rem;
         bottom: 0.75rem;
