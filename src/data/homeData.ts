@@ -38,13 +38,11 @@ export interface Faq {
 }
 
 export interface Testimonial {
-  /** The line that carries the section. Pulled out of `body` and set larger. */
+  /** Her opening paragraph, set larger. Not a pull quote — see the note below. */
   statement: string;
-  /** Remaining paragraphs, in the order they should read. */
+  /** The paragraphs that follow, in her original order. */
   body: string[];
   name: string;
-  /** Relationship to the person who received care. */
-  relationship: string;
 }
 
 // ==========================================
@@ -148,6 +146,12 @@ export const faqs: Faq[] = [
 // The first approved quote — the README's "testimonials removed, no approved
 // quotes yet" note no longer holds for the homepage.
 //
+// Her full quote, every paragraph, in her order. `statement` is simply the
+// first paragraph set larger — NOT a pull quote. An earlier pass lifted a
+// fragment out of paragraph four to use as an opener, which meant the site
+// displayed a sentence she never wrote. Nothing here may be re-cut that way:
+// if a shorter version is ever wanted, drop whole paragraphs from the end.
+//
 // Verbatim except for three corrections, all of which should be confirmed:
 //   · "Marvelyn" → "Marvalyn". The handoff notes, the design reference and
 //     every page of this site spell it Marvalyn; the reviewer misspelled the
@@ -157,6 +161,9 @@ export const faqs: Faq[] = [
 //   · "88 year old" → "88-year-old".
 // The closing ❤️ was dropped — it does not survive the typographic treatment.
 //
+// No relationship line: she signed the review with her name alone, and
+// anything more specific would be a guess about who she is.
+//
 // An array because more are expected. Testimonial.astro features the first one
 // on its own; when a second lands, that component is where the list treatment
 // goes, not here.
@@ -164,14 +171,14 @@ export const faqs: Faq[] = [
 export const testimonials: Testimonial[] = [
   {
     statement:
-      "We felt confident and comfortable trusting Marvalyn and her staff with our treasured mother.",
+      "We are so grateful for our experience with Quantum Home Cares, especially Marvalyn.",
     body: [
       "When our 88-year-old mom first needed in-home care, it was our first experience with an in-home aide service, and honestly, we didn't know what to expect. Marvalyn made the entire transition feel comfortable, painless, and smooth for both Mom and our family.",
       "She took the time to understand Mom's needs and made sure the aides assigned to her were truly a good fit. That made all the difference.",
-      "That kind of trust means everything when you're inviting someone into your loved one's home and life. We are truly grateful to Marvalyn and the Quantum Home Cares team for the care, compassion, and personal attention they gave our mom.",
+      "Most importantly, we felt confident and comfortable trusting Marvalyn and her staff with our treasured mother. That kind of trust means everything when you're inviting someone into your loved one's home and life.",
+      "We are truly grateful to Marvalyn and the Quantum Home Cares team for the care, compassion, and personal attention they gave our mom.",
     ],
     name: "Daneca Mergott",
-    relationship: "Family of a Quantum Home Cares client",
   },
 ];
 
