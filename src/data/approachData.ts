@@ -233,6 +233,17 @@ export const careerRoles: string[] = [
   "Not sure yet",
 ];
 
+/**
+ * PARKED alongside [careerTraits] above. These were two required selects on the
+ * application form until 2026-09-01, next to a free-text work area and an
+ * apply/enquire intent switch. Screening someone before they have spoken to
+ * anyone costs applicants at the point they are least invested, and Marvalyn
+ * gets the same answers on the first call. The form asks for name, contact,
+ * role, an optional résumé and an open box now.
+ *
+ * Kept because the options themselves are sound and a real careers page would
+ * want them back.
+ */
 export const careerExperienceOptions: string[] = [
   "New Jersey CHHA",
   "Certified Nursing Assistant (CNA)",

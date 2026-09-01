@@ -252,8 +252,18 @@ const aboutSchema = {
       }
     }
 
+    /* Without the photo this column is far shorter than the form beside it, so
+       it tracks the scroll instead of leaving a dead half-band — and the phone
+       number stays on screen while someone is filling the form in. Same device
+       the careers checklist column used before it was condensed away. */
     &__intro {
       --gap: 1.5rem;
+      position: sticky;
+      top: 8.5rem;
+
+      @media (max-width: 1078px) {
+        position: static;
+      }
     }
 
     :global(.fs-xxl) {
@@ -263,11 +273,6 @@ const aboutSchema = {
     &__lead {
       --w: 46ch;
       line-height: 1.6;
-    }
-
-    &__plate {
-      aspect-ratio: 16 / 10;
-      margin-top: 0.5rem;
     }
 
     &__direct {
