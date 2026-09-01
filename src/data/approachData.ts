@@ -137,7 +137,8 @@ export const credentials: Credential[] = [
   },
   {
     label: "Screened caregivers",
-    detail: "Every caregiver is vetted, screened, and background checked before they work with a client.",
+    detail:
+      "Every caregiver is vetted, screened, and background checked before they work with a client.",
   },
   {
     label: "Written care plans",
@@ -158,3 +159,92 @@ export const press = {
   dek: "HomeCare Magazine covered our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.",
   url: "https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location",
 };
+
+// ==========================================
+// 10. CAREERS — added 2026-08-29. No handoff note covers this section, so
+// the copy below is drafted, not client-approved. Two things the client
+// should confirm before launch: the roles list (which positions are actually
+// open) and the CHHA line — New Jersey requires a CHHA certification for
+// hands-on personal care through a Health Care Service Firm, and companion
+// roles do not, but only the client knows which roles they staff. No pay,
+// benefits, or hours are promised anywhere in this copy; keep it that way.
+// ==========================================
+/**
+ * Condensed from two paragraphs to one (2026-09-01). The careers block was two
+ * full sections plus the form and read as a small careers site bolted onto an
+ * about page; it is one section now. Nothing factual was cut — only the
+ * restatement.
+ */
+export const careersIntro =
+  "Most agencies treat caregivers as hours on a schedule. We are building something smaller and more deliberate, and we are looking for people who want to work that way: matched to a client and kept in place, working from a written care plan, reaching the owner directly when something changes.";
+
+export const careerExpectations: Credential[] = [
+  {
+    label: "Consistent placements",
+    detail: "You are matched to a client and you stay with them.",
+  },
+  {
+    label: "A plan you can work from",
+    detail: "A written care plan with specific tasks, hours, and goals.",
+  },
+  {
+    label: "An owner who picks up",
+    detail: "You reach Marvalyn directly, not a call center.",
+  },
+  {
+    label: "Respect for the work",
+    detail: "Caregiving is skilled work and we staff it that way.",
+  },
+];
+
+/**
+ * The one hiring requirement that changes whether someone can apply, so it
+ * survived the condensation as its own line. NJ requires a CHHA certification
+ * for hands-on personal care through a Health Care Service Firm — the client
+ * still needs to confirm which roles they actually staff.
+ */
+export const careerRequirement =
+  "Hands-on personal care requires a current New Jersey Certified Home Health Aide (CHHA) certification. Companion roles do not.";
+
+/**
+ * PARKED. This was the "Who we are looking for" checklist, its own full section
+ * until 2026-09-01. The careers block is one section now and the list was the
+ * least load-bearing part of it — everything here is either restated in the
+ * form's own fields or is a quality no applicant self-reports honestly. The
+ * CHHA line it carried lives on in `careerRequirement` above.
+ *
+ * Kept rather than deleted because it is drafted copy the client has not
+ * reviewed yet; if they want a fuller careers page later, it starts here.
+ */
+export const careerTraits: string[] = [
+  "Experience caring for seniors, whether professional or in your own family.",
+  "Reliability. Showing up on time, every time, is most of the job.",
+  "Patience with memory changes, and the instinct to redirect rather than correct.",
+  "Clear, honest communication with families and with us.",
+  "A current New Jersey Certified Home Health Aide (CHHA) certification for hands-on personal care. Companion roles do not require one.",
+];
+
+/** Select options on the application form — keep in sync with the roles the client is hiring for. */
+export const careerRoles: string[] = [
+  "Certified Home Health Aide (CHHA)",
+  "Companion caregiver",
+  "Live-in caregiver",
+  "Overnight caregiver",
+  "Not sure yet",
+];
+
+export const careerExperienceOptions: string[] = [
+  "New Jersey CHHA",
+  "Certified Nursing Assistant (CNA)",
+  "Experienced caregiver, not certified",
+  "New to caregiving",
+];
+
+export const careerAvailabilityOptions: string[] = [
+  "Weekdays",
+  "Evenings",
+  "Overnights",
+  "Weekends",
+  "Live-in",
+  "Flexible",
+];

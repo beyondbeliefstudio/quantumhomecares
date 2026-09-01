@@ -6,11 +6,19 @@ import Links from "@/components/Links.astro";
 import { Image } from "astro:assets";
 
 // DATA
-import { navData, contactHref } from "@/data/navData";
+import { navData, careersHref, contactHref as defaultContactHref } from "@/data/navData";
 import { baseData, telHref, mailHref } from "@/data/siteData";
 
 // IMAGES
 import lockup from "@/assets/brand/quantum-logo-full-lockup.png";
+
+// PROPS
+/** Layout swaps in the homepage anchor on pages that hide the contact band. */
+interface Props {
+  contactHref?: string;
+}
+
+const { contactHref = defaultContactHref } = Astro.props;
 
 const year = new Date().getFullYear();
 ---
@@ -30,7 +38,14 @@ const year = new Date().getFullYear();
       <div class="footer__links-group">
         <nav class="stack footer__col" aria-label="Footer navigation">
           <span class="topic">Explore</span>
-          {navData.map(i => <Links variant="footer-link" href={i.href}>{i.title}</Links>)}
+          {
+            navData.map(i => (
+              <Links variant="footer-link" href={i.href}>
+                {i.title}
+              </Links>
+            ))
+          }
+          <Links variant="footer-link" href={careersHref}>Careers</Links>
           <Links variant="footer-link" href={contactHref}>Request Care</Links>
         </nav>
 

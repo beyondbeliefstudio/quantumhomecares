@@ -1,0 +1,333 @@
+---
+/**
+ * The caregiver application form — a THIRD Netlify form, separate from the
+ * family "contact" and professional "referral" forms so hiring inquiries land
+ * in their own bucket and never mix with care requests.
+ *
+ * One form covers both asks: the intent switch at the top lets someone apply
+ * outright or just say they are interested and want a call. Résumé upload is
+ * optional (Netlify accepts files on multipart forms, 8 MB cap per file).
+ */
+
+// COMPONENTS
+import Buttons from "@/components/Buttons.astro";
+
+// DATA
+import {
+  careerRoles,
+  careerExperienceOptions,
+  careerAvailabilityOptions,
+} from "@/data/approachData";
+
+const source = Astro.url.pathname;
+
+const intents = [
+  {
+    value: "Apply now",
+    label: "I want to apply",
+    hint: "Send your details and a résumé if you have one.",
+  },
+  {
+    value: "Interested",
+    label: "I'm interested",
+    hint: "Tell us a little and we will call to talk it through.",
+  },
+];
+---
+
+<form
+  class="form-panel"
+  name="careers"
+  method="POST"
+  action="/submit-application"
+  enctype="multipart/form-data"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-career-form
+>
+  <!-- Honeypot — hidden from users, visible to bots -->
+  <p class="hidden">
+    <label>
+      Don't fill this out:
+      <input name="bot-field" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+
+  <input type="hidden" name="source" value={source} />
+
+  <p class="eyebrow">Work with us</p>
+
+  <p class="meta form-legend">
+    <span class="required" aria-hidden="true">*</span> Required.
+  </p>
+
+  <!-- Intent switch: the radios are real inputs, the labels are the control -->
+  <fieldset class="choice">
+    <legend class="choice__legend">
+      What would you like to do?<span class="required" aria-hidden="true">*</span>
+    </legend>
+    <div class="choice__options">
+      {
+        intents.map((intent, i) => (
+          <label class="choice__option">
+            <input
+              class="choice__input"
+              type="radio"
+              name="intent"
+              value={intent.value}
+              checked={i === 0}
+              required
+            />
+            <span class="choice__label">{intent.label}</span>
+            <span class="choice__hint">{intent.hint}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="job-first-name">
+        First name<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="job-first-name" name="firstName" type="text" autocomplete="given-name" required />
+    </div>
+    <div class="form-group">
+      <label for="job-last-name">
+        Last name<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="job-last-name" name="lastName" type="text" autocomplete="family-name" required />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="job-phone">
+        Phone<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="job-phone" name="phone" type="tel" autocomplete="tel" required />
+    </div>
+    <div class="form-group">
+      <label for="job-email">
+        Email<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="job-email" name="email" type="email" autocomplete="email" required />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="job-role">
+        Role you are interested in<span class="required" aria-hidden="true">*</span>
+      </label>
+      <select id="job-role" name="role" required>
+        <option value="" disabled selected>Select one</option>
+        {careerRoles.map(option => <option value={option}>{option}</option>)}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="job-experience">
+        Your experience<span class="required" aria-hidden="true">*</span>
+      </label>
+      <select id="job-experience" name="experience" required>
+        <option value="" disabled selected>Select one</option>
+        {careerExperienceOptions.map(option => <option value={option}>{option}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="job-availability">
+        Availability<span class="required" aria-hidden="true">*</span>
+      </label>
+      <select id="job-availability" name="availability" required>
+        <option value="" disabled selected>Select one</option>
+        {careerAvailabilityOptions.map(option => <option value={option}>{option}</option>)}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="job-area">
+        Area you can work in<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input id="job-area" name="area" type="text" autocomplete="address-level2" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="job-resume">
+      Résumé <span class="form-optional">(optional — PDF or Word, up to 8 MB)</span>
+    </label>
+    <input
+      id="job-resume"
+      class="file"
+      name="resume"
+      type="file"
+      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="job-notes">
+      Tell us a little about yourself <span class="form-optional">(optional)</span>
+    </label>
+    <textarea id="job-notes" name="notes" rows="3"></textarea>
+  </div>
+
+  <Buttons variant="primary" classes="full" data-submit-label>Send Application</Buttons>
+
+  <p class="meta">
+    We respond within one business day. Every caregiver is screened and background checked before
+    working with a client. Quantum Home Cares is an equal opportunity employer.
+  </p>
+</form>
+
+<script>
+  // The button's label follows the intent switch — "Send Application" when
+  // applying, "Send Inquiry" when only interested. The radios do the real work;
+  // this is cosmetic, so a no-JS submit still lands correctly.
+  document.querySelectorAll<HTMLFormElement>("[data-career-form]").forEach(form => {
+    const button = form.querySelector<HTMLButtonElement>("[data-submit-label]");
+    if (!button) return;
+
+    const update = () => {
+      const checked = form.querySelector<HTMLInputElement>('input[name="intent"]:checked');
+      button.textContent = checked?.value === "Interested" ? "Send Inquiry" : "Send Application";
+    };
+
+    form.addEventListener("change", event => {
+      if ((event.target as HTMLInputElement).name === "intent") update();
+    });
+    update();
+  });
+</script>
+
+<style lang="scss">
+  /* Same treatment as the contact form's optional marker */
+  .form-optional {
+    color: var(--qhc-slate-600);
+    font-weight: 400;
+  }
+
+  // ---- Intent switch ----
+  // Two selectable cards. The radio stays in the tree (keyboard, no-JS, form
+  // data) but is visually collapsed; the label carries the state.
+  .choice {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4375rem;
+    min-width: 0;
+    border: 0;
+
+    &__legend {
+      padding: 0;
+      font-size: var(--qhc-size-meta);
+      font-weight: 600;
+      color: var(--qhc-ink-900);
+
+      .required {
+        margin-left: 0.125rem;
+        color: var(--qhc-navy-700);
+      }
+    }
+
+    &__options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+
+      @media (max-width: 616px) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    &__option {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.875rem 1rem 0.9375rem;
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline-strong);
+      border-radius: var(--qhc-radius-sm);
+      font-weight: 400;
+      cursor: pointer;
+      transition:
+        background var(--qhc-duration-fast) var(--qhc-ease-out),
+        border-color var(--qhc-duration-fast) var(--qhc-ease-out),
+        box-shadow var(--qhc-duration-fast) var(--qhc-ease-out);
+
+      &:hover {
+        border-color: var(--qhc-navy-300);
+      }
+
+      &:has(:checked) {
+        background: var(--qhc-navy-050);
+        border-color: var(--qhc-navy-700);
+      }
+
+      &:has(:focus-visible) {
+        border-color: var(--qhc-navy-700);
+        box-shadow: var(--qhc-focus-ring);
+      }
+    }
+
+    /* Overrides the global input box model — this radio is never seen */
+    &__input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &__label {
+      font-size: var(--qhc-size-body-s);
+      font-weight: 600;
+      color: var(--qhc-navy-900);
+      line-height: 1.3;
+    }
+
+    &__hint {
+      font-size: var(--qhc-size-meta);
+      color: var(--qhc-slate-600);
+      line-height: 1.45;
+    }
+  }
+
+  // ---- Résumé upload ----
+  // The global input rule (fixed height, zero vertical padding) is built for
+  // text fields; a file input needs room for its button.
+  .file {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    color: var(--qhc-slate-600);
+    font-size: var(--qhc-size-meta);
+    line-height: 1.4;
+    cursor: pointer;
+
+    &::file-selector-button {
+      margin-right: 0.875rem;
+      padding: 0.5rem 1rem;
+      background: var(--qhc-navy-100);
+      border: 1px solid var(--qhc-navy-200);
+      border-radius: var(--qhc-radius-pill);
+      color: var(--qhc-navy-800);
+      font-family: inherit;
+      font-size: var(--qhc-size-meta);
+      font-weight: 600;
+      cursor: pointer;
+      transition:
+        background var(--qhc-duration-fast) var(--qhc-ease-out),
+        border-color var(--qhc-duration-fast) var(--qhc-ease-out);
+    }
+
+    &:hover::file-selector-button {
+      background: var(--qhc-navy-200);
+      border-color: var(--qhc-navy-300);
+    }
+  }
+</style>

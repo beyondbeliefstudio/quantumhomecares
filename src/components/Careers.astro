@@ -1,0 +1,171 @@
+---
+/**
+ * Working at Quantum — the careers block on /our-approach, directly above the
+ * application band.
+ *
+ * One section as of 2026-09-01. It was two ("what you can expect" on the tinted
+ * band, then a "who we are looking for" checklist with the roles), which read
+ * as a small careers site bolted onto an about page and pushed the form three
+ * screens down. The checklist is parked in approachData; the one part of it
+ * that changes whether someone can apply — the CHHA requirement — survives as a
+ * line under the roles.
+ *
+ * Copy is drafted, not client-approved — see the careers note in approachData.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Image } from "astro:assets";
+
+// DATA
+import {
+  careersIntro,
+  careerExpectations,
+  careerRequirement,
+  careerRoles,
+} from "@/data/approachData";
+
+// IMAGES
+import photo from "@/assets/photos/newStock/pexels-kampus-7551627.jpg";
+
+// The "Not sure yet" option belongs on the form, not in the list of roles.
+const roles = careerRoles.filter(role => role !== "Not sure yet");
+---
+
+<section id="careers" class="band band--down careers" data-reveal>
+  <div class="band__inner">
+    <div class="section-header careers__header">
+      <span class="eyebrow eyebrow--band">Careers</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Come do this work the way it should be done.
+      </Heading>
+      <p class="lead">{careersIntro}</p>
+    </div>
+
+    <div class="split split--5-6 split--gap-lg">
+      <div class="careers__media">
+        <div class="plate plate--lg careers__plate" data-drift="4">
+          <Image
+            src={photo}
+            alt="A caregiver guiding a senior man through stretching exercises in his living room"
+            widths={[600, 1200]}
+            sizes="(max-width: 1078px) 92vw, 40vw"
+          />
+        </div>
+      </div>
+
+      <div class="careers__body">
+        <div class="careers__grid">
+          {
+            careerExpectations.map((item, i) => (
+              <p class="pair careers__item" data-stagger style={`--i: ${i}`}>
+                <strong>{item.label}</strong>
+                {item.detail}
+              </p>
+            ))
+          }
+        </div>
+
+        <div class="careers__roles" data-stagger style={`--i: ${careerExpectations.length}`}>
+          <span class="topic">Roles we hire for</span>
+          <ul class="careers__pills">
+            {roles.map(role => <li class="careers__pill">{role}</li>)}
+          </ul>
+          <p class="meta careers__requirement">{careerRequirement}</p>
+        </div>
+
+        <div class="btn-wrapper">
+          <Links variant="primary" href="#apply">Apply or Ask a Question</Links>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .careers {
+    scroll-margin-top: 7.25rem;
+
+    &__header {
+      --w: 60ch;
+      --mb: 3.25rem;
+    }
+
+    /* Same contract as the professionals discharge split: the photo runs the
+       full height of the copy beside it. */
+    &__media {
+      align-self: stretch;
+      min-height: 26rem;
+    }
+
+    &__plate {
+      height: 100%;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem 2.5rem;
+    }
+
+    &__roles {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--qhc-hairline-cool);
+    }
+
+    &__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+      list-style: none;
+    }
+
+    &__pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.5rem;
+      padding: 0 1.125rem;
+      background: var(--qhc-surface-raised);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius-pill);
+      color: var(--qhc-navy-900);
+      font-size: var(--qhc-size-label);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* Sits with the roles it qualifies, not as a footnote to the whole band. */
+    &__requirement {
+      max-width: 56ch;
+    }
+
+    @media (max-width: 1078px) {
+      &__media {
+        min-height: 0;
+      }
+
+      &__plate {
+        height: auto;
+        aspect-ratio: 3 / 2;
+      }
+    }
+
+    @media (max-width: 616px) {
+      &__grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+</style>

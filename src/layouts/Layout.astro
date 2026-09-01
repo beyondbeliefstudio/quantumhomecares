@@ -6,6 +6,9 @@ import Footer from "@/layouts/Footer.astro";
 import Contact from "@/components/Contact.astro";
 import UserBack from "@/components/UserBack.astro";
 
+// DATA
+import { contactHref, contactHrefFallback } from "@/data/navData";
+
 // STYLES
 import "@/styles/global.scss";
 
@@ -15,9 +18,12 @@ import "@/styles/global.scss";
  * conversion, so it travels with the layout rather than being re-added page by
  * page. `contactTitle` / `contactLead` let a page re-frame the ask for where
  * the reader just was; `hideCTA` is for pages where a form makes no sense
- * (the post-submit thank-you).
+ * (the post-submit thank-you) or where a different form closes the page
+ * (the referral and careers bands). On those pages the header and footer
+ * "Request Care" links hop to the homepage band instead of a dead anchor.
  */
 const { contactTitle, contactLead, hideCTA = false } = Astro.props;
+const requestHref = hideCTA ? contactHrefFallback : contactHref;
 ---
 
 <!doctype html>
@@ -33,14 +39,14 @@ const { contactTitle, contactLead, hideCTA = false } = Astro.props;
       <!-- 2.5rem tall: the header flips to its scrolled state when this leaves view -->
       <div class="scroll-sentinel" aria-hidden="true"></div>
 
-      <Nav />
+      <Nav contactHref={requestHref} />
 
       <main>
         <slot />
         {!hideCTA && <Contact title={contactTitle} lead={contactLead} />}
       </main>
 
-      <Footer />
+      <Footer contactHref={requestHref} />
     </div>
 
     <UserBack />

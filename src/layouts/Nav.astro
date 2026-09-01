@@ -7,12 +7,20 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 // DATA
-import { navData, contactHref } from "@/data/navData";
+import { navData, contactHref as defaultContactHref } from "@/data/navData";
 import { baseData, telHref } from "@/data/siteData";
 
 // IMAGES
 import wordmark from "@/assets/brand/quantum-wordmark.png";
 import mark from "@/assets/brand/quantum-mark.png";
+
+// PROPS
+/** Layout swaps in the homepage anchor on pages that hide the contact band. */
+interface Props {
+  contactHref?: string;
+}
+
+const { contactHref = defaultContactHref } = Astro.props;
 
 /**
  * Active route. Trailing slash stripped so "/services/" and "/services" agree,

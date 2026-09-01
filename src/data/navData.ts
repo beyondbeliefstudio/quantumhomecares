@@ -21,7 +21,13 @@ export const navData: NavItem[] = [
 /**
  * Layout.astro renders the contact band at the bottom of every page, so a
  * bare anchor resolves wherever it is clicked — no cross-page hop, the reader
- * just scrolls down the page they are already on. (The post-submit thank-you
- * hides the band, but nothing links to #contact from there.)
+ * just scrolls down the page they are already on. Pages that hide the band
+ * (`hideCTA`: the thank-you pages, /for-professionals, /our-approach) get the
+ * homepage band instead — Layout passes `contactHrefFallback` to the nav and
+ * footer on those pages.
  */
 export const contactHref = "#contact";
+export const contactHrefFallback = "/#contact";
+
+/** The careers block lives on /our-approach; only the footer links to it. */
+export const careersHref = "/our-approach#careers";

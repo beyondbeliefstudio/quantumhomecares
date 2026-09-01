@@ -10,10 +10,14 @@ import WhoWeHelp from "@/components/WhoWeHelp.astro";
 import Culture from "@/components/Culture.astro";
 import About from "@/components/About.astro";
 import InTheNews from "@/components/InTheNews.astro";
+import Careers from "@/components/Careers.astro";
+import CareerForm from "@/components/CareerForm.astro";
+
+// HELPERS
 
 // DATA
 import { credentials } from "@/data/approachData";
-import { schemaIds } from "@/data/siteData";
+import { baseData, schemaIds, telHref, mailHref } from "@/data/siteData";
 
 // IMAGES
 import heroPhoto from "@/assets/photos/quote-path.jpg";
@@ -42,8 +46,7 @@ const aboutSchema = {
   pageTitle="Our Approach and Founder's Story | Quantum Home Cares New Jersey"
   description="Marvalyn Ellis founded Quantum Home Cares after 25 years managing her own parents' care. Advocacy-led senior home care built around one family at a time."
   schemaNodes={[aboutSchema]}
-  contactTitle="Let's talk about your family."
-  contactLead="One conversation, no cost, nothing to sign. Tell us what is going on and we will give you an honest read on what would help."
+  hideCTA
 >
   <!-- ===== 1. PAGE INTRO — the pitch is the hero ===== -->
   <InternalHero
@@ -54,8 +57,8 @@ const aboutSchema = {
   >
     <p class="lead">
       Large home care agencies run on clinical quotas and insurance billing. An aide is assigned,
-      hours are logged, the visit closes, and the family is still the one on hold with the
-      insurance company at four in the afternoon.
+      hours are logged, the visit closes, and the family is still the one on hold with the insurance
+      company at four in the afternoon.
     </p>
     <p class="lead">
       We work the other way. We build the care plan and we maintain it. We go to the appointments.
@@ -119,8 +122,41 @@ const aboutSchema = {
        quotes are collected with written permission (03-our-approach.md);
        never launch this section with placeholder or invented quotes. -->
 
-  <!-- ===== 10. PAGE CTA ===== is the sitewide contact band, retitled via
-       contactTitle / contactLead on Layout above. -->
+  <!-- ===== 10. WORK WITH US — one section as of 2026-09-01; it was two before
+       that and pushed the application form three screens down. -->
+  <Careers />
+
+  <!-- ===== 11. APPLY BAND — this page closes on the careers form instead of
+       the sitewide family contact band (hideCTA on Layout above). The nav and
+       footer "Request Care" links fall back to the homepage band here.
+       No photo in this intro: the careers section directly above already
+       carries one, and two in consecutive bands read as padding. -->
+  <section id="apply" class="band band--cool apply" data-reveal>
+    <div class="band__inner apply__inner">
+      <div class="split split--gap-lg split--top">
+        <!-- Same intro grammar as the contact band this replaces: heading,
+             lead, photo plate, direct line. -->
+        <div class="stack apply__intro">
+          <Heading tag="h2" size="xxl" fontFamily="primary" weight="fw400" marginBottom="none">
+            Apply, or just ask.
+          </Heading>
+          <p class="lead apply__lead">
+            Send an application if you are ready, or tell us you are interested and we will call you
+            to talk it through. Either way you hear back within one business day, from the owner.
+          </p>
+          <p class="meta--lg apply__direct">
+            Prefer to talk? Call <a href={telHref}>{baseData.phone}</a> or email
+            <a href={mailHref}>{baseData.email}</a>.
+          </p>
+          <p class="meta--lg apply__direct">
+            Looking for care for someone in your family? <a href="/#contact">Request care here</a>.
+          </p>
+        </div>
+
+        <CareerForm />
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style lang="scss">
@@ -200,6 +236,45 @@ const aboutSchema = {
 
       &__grid {
         grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+
+  // ---- 12. Apply band — the contact band's styles, one for one ----
+  .apply {
+    scroll-margin-top: 7.25rem;
+
+    &__inner {
+      --pad: 6rem;
+
+      @media (max-width: 616px) {
+        --pad: 3rem;
+      }
+    }
+
+    &__intro {
+      --gap: 1.5rem;
+    }
+
+    :global(.fs-xxl) {
+      max-width: 20ch;
+    }
+
+    &__lead {
+      --w: 46ch;
+      line-height: 1.6;
+    }
+
+    &__plate {
+      aspect-ratio: 16 / 10;
+      margin-top: 0.5rem;
+    }
+
+    &__direct {
+      color: var(--qhc-slate-600);
+
+      & + & {
+        margin-top: -0.75rem;
       }
     }
   }
