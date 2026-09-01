@@ -18,16 +18,27 @@ export const MAX_PER_SITE_PER_HOUR = 20;
 export function leadStore() {
   const options = { name: STORE_NAME, consistency: "strong" };
 
-  // Netlify wires the blobs context automatically inside functions. The manual
-  // credentials are a fallback for environments (local `netlify dev` without a
-  // linked site, say) where that context is absent.
+  // Netlify normally wires the blobs context automatically inside functions, but
+  // freshly created sites sometimes ship without it and every read fails with
+  // MissingBlobsEnvironmentError. BLOBS_SITE_ID + BLOBS_TOKEN are the escape
+  // hatch: set both and they win outright, no questions asked, because someone
+  // setting them has already hit that failure and means it.
   //
   // The choice has to be made from the environment up front: getStore itself
   // never throws, so a try/catch around it would never reach the fallback —
   // @netlify/blobs only raises the "not configured" error on the first read or
   // write, by which point the store has already been handed out.
-  const siteID = process.env.BLOBS_SITE_ID || process.env.SITE_ID;
-  const token = process.env.BLOBS_TOKEN || process.env.NETLIFY_API_TOKEN;
+  if (process.env.BLOBS_SITE_ID && process.env.BLOBS_TOKEN) {
+    return getStore({
+      ...options,
+      siteID: process.env.BLOBS_SITE_ID,
+      token: process.env.BLOBS_TOKEN,
+    });
+  }
+
+  // Netlify's own build vars, used only when the automatic context is absent.
+  const siteID = process.env.SITE_ID;
+  const token = process.env.NETLIFY_API_TOKEN;
 
   if (!process.env.NETLIFY_BLOBS_CONTEXT && siteID && token) {
     return getStore({ ...options, siteID, token });
