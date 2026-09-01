@@ -37,6 +37,16 @@ export interface Faq {
   answer: string;
 }
 
+export interface Testimonial {
+  /** The line that carries the section. Pulled out of `body` and set larger. */
+  statement: string;
+  /** Remaining paragraphs, in the order they should read. */
+  body: string[];
+  name: string;
+  /** Relationship to the person who received care. */
+  relationship: string;
+}
+
 // ==========================================
 // 2. TRUST BAR
 // ==========================================
@@ -130,6 +140,38 @@ export const faqs: Faq[] = [
   {
     question: "Will it be the same caregiver?",
     answer: "Yes, with a named backup who already knows the care plan for vacations and sick days.",
+  },
+];
+
+// ==========================================
+// 10. TESTIMONIAL
+// The first approved quote — the README's "testimonials removed, no approved
+// quotes yet" note no longer holds for the homepage.
+//
+// Verbatim except for three corrections, all of which should be confirmed:
+//   · "Marvelyn" → "Marvalyn". The handoff notes, the design reference and
+//     every page of this site spell it Marvalyn; the reviewer misspelled the
+//     founder's name and publishing that on her own site would be worse than
+//     silently fixing an obvious typo.
+//   · "Quantum Homecares" → "Quantum Home Cares", the registered name.
+//   · "88 year old" → "88-year-old".
+// The closing ❤️ was dropped — it does not survive the typographic treatment.
+//
+// An array because more are expected. Testimonial.astro features the first one
+// on its own; when a second lands, that component is where the list treatment
+// goes, not here.
+// ==========================================
+export const testimonials: Testimonial[] = [
+  {
+    statement:
+      "We felt confident and comfortable trusting Marvalyn and her staff with our treasured mother.",
+    body: [
+      "When our 88-year-old mom first needed in-home care, it was our first experience with an in-home aide service, and honestly, we didn't know what to expect. Marvalyn made the entire transition feel comfortable, painless, and smooth for both Mom and our family.",
+      "She took the time to understand Mom's needs and made sure the aides assigned to her were truly a good fit. That made all the difference.",
+      "That kind of trust means everything when you're inviting someone into your loved one's home and life. We are truly grateful to Marvalyn and the Quantum Home Cares team for the care, compassion, and personal attention they gave our mom.",
+    ],
+    name: "Daneca Mergott",
+    relationship: "Family of a Quantum Home Cares client",
   },
 ];
 

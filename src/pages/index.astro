@@ -18,6 +18,7 @@ import HowItWorks from "@/components/HowItWorks.astro";
 import ForProfessionals from "@/components/ForProfessionals.astro";
 import Resources from "@/components/Resources.astro";
 import FAQ from "@/components/FAQ.astro";
+import Testimonial from "@/components/Testimonial.astro";
 // The contact band is rendered by Layout on every page — not imported here.
 
 // DATA
@@ -50,4 +51,7 @@ const faqSchema = {
   <ForProfessionals />
   <Resources />
   <FAQ />
+  <!-- Last before the contact band Layout appends — the proof sits directly
+       against the ask. -->
+  <Testimonial />
 </Layout>

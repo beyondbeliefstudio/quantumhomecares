@@ -1,0 +1,161 @@
+---
+/**
+ * The one approved family testimonial, sited just before the contact band so
+ * the strongest proof is the last thing read before the ask.
+ *
+ * Deliberately NOT another full-bleed photo quote: QuoteBanner already plays
+ * that move higher up this same page, and repeating it would flatten both. This
+ * is a contained cool panel against the warm linen page — a different kind of
+ * pause, not a second version of the same one.
+ *
+ * There is also no portrait. A stock face beside a testimonial reads as the
+ * person who wrote it no matter what the caption says, and a caption admitting
+ * otherwise spends the trust the quote just earned. The words and a real name
+ * carry it.
+ *
+ * Renders `testimonials[0]` on its own. When a second quote is approved, the
+ * list treatment belongs here — the data is already an array.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+
+// DATA
+import { testimonials } from "@/data/homeData";
+
+const [testimonial] = testimonials;
+---
+
+{
+  testimonial && (
+    <section class="section" data-reveal>
+      <figure class="testimonial">
+        <div class="testimonial__head">
+          <span class="eyebrow">Family experience</span>
+          <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+            In their words
+          </Heading>
+        </div>
+
+        <blockquote class="testimonial__quote">
+          <span class="testimonial__mark" aria-hidden="true">
+            &ldquo;
+          </span>
+
+          <Heading
+            tag="p"
+            size="statement"
+            fontFamily="primary"
+            weight="fw400"
+            marginBottom="none"
+            class="testimonial__statement"
+          >
+            {testimonial.statement}
+          </Heading>
+
+          {testimonial.body.map(paragraph => (
+            <p>{paragraph}</p>
+          ))}
+        </blockquote>
+
+        <figcaption class="testimonial__attribution">
+          <span class="testimonial__name">{testimonial.name}</span>
+          <span class="meta">{testimonial.relationship}</span>
+        </figcaption>
+      </figure>
+    </section>
+  )
+}
+
+<style lang="scss">
+  .testimonial {
+    position: relative;
+    /* isolate so the oversized quote mark cannot paint over the section above */
+    isolation: isolate;
+    /* Sized so the panel edge and the text measure land together. Wider than
+       this and the copy strands a dead column against the right border. */
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
+    border: 1px solid var(--qhc-hairline-cool);
+    border-radius: var(--qhc-radius-lg);
+    background: var(--qhc-surface-cool);
+
+    /* The opening quotation glyph, set as art rather than punctuation. Anchored
+       to the blockquote, not the panel, so it marks where the quote actually
+       starts instead of colliding with the eyebrow pill. Hidden from assistive
+       tech — blockquote already announces the quotation. */
+    &__mark {
+      position: absolute;
+      z-index: -1;
+      top: -2.75rem;
+      left: -0.75rem;
+      color: var(--qhc-navy-100);
+      font-family: var(--qhc-font-display);
+      font-size: clamp(7rem, 14vw, 10rem);
+      line-height: 1;
+      user-select: none;
+    }
+
+    &__head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    &__quote {
+      position: relative;
+      /* blockquote carries a UA margin in every browser */
+      margin: 0;
+
+      /* The statement sets the section; the paragraphs support it, so they step
+         down in both size and weight rather than competing. */
+      p + p {
+        margin-top: 1.125rem;
+      }
+
+      /* No measure cap — the panel width above is the measure now. */
+      p:not(.testimonial__statement) {
+        color: var(--qhc-ink-700);
+        font-size: var(--qhc-size-body-m);
+        line-height: 1.62;
+      }
+    }
+
+    &__statement {
+      max-width: 26ch;
+      margin-bottom: 1.75rem;
+      color: var(--qhc-text-heading);
+    }
+
+    &__attribution {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-top: 2.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--qhc-hairline-cool);
+    }
+
+    &__name {
+      color: var(--qhc-text-heading);
+      font-size: var(--qhc-size-label);
+      font-weight: 600;
+    }
+
+    @media (max-width: 770px) {
+      /* The statement's 26ch measure is a desktop line-break device; on a phone
+         it strands two or three words per line. */
+      &__statement {
+        max-width: none;
+      }
+
+      /* Half the glyph would sit off the panel at small widths. */
+      &__mark {
+        left: -0.25rem;
+      }
+    }
+  }
+</style>
