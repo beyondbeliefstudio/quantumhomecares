@@ -22,6 +22,17 @@ const {
 const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const AHREFS_DATA_KEY = import.meta.env.PUBLIC_AHREFS_DATA_KEY;
 
+/**
+ * Set PUBLIC_NOINDEX=true on any deploy that must stay out of search — the
+ * staging site that builds the in-development branch, in particular.
+ *
+ * Netlify noindexes branch deploys and deploy previews on its own, but a
+ * staging site whose production branch IS the dev branch counts as production
+ * there and gets no such protection. This is the guard for that case, and it
+ * must stay unset on the real site.
+ */
+const noIndex = import.meta.env.PUBLIC_NOINDEX === "true";
+
 // Open Graph
 const ogImage = new URL("/og-image.png", Astro.site).toString();
 const ogUrl = Astro.url.toString();
@@ -70,6 +81,7 @@ const schema = {
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={Astro.url} />
+  {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
