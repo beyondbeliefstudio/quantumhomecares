@@ -3,15 +3,16 @@
  * The one approved family testimonial, sited just before the contact band so
  * the strongest proof is the last thing read before the ask.
  *
- * Deliberately NOT another full-bleed photo quote: QuoteBanner already plays
- * that move higher up this same page, and repeating it would flatten both. This
- * is a contained cool panel against the warm linen page — a different kind of
- * pause, not a second version of the same one.
+ * Built on the same panel grammar as ForProfessionals — 78rem frame, photo
+ * filling one half, navy-050 plane — because a narrower fixed-width card broke
+ * the scroll rhythm every other section on this page keeps. Photo sits left,
+ * alternating off Resources above it (Why L, Approach R, Professionals L,
+ * Resources R, this L).
  *
- * There is also no portrait. A stock face beside a testimonial reads as the
- * person who wrote it no matter what the caption says, and a caption admitting
- * otherwise spends the trust the quote just earned. The words and a real name
- * carry it.
+ * The photo is deliberately faceless. A stock portrait beside a testimonial
+ * reads as the person who wrote it no matter what the caption says, and a
+ * caption admitting otherwise spends the trust the quote just earned. Two
+ * hands say caregiver and client without claiming to be anyone in particular.
  *
  * Renders `testimonials[0]` on its own. When a second quote is approved, the
  * list treatment belongs here — the data is already an array.
@@ -20,8 +21,14 @@
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
 
+// HELPERS
+import { Image } from "astro:assets";
+
 // DATA
 import { testimonials } from "@/data/homeData";
+
+// IMAGES
+import photo from "@/assets/photos/newStock/pexels-ilayda0700-36706841.jpg";
 
 const [testimonial] = testimonials;
 ---
@@ -30,33 +37,42 @@ const [testimonial] = testimonials;
   testimonial && (
     <section class="section" data-reveal>
       <figure class="testimonial">
-        <div class="testimonial__head">
-          <span class="eyebrow">Family experience</span>
+        <div class="testimonial__media" data-drift="5">
+          <Image
+            src={photo}
+            alt="A younger hand resting gently on the hand of an older person"
+            widths={[600, 1200]}
+            sizes="(max-width: 836px) 92vw, 34vw"
+          />
+        </div>
+
+        <div class="testimonial__body">
+          <span class="eyebrow eyebrow--band">Family experience</span>
           <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
             In their words
           </Heading>
+
+          <blockquote class="testimonial__quote">
+            <span class="testimonial__mark" aria-hidden="true">
+              &ldquo;
+            </span>
+
+            <Heading
+              tag="p"
+              size="statement"
+              fontFamily="primary"
+              weight="fw400"
+              marginBottom="none"
+              class="testimonial__statement"
+            >
+              {testimonial.statement}
+            </Heading>
+
+            {testimonial.body.map(paragraph => (
+              <p>{paragraph}</p>
+            ))}
+          </blockquote>
         </div>
-
-        <blockquote class="testimonial__quote">
-          <span class="testimonial__mark" aria-hidden="true">
-            &ldquo;
-          </span>
-
-          <Heading
-            tag="p"
-            size="statement"
-            fontFamily="primary"
-            weight="fw400"
-            marginBottom="none"
-            class="testimonial__statement"
-          >
-            {testimonial.statement}
-          </Heading>
-
-          {testimonial.body.map(paragraph => (
-            <p>{paragraph}</p>
-          ))}
-        </blockquote>
 
         <figcaption class="testimonial__attribution">
           <span class="testimonial__name">{testimonial.name}</span>
@@ -69,40 +85,46 @@ const [testimonial] = testimonials;
 
 <style lang="scss">
   .testimonial {
-    position: relative;
-    /* isolate so the oversized quote mark cannot paint over the section above */
-    isolation: isolate;
-    /* Sized so the panel edge and the text measure land together. Wider than
-       this and the copy strands a dead column against the right border. */
-    max-width: 50rem;
+    /* figcaption has to stay a direct child of figure to be a valid caption, so
+       the copy column is two grid rows rather than one wrapper — the photo
+       spans both. */
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    grid-template-areas:
+      "media body"
+      "media caption";
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+    max-width: 78rem;
     margin: 0 auto;
-    padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
-    border: 1px solid var(--qhc-hairline-cool);
+    background: var(--qhc-navy-050);
+    border: 1px solid var(--qhc-navy-300);
     border-radius: var(--qhc-radius-lg);
-    background: var(--qhc-surface-cool);
 
-    /* The opening quotation glyph, set as art rather than punctuation. Anchored
-       to the blockquote, not the panel, so it marks where the quote actually
-       starts instead of colliding with the eyebrow pill. Hidden from assistive
-       tech — blockquote already announces the quotation. */
-    &__mark {
-      position: absolute;
-      z-index: -1;
-      top: -2.75rem;
-      left: -0.75rem;
-      color: var(--qhc-navy-100);
-      font-family: var(--qhc-font-display);
-      font-size: clamp(7rem, 14vw, 10rem);
-      line-height: 1;
-      user-select: none;
+    &__media {
+      grid-area: media;
+      position: relative;
+      /* Clips the overscaled data-drift image to this half of the panel — the
+         panel's own overflow only clips at the rounded outer edge. */
+      overflow: hidden;
+      min-height: 21.25rem;
+
+      :global(img) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
-    &__head {
+    &__body {
+      grid-area: body;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 1.25rem;
+      padding: 3rem 3.25rem 1.75rem;
     }
 
     &__quote {
@@ -110,13 +132,12 @@ const [testimonial] = testimonials;
       /* blockquote carries a UA margin in every browser */
       margin: 0;
 
-      /* The statement sets the section; the paragraphs support it, so they step
-         down in both size and weight rather than competing. */
       p + p {
         margin-top: 1.125rem;
       }
 
-      /* No measure cap — the panel width above is the measure now. */
+      /* The statement sets the section; the paragraphs support it, so they step
+         down in size and colour rather than competing. */
       p:not(.testimonial__statement) {
         color: var(--qhc-ink-700);
         font-size: var(--qhc-size-body-m);
@@ -124,19 +145,37 @@ const [testimonial] = testimonials;
       }
     }
 
+    /* The opening quotation glyph, set as art rather than punctuation. It hangs
+       in the panel's left padding rather than above the quote — sat above, it
+       clipped into the h2's descenders and read as a collision. Hidden from
+       assistive tech; blockquote already announces the quotation. */
+    &__mark {
+      position: absolute;
+      z-index: 0;
+      top: -1.5rem;
+      left: -2.5rem;
+      color: var(--qhc-navy-100);
+      font-family: var(--qhc-font-display);
+      font-size: clamp(4rem, 6vw, 5.5rem);
+      line-height: 1;
+      user-select: none;
+    }
+
     &__statement {
-      max-width: 26ch;
-      margin-bottom: 1.75rem;
+      position: relative;
+      max-width: 28ch;
+      margin-bottom: 1.5rem;
       color: var(--qhc-text-heading);
     }
 
     &__attribution {
+      grid-area: caption;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      margin-top: 2.25rem;
+      margin: 0 3.25rem 3rem;
       padding-top: 1.5rem;
-      border-top: 1px solid var(--qhc-hairline-cool);
+      border-top: 1px solid var(--qhc-navy-300);
     }
 
     &__name {
@@ -145,16 +184,36 @@ const [testimonial] = testimonials;
       font-weight: 600;
     }
 
-    @media (max-width: 770px) {
-      /* The statement's 26ch measure is a desktop line-break device; on a phone
+    @media (max-width: 836px) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "media"
+        "body"
+        "caption";
+      grid-template-rows: auto auto auto;
+
+      &__media {
+        min-height: 15rem;
+      }
+
+      &__body {
+        padding: 2rem 1.75rem 1.5rem;
+      }
+
+      &__attribution {
+        margin: 0 1.75rem 2rem;
+      }
+
+      /* The statement's 28ch measure is a desktop line-break device; on a phone
          it strands two or three words per line. */
       &__statement {
         max-width: none;
       }
 
-      /* Half the glyph would sit off the panel at small widths. */
+      /* The narrow gutter has no room to hang it — tuck it back inside. */
       &__mark {
-        left: -0.25rem;
+        top: -1.25rem;
+        left: -1rem;
       }
     }
   }
