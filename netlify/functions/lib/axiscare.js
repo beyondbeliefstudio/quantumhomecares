@@ -118,18 +118,18 @@ function extractError(body, response) {
 export async function createLead(submission) {
   const url = baseUrl();
   const apiToken = process.env.AXISCARE_API_TOKEN;
+  const dryRun = /^(1|true|yes)$/i.test(process.env.AXISCARE_DRY_RUN ?? "");
 
-  if (!url || !apiToken) {
-    const missing = [!url && "AXISCARE_SITE_NUMBER", !apiToken && "AXISCARE_API_TOKEN"].filter(
-      Boolean
-    );
-    const error = `AxisCare is not configured — missing ${missing.join(" and ")}.`;
-    console.error("[axiscare] " + error);
-    return { success: false, error, statusCode: 0 };
-  }
+  const missing = [!url && "AXISCARE_SITE_NUMBER", !apiToken && "AXISCARE_API_TOKEN"].filter(
+    Boolean
+  );
 
-  const endpoint = `${url}${CREATE_LEAD_PATH}`;
+  const endpoint = `${url ?? "https://{siteNumber}.axiscare.com"}${CREATE_LEAD_PATH}`;
   const payload = buildLeadPayload(submission);
+
+  if (missing.length) {
+    console.warn(`[axiscare] not configured — missing ${missing.join(" and ")}`);
+  }
 
   console.log(
     "[axiscare] request",
@@ -146,10 +146,18 @@ export async function createLead(submission) {
   );
 
   // Checked after the request log, so a dry run shows exactly what a live one
-  // would have sent.
-  if (/^(1|true|yes)$/i.test(process.env.AXISCARE_DRY_RUN ?? "")) {
+  // would have sent — and checked BEFORE the missing-credentials bail, so the
+  // approval flow can be walked end to end before the API token exists. A dry
+  // run sends nothing, so it has nothing to authenticate.
+  if (dryRun) {
     console.log("[axiscare] DRY RUN — no request was sent, nothing was written to AxisCare");
     return { success: true, leadId: "dry-run", dryRun: true };
+  }
+
+  if (missing.length) {
+    const error = `AxisCare is not configured — missing ${missing.join(" and ")}.`;
+    console.error("[axiscare] " + error);
+    return { success: false, error, statusCode: 0 };
   }
 
   let response;
