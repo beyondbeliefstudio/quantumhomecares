@@ -5,10 +5,14 @@ import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://quantumhomecares.com",
+  site: "https://quantumhomecares.net",
   integrations: [
     mdx(),
-    sitemap(),
+    sitemap({
+      // /test-form is a temporary harness for the AxisCare integration. Drop
+      // this filter when that page is deleted.
+      filter: page => !page.includes("/test-form"),
+    }),
     icon({
       iconDir: "src/icons",
     }),
