@@ -14,6 +14,7 @@ import Careers from "@/components/Careers.astro";
 import CareerForm from "@/components/CareerForm.astro";
 
 // HELPERS
+import { Image } from "astro:assets";
 
 // DATA
 import { credentials } from "@/data/approachData";
@@ -21,6 +22,17 @@ import { baseData, schemaIds, telHref, mailHref } from "@/data/siteData";
 
 // IMAGES
 import heroPhoto from "@/assets/photos/quote-path.jpg";
+/**
+ * The sitewide contact band's photo. This page sets hideCTA, so that band never
+ * renders here and there is no duplication — the apply band is standing in for
+ * it, and sharing its image is what makes the two read as the same object.
+ *
+ * The previous choice showed a care-facility common room: residents at dining
+ * tables, institutional chairs. Wrong for an agency whose whole position is
+ * that care happens at home. It is still on /services as the respite photo and
+ * should be replaced there too.
+ */
+import applyPhoto from "@/assets/photos/newStock/pexels-cottonbro-7086034.jpg";
 
 // SCHEMA — AboutPage hanging off the graph BaseHead already emits: the page
 // is about the business, and its main entity is the founder.
@@ -128,9 +140,7 @@ const aboutSchema = {
 
   <!-- ===== 11. APPLY BAND — this page closes on the careers form instead of
        the sitewide family contact band (hideCTA on Layout above). The nav and
-       footer "Request Care" links fall back to the homepage band here.
-       No photo in this intro: the careers section directly above already
-       carries one, and two in consecutive bands read as padding. -->
+       footer "Request Care" links fall back to the homepage band here. -->
   <section id="apply" class="band band--cool apply" data-reveal>
     <div class="band__inner apply__inner">
       <div class="split split--gap-lg split--top">
@@ -144,6 +154,14 @@ const aboutSchema = {
             Send an application if you are ready, or tell us you are interested and we will call you
             to talk it through. Either way you hear back within one business day, from the owner.
           </p>
+          <div class="plate plate--lg apply__plate" data-drift="4">
+            <Image
+              src={applyPhoto}
+              alt="A senior man and a caregiver smiling at each other outdoors"
+              widths={[600, 1200]}
+              sizes="(max-width: 1078px) 92vw, 42vw"
+            />
+          </div>
           <p class="meta--lg apply__direct">
             Prefer to talk? Call <a href={telHref}>{baseData.phone}</a> or email
             <a href={mailHref}>{baseData.email}</a>.
@@ -252,18 +270,8 @@ const aboutSchema = {
       }
     }
 
-    /* Without the photo this column is far shorter than the form beside it, so
-       it tracks the scroll instead of leaving a dead half-band — and the phone
-       number stays on screen while someone is filling the form in. Same device
-       the careers checklist column used before it was condensed away. */
     &__intro {
       --gap: 1.5rem;
-      position: sticky;
-      top: 8.5rem;
-
-      @media (max-width: 1078px) {
-        position: static;
-      }
     }
 
     :global(.fs-xxl) {
@@ -273,6 +281,13 @@ const aboutSchema = {
     &__lead {
       --w: 46ch;
       line-height: 1.6;
+    }
+
+    /* Matches the contact band's plate exactly — same ratio, same lift off the
+       lead above it. */
+    &__plate {
+      aspect-ratio: 16 / 10;
+      margin-top: 0.5rem;
     }
 
     &__direct {
