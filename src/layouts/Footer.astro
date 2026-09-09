@@ -112,21 +112,29 @@ const year = new Date().getFullYear();
       gap: 2.5rem 4rem;
       padding-bottom: 3.5rem;
 
-      @media (max-width: 990px) {
+      /* 1100, not 990: the brand column is wider now, so the row runs out of
+         room sooner and would otherwise wrap the links under it. */
+      @media (max-width: 1100px) {
         flex-direction: column;
       }
     }
 
     &__brand {
       --gap: 1.5rem;
-      flex: 0 1 23.75rem;
-      max-width: 34ch;
+
+      /*
+        Grows into the space beside it rather than sitting at a fixed 34ch and
+        leaving ~550px of empty footer to its right. The cap keeps the tagline
+        to one line on a wide screen without letting the measure run away.
+      */
+      flex: 1 1 23.75rem;
+      max-width: 54ch;
 
       /* 380px is a width — it only means that while .footer__grid is a row.
          Once the grid flips to column the main axis is vertical, so that same
          basis pins this block to 380px TALL and strands ~155px of empty space
          under the tagline. Release it when the axis flips. */
-      @media (max-width: 990px) {
+      @media (max-width: 1100px) {
         flex-basis: auto;
       }
     }
@@ -142,9 +150,9 @@ const year = new Date().getFullYear();
       flex-wrap: wrap;
       gap: 2.5rem 4rem;
 
-      /* Full stack below 900, same breakpoint as .footer__grid — Explore and
-         Contact each get their own row rather than pairing up mid-width. */
-      @media (max-width: 990px) {
+      /* Same breakpoint as .footer__grid — Explore and Contact each get their
+         own row rather than pairing up mid-width. */
+      @media (max-width: 1100px) {
         flex-direction: column;
       }
     }
