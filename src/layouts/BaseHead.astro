@@ -17,21 +17,28 @@ const {
   pageTitle = baseData.title,
   description = baseData.description,
   schemaNodes = [],
+  noindex = false,
 } = Astro.props;
 
 const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const AHREFS_DATA_KEY = import.meta.env.PUBLIC_AHREFS_DATA_KEY;
 
 /**
- * Set PUBLIC_NOINDEX=true on any deploy that must stay out of search — the
- * staging site that builds the in-development branch, in particular.
+ * Two ways a page stays out of search, and either one is enough.
  *
- * Netlify noindexes branch deploys and deploy previews on its own, but a
- * staging site whose production branch IS the dev branch counts as production
- * there and gets no such protection. This is the guard for that case, and it
- * must stay unset on the real site.
+ * PUBLIC_NOINDEX=true covers a whole deploy — the staging site that builds the
+ * in-development branch, in particular. Netlify noindexes branch deploys and
+ * deploy previews on its own, but a staging site whose production branch IS
+ * the dev branch counts as production there and gets no such protection. That
+ * variable is the guard for that case, and it must stay unset on the real site.
+ *
+ * The `noindex` prop covers a single page on every deploy, production
+ * included. The thank-you pages use it: they are real pages that must return
+ * 200 to the form post, but a visitor arriving on "Request Received" straight
+ * from a search result has submitted nothing and reads the page as broken.
+ * They are kept out of the sitemap in astro.config.mjs for the same reason.
  */
-const noIndex = import.meta.env.PUBLIC_NOINDEX === "true";
+const hideFromSearch = noindex || import.meta.env.PUBLIC_NOINDEX === "true";
 
 // Open Graph
 const ogImage = new URL("/og-image.png", Astro.site).toString();
@@ -81,7 +88,7 @@ const schema = {
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={Astro.url} />
-  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+  {hideFromSearch && <meta name="robots" content="noindex, nofollow" />}
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
