@@ -38,6 +38,11 @@ const year = new Date().getFullYear();
           />
         </a>
         <p class="meta--lg">Advocacy-led in-home senior care, serving all of New Jersey.</p>
+
+        <div class="footer__credentials">
+          <p class="meta">{baseData.credentials.license}</p>
+          <p class="meta">{baseData.credentials.insurance}</p>
+        </div>
       </div>
 
       <!-- Explore + Contact — grouped as one unit on the right, opposite the brand -->
@@ -74,11 +79,11 @@ const year = new Date().getFullYear();
           rel="noopener noreferrer">Beyond Belief Web Design</a
         >
       </span>
-      <span>{baseData.credentials.license} · {baseData.credentials.insurance}</span>
-
       <nav class="footer__policies" aria-label="Legal">
         <a href="/privacy-policy">Privacy Policy</a>
+        <span aria-hidden="true">·</span>
         <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+        <span aria-hidden="true">·</span>
         <a href="/accessibility">Accessibility</a>
       </nav>
     </div>
@@ -173,11 +178,22 @@ const year = new Date().getFullYear();
       rather than competing with it, and they inherit the credit's quiet
       treatment so the whole bar reads as one register.
     */
+    /*
+      The registration and insurance line reads as part of who the business is,
+      so it sits under the brand blurb rather than in the legal bar. Tighter
+      than the column's 1.5rem stack gap — these two lines are one fact.
+    */
+    &__credentials {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
     &__policies {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem 1.5rem;
-      flex-basis: 100%;
+      align-items: baseline;
+      gap: 0.5rem 0.75rem;
 
       a {
         color: inherit;
