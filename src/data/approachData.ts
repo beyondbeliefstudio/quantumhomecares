@@ -176,7 +176,7 @@ export const press = {
  * restatement.
  */
 export const careersIntro =
-  "Most agencies treat caregivers as hours on a schedule. We are building something smaller and more deliberate, and we are looking for people who want to work that way: matched to a client and kept in place, working from a written care plan, reaching the owner directly when something changes.";
+  "Most agencies treat caregivers as hours on a schedule. We are building something more deliberate, and we are looking for people who want to work that way: matched to a client and kept in place, working from a written care plan, reaching the owner directly when something changes.";
 
 export const careerExpectations: Credential[] = [
   {
