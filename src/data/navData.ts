@@ -12,10 +12,10 @@ export interface NavItem {
  * seven anchor links from overflowing the desktop bar, and four page links fit.
  */
 export const navData: NavItem[] = [
-  { title: "Services", href: "/services" },
-  { title: "Our Approach", href: "/our-approach" },
-  { title: "For Professionals", href: "/for-professionals" },
-  { title: "Resources", href: "/resources" },
+  { title: "Services", href: "/services/" },
+  { title: "Our Approach", href: "/our-approach/" },
+  { title: "For Professionals", href: "/for-professionals/" },
+  { title: "Resources", href: "/resources/" },
 ];
 
 /**
@@ -30,4 +30,4 @@ export const contactHref = "#contact";
 export const contactHrefFallback = "/#contact";
 
 /** The careers block lives on /our-approach; only the footer links to it. */
-export const careersHref = "/our-approach#careers";
+export const careersHref = "/our-approach/#careers";

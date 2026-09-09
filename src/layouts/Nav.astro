@@ -23,11 +23,18 @@ interface Props {
 const { contactHref = defaultContactHref } = Astro.props;
 
 /**
- * Active route. Trailing slash stripped so "/services/" and "/services" agree,
- * and startsWith so a future "/services/respite" still lights up its parent.
+ * Active route. Both sides get their trailing slash stripped before comparing,
+ * so the nav still lights up whether a link is written with one or without —
+ * navData carries them now, the pathname has one in production, and neither
+ * should be what decides this. startsWith so a future "/services/respite"
+ * still lights up its parent.
  */
-const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
-const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+const strip = (value: string) => value.replace(/\/+$/, "") || "/";
+const path = strip(Astro.url.pathname);
+const isActive = (href: string) => {
+  const target = strip(href);
+  return path === target || path.startsWith(`${target}/`);
+};
 ---
 
 <header class="nav" data-nav>

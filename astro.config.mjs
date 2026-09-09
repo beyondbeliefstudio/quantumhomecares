@@ -15,6 +15,15 @@ const EXCLUDED_FROM_SITEMAP = [
 
 export default defineConfig({
   site: "https://quantumhomecares.net",
+
+  /*
+    Netlify serves these pages at a trailing slash and 301s the bare path to
+    it, and the canonical tags and sitemap have always said the same. Only the
+    site's own links disagreed, so every internal click spent a redirect hop.
+    Declaring it here makes the dev server enforce what production enforces,
+    so a link written without the slash fails locally instead of in an audit.
+  */
+  trailingSlash: "always",
   integrations: [
     mdx(),
     sitemap({
