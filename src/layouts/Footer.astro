@@ -66,7 +66,15 @@ const year = new Date().getFullYear();
 
     <!-- Legal. Privacy/Accessibility links land when those pages ship. -->
     <div class="footer__legal">
-      <span>© {year} {baseData.legalName} · {baseData.serviceArea.summary}</span>
+      <span>
+        © {year}
+        {baseData.legalName} · {baseData.serviceArea.summary} · Designed by <a
+          class="footer__credit"
+          href="https://beyondbeliefwebdesign.com/"
+          target="_blank"
+          rel="noopener noreferrer">Beyond Belief Web Design</a
+        >
+      </span>
       <span>{baseData.credentials.license} · {baseData.credentials.insurance}</span>
     </div>
   </div>
@@ -153,6 +161,22 @@ const year = new Date().getFullYear();
       color: var(--qhc-slate-600);
       font-size: var(--qhc-size-meta);
       line-height: 1.6;
+    }
+
+    /*
+      The studio credit reads as part of the legal line rather than as a navy
+      link shouting out of a muted row: it borrows the row's colour and keeps
+      only a faint underline, then warms on hover like every other link.
+    */
+    &__credit {
+      color: inherit;
+      text-decoration-color: var(--qhc-slate-400);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--qhc-navy-800);
+        text-decoration-color: currentColor;
+      }
     }
   }
 </style>
