@@ -47,7 +47,13 @@ const { eyebrow, title, image, imageAlt } = Astro.props;
       </div>
 
       <div class="plate plate--lg ihero__plate" data-intro-media data-drift="5">
-        <Image src={image} alt={imageAlt} widths={[600, 1200]} sizes="(max-width: 1078px) 92vw, 42vw" />
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={1200}
+          widths={[600, 1200]}
+          sizes="(max-width: 1078px) 92vw, 42vw"
+        />
       </div>
     </div>
   </div>

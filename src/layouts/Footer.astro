@@ -29,7 +29,13 @@ const year = new Date().getFullYear();
       <!-- Brand — the full lockup anchors the footer -->
       <div class="stack footer__brand">
         <a href="/" aria-label={`${baseData.title} — home`}>
-          <Image src={lockup} alt={baseData.title} widths={[200, 400]} class="footer__lockup" />
+          <Image
+            src={lockup}
+            alt={baseData.title}
+            width={400}
+            widths={[200, 400]}
+            class="footer__lockup"
+          />
         </a>
         <p class="meta--lg">Advocacy-led in-home senior care, serving all of New Jersey.</p>
       </div>

@@ -38,6 +38,7 @@ const { service, flip = false } = Astro.props;
         <Image
           src={service.photo}
           alt={service.photoAlt}
+          width={2000}
           widths={[800, 1400, 2000]}
           sizes="(max-width: 1078px) 92vw, 46vw"
         />
