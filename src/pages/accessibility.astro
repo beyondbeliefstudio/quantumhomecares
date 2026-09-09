@@ -1,0 +1,92 @@
+---
+/**
+ * An accessibility statement is only worth having if it is honest, so this one
+ * names what the site actually does rather than claiming conformance it has
+ * not been audited for. "Aiming for WCAG 2.1 AA" is a commitment; "conforms to
+ * WCAG 2.1 AA" would be a claim nobody here has tested.
+ *
+ * The audience matters more than usual: this site is read by older adults and
+ * by family members who may be tired, on a phone, and in a hurry. The offer to
+ * do by phone anything the site can do is the substantive part of this page.
+ *
+ * NOT REVIEWED BY COUNSEL, and not audited by an accessibility specialist.
+ */
+
+// COMPONENTS
+import LegalPage from "@/components/LegalPage.astro";
+
+// DATA
+import { baseData, telHref, mailHref } from "@/data/siteData";
+---
+
+<LegalPage
+  title="Accessibility"
+  updated="September 8, 2026"
+  pageTitle={`Accessibility | ${baseData.title}`}
+  description="Our commitment to keeping the Quantum Home Cares website usable for everyone, and how to tell us when it is not."
+>
+  <p class="lead">
+    Most people who read this site are arranging care for someone they love, often at a hard moment.
+    It should not be hard to use. {baseData.legalName} is committed to keeping this website usable for
+    everyone, including people who browse with assistive technology.
+  </p>
+
+  <h2>What we are aiming for</h2>
+
+  <p>
+    We build toward the Web Content Accessibility Guidelines, version 2.1, at conformance level AA.
+    That is the standard most widely referenced for public websites. We have not had this site
+    independently audited, so we describe this as the target we work to rather than a certification
+    we hold.
+  </p>
+
+  <h2>What we have done</h2>
+
+  <ul>
+    <li>Every page can be navigated by keyboard, and focus is visible as you move through it.</li>
+    <li>Headings run in order, so a screen reader can move through a page by structure.</li>
+    <li>
+      Images that carry meaning have text descriptions; decorative ones are hidden from screen
+      readers.
+    </li>
+    <li>Body text and interface colors are chosen for contrast against their backgrounds.</li>
+    <li>Text reflows down to small screens and stays readable when you zoom in.</li>
+    <li>Motion and animation are reduced automatically if your device asks for that.</li>
+    <li>Forms use real labels, and errors are announced rather than shown by color alone.</li>
+  </ul>
+
+  <h2>Where we know we fall short</h2>
+
+  <p>
+    Accessibility is ongoing work, not a box to tick. Some content on this site comes from outside
+    services, including our feedback widget and any embedded material, and we do not control how
+    accessible those are. If you hit a barrier anywhere, we would rather hear about it than not.
+  </p>
+
+  <h2>You never have to use the website</h2>
+
+  <div class="legal-callout">
+    <p>
+      <strong>Anything the site can do, a phone call can do.</strong> If a form is difficult to use, or
+      a page will not work with your software, call <a href={telHref}>{baseData.phone}</a> and we will
+      take your request, answer your questions, or read you anything on the site. There is no part of
+      arranging care that requires you to fill in a form.
+    </p>
+  </div>
+
+  <h2>Telling us about a problem</h2>
+
+  <p>
+    If something on this site is hard to use, contact us at <a href={mailHref}>{baseData.email}</a> or
+    <a href={telHref}>{baseData.phone}</a>. It helps if you can tell us the page, what you were
+    trying to do, and what browser or assistive technology you were using, but tell us anyway even
+    if you cannot.
+  </p>
+
+  <p>
+    We aim to respond within one business day and to fix what we can fix quickly. Where a fix will
+    take longer, we will tell you and offer another way to get what you needed.
+  </p>
+
+  <p>{baseData.legalName} · {baseData.credentials.license}</p>
+</LegalPage>

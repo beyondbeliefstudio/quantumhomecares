@@ -1,0 +1,137 @@
+---
+/**
+ * The load-bearing clauses here are the non-medical scope note and the
+ * emergency instruction. Both restate what the site says elsewhere in its own
+ * copy, which is the point: the terms should not be the first place a reader
+ * learns Quantum does not do skilled nursing.
+ *
+ * The site is a brochure with contact forms — no accounts, no payments, no
+ * user content — so there is nothing here about billing or account security.
+ * Add those if that ever changes.
+ *
+ * NOT REVIEWED BY COUNSEL. The limitation-of-liability and governing-law
+ * sections in particular are boilerplate that a lawyer should confirm.
+ */
+
+// COMPONENTS
+import LegalPage from "@/components/LegalPage.astro";
+
+// DATA
+import { baseData, telHref, mailHref } from "@/data/siteData";
+---
+
+<LegalPage
+  title="Terms & Conditions"
+  updated="September 8, 2026"
+  pageTitle={`Terms & Conditions | ${baseData.title}`}
+  description="The terms that apply when you use the Quantum Home Cares website."
+>
+  <p class="lead">
+    These terms apply to your use of this website. By browsing the site or sending us a form, you
+    agree to them. If you do not, please do not use the site.
+  </p>
+
+  <h2>What this website is</h2>
+
+  <p>
+    This site describes the services {baseData.legalName} offers and gives you a way to reach us. It is
+    information, not an offer of care and not a contract to provide it.
+  </p>
+
+  <h2>No care relationship until we agree to one</h2>
+
+  <p>
+    Sending a form does not make you a client. We take care relationships on only after we have
+    spoken with you, assessed the situation, confirmed we can staff it, and put a written service
+    agreement in place. That agreement, not this website, governs the care we provide.
+  </p>
+
+  <h2>We are a non-medical provider</h2>
+
+  <div class="legal-callout">
+    <p>
+      <strong>Nothing on this site is medical advice.</strong> We provide non-medical home care. We do
+      not deliver skilled nursing services such as wound care, injections, or IV therapy, and nothing
+      here should be used to decide about anyone's treatment. Talk to a physician or a licensed clinician
+      about medical questions.
+    </p>
+    <p>
+      <strong>In an emergency, call 911.</strong> This website is not monitored around the clock, and
+      a form submission is not a way to get urgent help.
+    </p>
+  </div>
+
+  <h2>Using the site</h2>
+
+  <p>You agree not to:</p>
+
+  <ul>
+    <li>Submit false information, or someone else's information without the right to share it.</li>
+    <li>Use the forms to send unsolicited advertising.</li>
+    <li>Attempt to disrupt, overload, or gain unauthorized access to the site.</li>
+    <li>Copy the site's content for a competing commercial purpose.</li>
+  </ul>
+
+  <h2>Information you send us</h2>
+
+  <p>
+    When you send us details about another person, whether as a family member or as a referring
+    professional, you confirm you are entitled to share them. What we do with what you send is
+    covered in our <a href="/privacy-policy">Privacy Policy</a>.
+  </p>
+
+  <h2>Our content</h2>
+
+  <p>
+    The text, photographs, and design on this site belong to {baseData.legalName} or are used with permission.
+    You may read and share pages, but please do not republish the content as your own.
+  </p>
+
+  <h2>Links to other sites</h2>
+
+  <p>
+    Some pages link to outside organizations, including the resources we gather for families. We
+    offer those links to be useful. We do not control those sites, we are not responsible for what
+    they say, and a link is not an endorsement. Programs and eligibility rules change, so confirm
+    anything important directly with the organization that runs it.
+  </p>
+
+  <h2>Accuracy</h2>
+
+  <p>
+    We work to keep this site accurate and current, but we do not guarantee that every detail is
+    complete or up to date. Service availability, response times, and coverage can change.
+  </p>
+
+  <h2>Limitation of liability</h2>
+
+  <p>
+    To the extent the law allows, {baseData.legalName} is not liable for indirect or consequential losses
+    arising from your use of this website. Nothing in these terms limits liability that cannot lawfully
+    be limited, and nothing here affects the terms of a signed service agreement between us.
+  </p>
+
+  <h2>Governing law</h2>
+
+  <p>
+    These terms are governed by the laws of the State of New Jersey, and disputes about them belong
+    in the courts of New Jersey.
+  </p>
+
+  <h2>Changes</h2>
+
+  <p>
+    We may update these terms. The current version always lives on this page, with the date it
+    changed at the top.
+  </p>
+
+  <h2>Contact us</h2>
+
+  <p>
+    Questions about these terms can go to <a href={mailHref}>{baseData.email}</a> or <a
+      href={telHref}>{baseData.phone}</a
+    >.
+  </p>
+
+  <p>{baseData.legalName} · {baseData.credentials.license}</p>
+</LegalPage>

@@ -1,0 +1,160 @@
+---
+/**
+ * Written against what the site actually does: three Netlify forms, Google
+ * Analytics, Ahrefs, Userback, and the AxisCare hand-off. If a form field or a
+ * third-party script changes, this page is the other half of that change.
+ *
+ * Deliberately absent: any claim of HIPAA compliance. A non-medical, private
+ * pay agency is generally not a covered entity, and claiming to be one creates
+ * an obligation that does not otherwise exist. The page says what is true —
+ * health details are treated as confidential — without naming the statute.
+ *
+ * NOT REVIEWED BY COUNSEL. Marvalyn should have a lawyer read this before it
+ * is relied on, particularly the referral section: that form takes health
+ * information about a third party from someone who is not that person.
+ */
+
+// COMPONENTS
+import LegalPage from "@/components/LegalPage.astro";
+
+// DATA
+import { baseData, telHref, mailHref } from "@/data/siteData";
+---
+
+<LegalPage
+  title="Privacy Policy"
+  updated="September 8, 2026"
+  pageTitle={`Privacy Policy | ${baseData.title}`}
+  description="How Quantum Home Cares collects, uses, and protects the information you share through this website."
+>
+  <p class="lead">
+    {baseData.legalName} respects the privacy of the families, professionals, and job applicants who contact
+    us. This policy explains what this website collects, why, and what happens to it.
+  </p>
+
+  <h2>What we collect</h2>
+
+  <p>We only collect what you choose to send us. There are three forms on this site.</p>
+
+  <h3>Care requests from families</h3>
+  <p>
+    Your name, phone number, email address, and whatever you tell us about the help you are looking
+    for.
+  </p>
+
+  <h3>Referrals from professionals</h3>
+  <p>
+    Your name, organization, role, and contact details, along with the details you provide about the
+    person you are referring. That can include their first name, their general location, the kind of
+    support they need, and when care should start.
+  </p>
+
+  <h3>Job applications</h3>
+  <p>
+    Your name, contact details, the role you are applying for, the work history document you upload,
+    and anything you write in the message box.
+  </p>
+
+  <div class="legal-callout">
+    <p>
+      <strong>Health information.</strong> A care request or a referral often includes details about someone's
+      health or living situation. We treat that as confidential, share it only as described below, and
+      ask that you send us only what we need in order to respond.
+    </p>
+  </div>
+
+  <h2>How we use it</h2>
+
+  <ul>
+    <li>To respond to your request, usually within one business day.</li>
+    <li>To assess whether we can take a case, and to plan care if we can.</li>
+    <li>To evaluate job applicants and arrange interviews.</li>
+    <li>To keep our own records of who contacted us and when.</li>
+  </ul>
+
+  <p>
+    We do not sell your information. We do not rent or trade it. We do not use it to advertise to
+    you, and we do not send marketing email to people who contacted us about care.
+  </p>
+
+  <h2>Who else sees it</h2>
+
+  <p>
+    We use a small number of service providers to run this website and our business. They only
+    receive what they need to do their job.
+  </p>
+
+  <ul>
+    <li><strong>Netlify</strong> hosts this website and processes form submissions.</li>
+    <li>
+      <strong>AxisCare</strong> is the client management system where care inquiries are recorded.
+    </li>
+    <li>
+      <strong>Google Analytics</strong> and <strong>Ahrefs</strong> tell us how the site is used.
+    </li>
+    <li><strong>Userback</strong> collects feedback about the website itself.</li>
+  </ul>
+
+  <p>
+    We may also disclose information if the law requires it, or where we believe someone is at risk
+    of serious harm. Caregivers and staff see only what they need in order to provide care.
+  </p>
+
+  <h2>Analytics and cookies</h2>
+
+  <p>
+    Our analytics tools use cookies and similar technology to count visits and understand which
+    pages people read. This tells us about traffic patterns, not about you personally, and we do not
+    use it to build a profile of you. Most browsers let you refuse cookies or delete them, and this
+    site works without them.
+  </p>
+
+  <h2>How long we keep it</h2>
+
+  <p>
+    We keep care inquiries and client records for as long as we are providing care and for a period
+    afterward, so we can answer questions about the care that was given. Job applications are kept
+    while the role is open and for a reasonable period after. Website analytics are retained on the
+    schedule set by the analytics provider.
+  </p>
+
+  <h2>Your choices</h2>
+
+  <p>
+    You can ask us what we hold about you, ask us to correct it, or ask us to delete it. Write to us
+    and we will respond. We may need to keep some records where the law or our own recordkeeping
+    obligations require it, and we will tell you if that is the case.
+  </p>
+
+  <h2>Children</h2>
+
+  <p>
+    This website is meant for adults. We do not knowingly collect information from children. If you
+    believe a child has sent us information, contact us and we will delete it.
+  </p>
+
+  <h2>Security</h2>
+
+  <p>
+    Form submissions travel over an encrypted connection, and access to what we store is limited to
+    the people who need it. No website can promise perfect security, and we will not pretend
+    otherwise.
+  </p>
+
+  <h2>Changes</h2>
+
+  <p>
+    If this policy changes we will post the new version here and update the date at the top of the
+    page.
+  </p>
+
+  <h2>Contact us</h2>
+
+  <p>
+    Questions about this policy, or about information we hold, can go to <a href={mailHref}
+      >{baseData.email}</a
+    > or <a href={telHref}>{baseData.phone}</a>.
+  </p>
+
+  <p>{baseData.legalName} · {baseData.credentials.license}</p>
+</LegalPage>
