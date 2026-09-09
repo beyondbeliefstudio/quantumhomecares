@@ -98,7 +98,7 @@ const year = new Date().getFullYear();
     &__inner {
       max-width: var(--qhc-page-max);
       margin-inline: auto;
-      padding: 4.5rem var(--qhc-gutter) 2.5rem;
+      padding: 3.25rem var(--qhc-gutter) 2rem;
     }
 
     /* Two sides, not three even columns: brand pinned left, nav + contact
@@ -109,8 +109,8 @@ const year = new Date().getFullYear();
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: start;
-      gap: 2.5rem 4rem;
-      padding-bottom: 3.5rem;
+      gap: 2rem 4rem;
+      padding-bottom: 2.25rem;
 
       /* 1100, not 990: the brand column is wider now, so the row runs out of
          room sooner and would otherwise wrap the links under it. */
@@ -120,7 +120,7 @@ const year = new Date().getFullYear();
     }
 
     &__brand {
-      --gap: 1.5rem;
+      --gap: 1rem;
 
       /*
         Grows into the space beside it rather than sitting at a fixed 34ch and
@@ -141,7 +141,7 @@ const year = new Date().getFullYear();
 
     &__lockup {
       width: auto;
-      height: 9.375rem;
+      height: 7.5rem;
     }
 
     /* The related pair — kept close together as they move as one block */
@@ -174,7 +174,7 @@ const year = new Date().getFullYear();
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 0.5rem 2rem;
-      padding-top: 1.5rem;
+      padding-top: 1.25rem;
       border-top: 1px solid var(--qhc-hairline);
       color: var(--qhc-slate-600);
       font-size: var(--qhc-size-meta);
@@ -189,7 +189,7 @@ const year = new Date().getFullYear();
     /*
       The registration and insurance line reads as part of who the business is,
       so it sits under the brand blurb rather than in the legal bar. Tighter
-      than the column's 1.5rem stack gap — these two lines are one fact.
+      than the column's 1rem stack gap — these two lines are one fact.
     */
     &__credentials {
       display: flex;
