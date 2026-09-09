@@ -8,11 +8,11 @@
  * intent switch and asked for experience, availability and work area as well.
  * That is a screening interview asked of someone who has not spoken to anyone
  * yet, and the same answers come out of the first phone call anyway. Name,
- * contact, the role, an optional résumé and an open box is enough to start a
+ * contact, the role, a work history and an open box is enough to start a
  * conversation; Marvalyn gathers the rest when she calls.
  *
- * Résumé upload is optional (Netlify accepts files on multipart forms, 8 MB
- * cap per file).
+ * Work history upload is required (Netlify accepts files on multipart forms,
+ * 8 MB cap per file).
  */
 
 // COMPONENTS
@@ -91,7 +91,8 @@ const source = Astro.url.pathname;
 
   <div class="form-group">
     <label for="job-resume">
-      Résumé <span class="form-optional">(optional — PDF or Word, up to 8 MB)</span>
+      Work history<span class="required" aria-hidden="true">*</span>
+      <span class="form-optional">(PDF or Word, up to 8 MB)</span>
     </label>
     <input
       id="job-resume"
@@ -99,6 +100,7 @@ const source = Astro.url.pathname;
       name="resume"
       type="file"
       accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      required
     />
   </div>
 
@@ -124,7 +126,7 @@ const source = Astro.url.pathname;
     font-weight: 400;
   }
 
-  // ---- Résumé upload ----
+  // ---- Work history upload ----
   // The global input rule (fixed height, zero vertical padding) is built for
   // text fields; a file input needs room for its button.
   .file {

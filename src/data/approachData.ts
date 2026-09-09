@@ -239,7 +239,7 @@ export const careerRoles: string[] = [
  * apply/enquire intent switch. Screening someone before they have spoken to
  * anyone costs applicants at the point they are least invested, and Marvalyn
  * gets the same answers on the first call. The form asks for name, contact,
- * role, an optional résumé and an open box now.
+ * role, a required work history upload and an open box now.
  *
  * Kept because the options themselves are sound and a real careers page would
  * want them back.
