@@ -4,6 +4,8 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
+import stripHtmlComments from "./src/integrations/strip-html-comments.mjs";
+
 export default defineConfig({
   site: "https://quantumhomecares.net",
   integrations: [
@@ -16,6 +18,8 @@ export default defineConfig({
     icon({
       iconDir: "src/icons",
     }),
+    // Source comments stay in the .astro files; they just do not ship.
+    stripHtmlComments(),
   ],
   vite: {
     build: {
