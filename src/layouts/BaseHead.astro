@@ -50,7 +50,13 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const { business: businessId, founder: founderId } = schemaIds(Astro.site);
 
 const business = {
-  "@type": ["LocalBusiness", "HomeHealthCareService"],
+  // LocalBusiness alone, deliberately. This carried a second type,
+  // "HomeHealthCareService", which is not a schema.org type at all — it was
+  // invented, and every page failed validation on it. The nearest real type is
+  // MedicalBusiness, and claiming that would tell Google the opposite of what
+  // the site says: Quantum is a non-medical provider and does not deliver
+  // skilled nursing. So the second type goes rather than gets replaced.
+  "@type": "LocalBusiness",
   "@id": businessId,
   name: baseData.legalName,
   alternateName: baseData.title,
@@ -62,7 +68,13 @@ const business = {
   // In-home agency — no storefront to publish, so region only.
   address: { "@type": "PostalAddress", addressRegion: "NJ", addressCountry: "US" },
   founder: { "@id": founderId },
-  hasCredential: baseData.credentials.license,
+  // hasCredential wants a Credential object, not a string. It held the bare
+  // licence text, which was the site's second validation error.
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "license",
+    name: baseData.credentials.license,
+  },
 };
 
 const founder = {
