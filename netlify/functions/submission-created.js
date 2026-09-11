@@ -25,6 +25,20 @@ import { ownerNotification, send } from "./lib/email.js";
  * change, and the owner gets an inbox full of rejections either way.
  */
 
+/**
+ * Netlify fires this for EVERY form on the site, so the lead pipeline has to
+ * say which ones are its own. The careers and referral forms are handled by
+ * Netlify's built-in form notifications instead: an applicant is not a care
+ * lead, and a referral names a patient and a referring professional in fields
+ * this pipeline has no place to put.
+ *
+ * Without this list those two still exited — but by failing the helpType
+ * validation below, which is indistinguishable in the log from a real inquiry
+ * arriving broken. Skipping them by name is the difference between "working as
+ * designed" and "silently rejected".
+ */
+const LEAD_FORMS = new Set(["contact", "test-form"]);
+
 const REQUIRED_FIELDS = ["firstName", "lastName", "phone", "email", "helpType"];
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
@@ -66,6 +80,13 @@ export const handler = async event => {
   const ip = String(data.ip ?? payload.ip ?? "unknown").trim();
 
   console.log(`[submission] received from form "${formName}", source "${source}", ip ${ip}`);
+
+  if (!LEAD_FORMS.has(formName)) {
+    console.log(
+      `[submission] "${formName}" is not a lead form — Netlify's own notification has it`
+    );
+    return { statusCode: 200, body: "skipped" };
+  }
 
   const invalid = validate(data);
   if (invalid) {

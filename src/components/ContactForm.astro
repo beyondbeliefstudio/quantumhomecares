@@ -2,10 +2,20 @@
 // COMPONENTS
 import Buttons from "@/components/Buttons.astro";
 
+// DATA
+import { serviceDetails } from "@/data/servicesData";
+
 // The form renders on every page now, so the source tag comes from the URL
 // rather than a hardcoded "homepage-contact" — submissions say where they
 // actually came from.
 const source = Astro.url.pathname;
+
+// Sourced from the services page rather than retyped, so the options a visitor
+// picks from cannot drift away from the services the site actually describes.
+// The value is sent verbatim to AxisCare, where it becomes the email subject
+// line and the first line of the lead note — free text would put a paragraph
+// in both.
+const helpTypes = [...serviceDetails.map(service => service.title), "Not sure yet"];
 ---
 
 <form
@@ -69,17 +79,20 @@ const source = Astro.url.pathname;
   </div>
 
   <div class="form-group">
-    <label for="help-needed">
+    <label for="help-type">
       What kind of help are you looking for?<span class="required" aria-hidden="true">*</span>
     </label>
-    <textarea id="help-needed" name="helpNeeded" rows="3" required></textarea>
+    <select id="help-type" name="helpType" required>
+      <option value="">Choose one</option>
+      {helpTypes.map(option => <option value={option}>{option}</option>)}
+    </select>
   </div>
 
   <div class="form-group">
-    <label for="additional-info">
+    <label for="notes">
       Anything else you want us to know <span class="form-optional">(optional)</span>
     </label>
-    <textarea id="additional-info" name="additionalInfo" rows="3"></textarea>
+    <textarea id="notes" name="notes" rows="3"></textarea>
   </div>
 
   <Buttons variant="primary" classes="full">Send Request</Buttons>
