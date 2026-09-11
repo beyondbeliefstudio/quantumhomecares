@@ -35,6 +35,8 @@
  * whole approve path with the payload logged and no request sent.
  */
 
+import { formatTimestamp } from "./format.js";
+
 const API_VERSION = "2023-10-01";
 const CREATE_LEAD_PATH = "/api/leads";
 
@@ -79,7 +81,7 @@ function priorityNote(submission) {
   if (submission.notes) parts.push(submission.notes);
 
   const origin = submission.source ? `website form (${submission.source})` : "website form";
-  parts.push(`Submitted via ${origin} on ${submission.submittedAt}.`);
+  parts.push(`Submitted via ${origin} on ${formatTimestamp(submission.submittedAt)}.`);
 
   return parts.join("\n\n");
 }
