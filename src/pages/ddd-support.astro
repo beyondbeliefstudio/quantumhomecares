@@ -355,7 +355,13 @@ const subnavItems = [
      Same object grammar as ServiceBlock on /services, rebuilt here because
      that component is typed to ServiceDetail and expects `definitions`. ----- */
   .ddd-svc {
-    padding-block: 1rem;
+    /* Same container contract as .svc on /services: the section owns the page
+       width and the gutter, the card fills it. Putting max-width on the card
+       instead left the page with no gutter at all at wide viewports. */
+    max-width: var(--qhc-page-max);
+    margin-inline: auto;
+    margin-top: clamp(2rem, 4vw, 3.25rem);
+    padding-inline: var(--qhc-gutter);
     scroll-margin-top: 12rem;
 
     &__card {
@@ -363,16 +369,19 @@ const subnavItems = [
       grid-template-columns: 1fr 1fr;
       align-items: stretch;
       overflow: hidden;
-      max-width: 78rem;
-      margin-inline: auto;
       background: var(--qhc-white);
       border: 1px solid var(--qhc-hairline-strong);
       border-radius: var(--qhc-radius-lg);
     }
 
+    /* data-drift scales the photo to 1.16 and slides it vertically, so the
+       frame has to clip on its own. The card's overflow:hidden is not enough:
+       it only stops the photo leaving the card, not leaving its own grid cell
+       and running under the copy. */
     &__media {
       position: relative;
-      min-height: 22rem;
+      overflow: hidden;
+      min-height: 24rem;
 
       img {
         position: absolute;
