@@ -9,20 +9,29 @@ import Subnav from "@/components/Subnav.astro";
 import Links from "@/components/Links.astro";
 
 // HELPERS
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 // DATA
-import { dddServices, requirements, startPaths, coordinatorFacts } from "@/data/dddData";
+import {
+  coreServices,
+  specialistServices,
+  dddServices,
+  requirements,
+  startPaths,
+  coordinatorFacts,
+} from "@/data/dddData";
 import { baseData, schemaIds } from "@/data/siteData";
 
 // IMAGES
-import heroPhoto from "@/assets/photos/strip-hands.jpg";
+import heroPhoto from "@/assets/photos/newStock/care-assure-Zx4ddAfk0Ck-unsplash.jpg";
 
 /**
- * PHOTOGRAPHY NOTE: every photo in src/assets is a senior. This page is about
- * adults 21 and over with developmental disabilities, so senior portraits would
- * work against the copy. strip-hands.jpg is the one age-neutral image in the
- * library and is standing in until DDD-appropriate photography exists.
+ * PHOTOGRAPHY: the four DDD photos in newStock are the only ones on the site
+ * that show anyone under about seventy, so they all live on this page — one per
+ * core service. The hero reuses the respite photo because there are four photos
+ * and five slots; they sit at opposite ends of a very long page. One more image
+ * of a family caregiver would remove the repeat.
  */
 
 /**
@@ -150,37 +159,73 @@ const subnavItems = [
   </section>
 
   {
-    dddServices.map(service => (
-      <section id={service.id} class="ddd-svc" data-reveal>
+    coreServices.map((service, i) => (
+      <section id={service.id} class:list={["ddd-svc", i % 2 === 1 && "ddd-svc--flip"]} data-reveal>
         <article class="ddd-svc__card">
-          <div class="ddd-svc__head">
-            <span class="ddd-svc__icon" aria-hidden="true">
-              <Icon name={service.icon} />
-            </span>
-            <div class="stack ddd-svc__title">
+          <div class="ddd-svc__media" data-drift="6">
+            <Image
+              src={service.photo!}
+              alt={service.photoAlt!}
+              width={1600}
+              widths={[700, 1100, 1600]}
+              sizes="(max-width: 1078px) 92vw, 46vw"
+            />
+          </div>
+
+          <div class="ddd-svc__panel">
+            <div class="stack ddd-svc__copy">
               <Heading tag="h3" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
                 {service.title}
               </Heading>
+
               <p class="ddd-svc__lead">{service.lead}</p>
+              <p>{service.body}</p>
+
+              <ul class="ddd-svc__includes" data-stagger>
+                {service.includes.map(item => (
+                  <li>
+                    <Icon name="check" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-
-          <div class="ddd-svc__body">
-            <p>{service.body}</p>
-          </div>
-
-          <ul class="ddd-svc__includes" data-stagger>
-            {service.includes.map(item => (
-              <li>
-                <Icon name="check" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
         </article>
       </section>
     ))
   }
+
+  <!-- ===== 3b. SPECIALIST SERVICES ===== -->
+  <section class="section" data-reveal>
+    <div class="stack ddd__intro">
+      <span class="eyebrow">Specialist Support</span>
+      <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+        Alongside the everyday support.
+      </Heading>
+      <p class="lead">
+        These sit outside a caregiver's day-to-day work and are arranged around it, in the same home
+        and against the same plan.
+      </p>
+    </div>
+
+    <div class="spec" data-stagger>
+      {
+        specialistServices.map(service => (
+          <article id={service.id} class="spec__card">
+            <span class="spec__icon" aria-hidden="true">
+              <Icon name={service.icon} />
+            </span>
+            <Heading tag="h3" size="s" fontFamily="primary" weight="fw400" marginBottom="none">
+              {service.title}
+            </Heading>
+            <p class="spec__lead">{service.lead}</p>
+            <p class="spec__body">{service.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 
   <!-- ===== 4. GETTING STARTED ===== -->
   <section id="getting-started" class="section" data-reveal>
@@ -306,47 +351,46 @@ const subnavItems = [
     }
   }
 
-  /* ----- One service ----- */
+  /* ----- One core service: photo one half, copy the other, sides alternating.
+     Same object grammar as ServiceBlock on /services, rebuilt here because
+     that component is typed to ServiceDetail and expects `definitions`. ----- */
   .ddd-svc {
     padding-block: 1rem;
     scroll-margin-top: 12rem;
 
     &__card {
       display: grid;
-      gap: 1.5rem;
-      max-width: 66rem;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      overflow: hidden;
+      max-width: 78rem;
       margin-inline: auto;
-      padding: clamp(1.5rem, 3vw, 2.5rem);
       background: var(--qhc-white);
       border: 1px solid var(--qhc-hairline-strong);
       border-radius: var(--qhc-radius-lg);
     }
 
-    &__head {
-      display: flex;
-      gap: 1.125rem;
-      align-items: flex-start;
-    }
+    &__media {
+      position: relative;
+      min-height: 22rem;
 
-    &__icon {
-      display: grid;
-      flex: none;
-      place-items: center;
-      width: 3.25rem;
-      height: 3.25rem;
-      background: var(--qhc-navy-050);
-      border: 1px solid var(--qhc-navy-300);
-      border-radius: var(--qhc-radius);
-
-      [data-icon] {
-        width: 1.625rem;
-        height: 1.625rem;
-        color: var(--qhc-navy-700);
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
 
-    &__title {
-      --gap: 0.375rem;
+    &__panel {
+      display: grid;
+      align-items: center;
+      padding: clamp(1.5rem, 3vw, 2.75rem);
+    }
+
+    &__copy {
+      --gap: 1rem;
     }
 
     &__lead {
@@ -355,16 +399,23 @@ const subnavItems = [
       color: var(--qhc-navy-700);
     }
 
-    &__body p {
-      margin: 0;
+    /* Photo right on every other card. Grid order rather than direction, so
+       the DOM keeps heading-before-image for screen readers. */
+    &--flip &__media {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    &--flip &__panel {
+      grid-column: 1;
+      grid-row: 1;
     }
 
     &__includes {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-      gap: 0.625rem 1.5rem;
-      margin: 0;
-      padding: 1.25rem 0 0;
+      gap: 0.5rem;
+      margin: 0.25rem 0 0;
+      padding: 1rem 0 0;
       list-style: none;
       border-top: 1px solid var(--qhc-hairline);
 
@@ -383,6 +434,75 @@ const subnavItems = [
         margin-top: 0.25rem;
         color: var(--qhc-navy-700);
       }
+    }
+
+    @media (max-width: 1078px) {
+      &__card,
+      &--flip &__card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      &__media,
+      &--flip &__media {
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 16rem;
+      }
+
+      &__panel,
+      &--flip &__panel {
+        grid-column: 1;
+        grid-row: 2;
+      }
+    }
+  }
+
+  /* ----- Specialist services: compact, no photography ----- */
+  .spec {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    max-width: 66rem;
+    margin: 2.5rem auto 0;
+
+    &__card {
+      padding: clamp(1.5rem, 3vw, 2rem);
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline-strong);
+      border-radius: var(--qhc-radius-lg);
+      scroll-margin-top: 12rem;
+    }
+
+    &__icon {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      margin-bottom: 1rem;
+      background: var(--qhc-navy-050);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius);
+
+      [data-icon] {
+        width: 1.375rem;
+        height: 1.375rem;
+        color: var(--qhc-navy-700);
+      }
+    }
+
+    &__lead {
+      margin: 0.5rem 0 0;
+      color: var(--qhc-navy-700);
+    }
+
+    &__body {
+      margin: 0.75rem 0 0;
+      font-size: var(--qhc-size-body-s);
+      color: var(--qhc-slate-600);
+    }
+
+    @media (max-width: 780px) {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
@@ -475,13 +595,6 @@ const subnavItems = [
       flex-wrap: wrap;
       gap: 0.75rem;
       margin-top: 2rem;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .ddd-svc__head {
-      flex-direction: column;
-      gap: 0.875rem;
     }
   }
 </style>

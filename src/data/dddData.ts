@@ -44,6 +44,13 @@
  *     Division reorganizes those URLs and several old ones now 404.
  */
 
+import type { ImageMetadata } from "astro";
+
+import photoIndividual from "@/assets/photos/newStock/pexels-cliff-booth-4058413.jpg";
+import photoCommunity from "@/assets/photos/newStock/raj-tuladhar-VZ2J246wEqE-unsplash.jpg";
+import photoInclusion from "@/assets/photos/newStock/pexels-cliff-booth-4058325.jpg";
+import photoRespite from "@/assets/photos/newStock/care-assure-Zx4ddAfk0Ck-unsplash.jpg";
+
 export interface DddService {
   /** In-page anchor and subnav target. */
   id: string;
@@ -57,6 +64,13 @@ export interface DddService {
   body: string;
   /** Concrete examples — what this looks like on an ordinary week. */
   includes: string[];
+  /**
+   * Core services carry a photo and render as full chapter cards. The
+   * specialist ones have none and render as a compact grid — see the note on
+   * specialistServices below.
+   */
+  photo?: ImageMetadata;
+  photoAlt?: string;
   /** See the accuracy guard above. Does not affect rendering. */
   needsConfirmation?: boolean;
 }
@@ -85,11 +99,17 @@ export const requirements: Requirement[] = [
 ];
 
 // ==========================================
-// THE SERVICES
+// CORE SERVICES — the four that map to Marvalyn's existing caregiver
+// workforce. These are the ones a family is most likely to want and the ones
+// least likely to be contested on approval, so they get the page's full
+// chapter-card treatment with a photo each.
 // ==========================================
-export const dddServices: DddService[] = [
+export const coreServices: DddService[] = [
   {
     id: "individual-support",
+    photo: photoIndividual,
+    photoAlt:
+      "A support worker and a young woman with Down syndrome talking together at a community gym",
     icon: "daily-living",
     title: "Individual Support",
     shortTitle: "Individual",
@@ -105,6 +125,9 @@ export const dddServices: DddService[] = [
   },
   {
     id: "community-based",
+    photo: photoCommunity,
+    photoAlt:
+      "A man using a wheelchair boarding an accessible van on a lift while a support worker assists",
     icon: "live-too-far-away",
     title: "Community Based Support",
     shortTitle: "Community",
@@ -119,6 +142,9 @@ export const dddServices: DddService[] = [
   },
   {
     id: "community-inclusion",
+    photo: photoInclusion,
+    photoAlt:
+      "A boxing coach wrapping the hands of a young woman with Down syndrome before a session",
     icon: "transportation",
     title: "Community Inclusion Services",
     shortTitle: "Inclusion",
@@ -133,6 +159,9 @@ export const dddServices: DddService[] = [
   },
   {
     id: "respite",
+    photo: photoRespite,
+    photoAlt:
+      "A support worker kneeling beside a young woman in a wheelchair as she lifts a hand weight at home",
     icon: "respite",
     title: "Respite",
     shortTitle: "Respite",
@@ -145,6 +174,17 @@ export const dddServices: DddService[] = [
       "Short-notice cover when something comes up",
     ],
   },
+];
+
+// ==========================================
+// SPECIALIST SERVICES — clinical or specially credentialed work, rendered as a
+// compact grid rather than chapter cards. Two reasons, and they point the same
+// way: there is no DDD photography for any of them, and all four are the
+// entries flagged in the accuracy guard at the top of this file. If Marvalyn
+// confirms one and it earns a photo, move it into coreServices and it picks up
+// the chapter-card treatment with no other change.
+// ==========================================
+export const specialistServices: DddService[] = [
   {
     id: "behavioral",
     icon: "memory-changing",
@@ -206,6 +246,9 @@ export const dddServices: DddService[] = [
     needsConfirmation: true,
   },
 ];
+
+/** Everything, in page order — used for the subnav rail and the Service schema. */
+export const dddServices: DddService[] = [...coreServices, ...specialistServices];
 
 // ==========================================
 // HOW SUPPORT STARTS — the two realistic entry points
