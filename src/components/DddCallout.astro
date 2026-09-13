@@ -1,0 +1,105 @@
+---
+/**
+ * Homepage routing signal for the DDD page.
+ *
+ * Marvalyn was approved as a DDD provider in September 2026 and nothing on the
+ * site said so. This is the one place the homepage acknowledges it.
+ *
+ * Deliberately restrained. Senior care is the business for the next several
+ * years and DDD is a smaller line beside it, so this reads as a door rather
+ * than a second headline: no photo, no stacked CTAs, and it sits after the
+ * senior services block rather than competing with it.
+ *
+ * The chips are pulled from dddData so the homepage cannot advertise a service
+ * the page itself has stopped listing.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { dddServices } from "@/data/dddData";
+
+// Four is what fits on one line at desktop without the panel growing a second
+// row — the page itself carries the full list.
+const chips = dddServices.slice(0, 4).map(service => service.title);
+---
+
+<section id="ddd" class="section" data-reveal>
+  <div class="ddd-call">
+    <div class="stack ddd-call__body">
+      <span class="eyebrow eyebrow--band">DDD Support</span>
+
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Now an approved New Jersey DDD provider.
+      </Heading>
+
+      <p class="lead">
+        Support funded through a Division of Developmental Disabilities budget can be delivered by
+        our caregivers, in the home and out in the community, anywhere in the state. Families and
+        Support Coordinators can see what we provide and how referrals work.
+      </p>
+
+      <ul class="ddd-call__chips" data-stagger>
+        {
+          chips.map(chip => (
+            <li>
+              <Icon name="check" aria-hidden="true" />
+              <span>{chip}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <Links variant="inline" href="/ddd-support/">
+        See our DDD services
+        <Icon name="arrow-right" aria-hidden="true" />
+      </Links>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .ddd-call {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    background: var(--qhc-white);
+    border: 1px solid var(--qhc-navy-300);
+    border-radius: var(--qhc-radius-lg);
+
+    &__body {
+      max-width: 46rem;
+      --gap: 1rem;
+    }
+
+    &__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      margin: 0.25rem 0 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        font-size: var(--qhc-size-body-s);
+        font-weight: 600;
+        color: var(--qhc-slate-600);
+      }
+
+      [data-icon] {
+        flex: none;
+        width: 1rem;
+        height: 1rem;
+        color: var(--qhc-navy-700);
+      }
+    }
+  }
+</style>

@@ -9,11 +9,16 @@ export interface NavItem {
  *
  * The header bar, the mobile drawer, and the footer all render this same list.
  * The earlier `headerHidden` / `mobileOnly` flags are gone: they existed to keep
- * seven anchor links from overflowing the desktop bar, and four page links fit.
+ * seven anchor links from overflowing the desktop bar, and five page links fit.
+ *
+ * DDD Support sits after Services and before For Professionals: it is a service
+ * line rather than an audience, but it stays behind the senior care pages
+ * because that remains the bulk of the business.
  */
 export const navData: NavItem[] = [
   { title: "Services", href: "/services/" },
   { title: "Our Approach", href: "/our-approach/" },
+  { title: "DDD Support", href: "/ddd-support/" },
   { title: "For Professionals", href: "/for-professionals/" },
   { title: "Resources", href: "/resources/" },
 ];

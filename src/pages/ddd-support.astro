@@ -1,0 +1,487 @@
+---
+// LAYOUT
+import Layout from "@/layouts/Layout.astro";
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import InternalHero from "@/components/InternalHero.astro";
+import Subnav from "@/components/Subnav.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+
+// DATA
+import { dddServices, requirements, startPaths, coordinatorFacts } from "@/data/dddData";
+import { baseData, schemaIds } from "@/data/siteData";
+
+// IMAGES
+import heroPhoto from "@/assets/photos/strip-hands.jpg";
+
+/**
+ * PHOTOGRAPHY NOTE: every photo in src/assets is a senior. This page is about
+ * adults 21 and over with developmental disabilities, so senior portraits would
+ * work against the copy. strip-hands.jpg is the one age-neutral image in the
+ * library and is standing in until DDD-appropriate photography exists.
+ */
+
+/**
+ * One Service node per DDD service, each pointing at the single LocalBusiness
+ * node BaseHead emits. Same pattern as /services — generated from the array the
+ * page renders, so a service cannot ship without its structured data.
+ */
+const { business: businessId } = schemaIds(Astro.site);
+
+const serviceSchema = dddServices.map(service => ({
+  "@type": "Service",
+  name: service.title,
+  serviceType: service.title,
+  description: service.lead,
+  provider: { "@id": businessId },
+  areaServed: { "@type": "State", name: baseData.serviceArea.state },
+  audience: {
+    "@type": "Audience",
+    audienceType: "Adults with intellectual and developmental disabilities",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: `${service.title} — what this includes`,
+    itemListElement: service.includes.map(item => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: item },
+    })),
+  },
+}));
+
+// The rail carries the three chapters plus every service, so a coordinator can
+// reach the provider facts without scrolling the family-facing half.
+const subnavItems = [
+  { href: "#who", label: "Who qualifies" },
+  ...dddServices.map(s => ({ href: `#${s.id}`, label: s.shortTitle })),
+  { href: "#getting-started", label: "Getting started" },
+  { href: "#coordinators", label: "Coordinators" },
+];
+---
+
+<Layout
+  pageTitle="DDD Support Services in New Jersey | Quantum Home Cares"
+  description="An approved New Jersey DDD provider. In-home and community support for adults with intellectual and developmental disabilities, statewide, through the Supports Program and Community Care Program."
+  schemaNodes={serviceSchema}
+  contactTitle="Not sure whether this applies to you?"
+  contactLead="DDD is a lot of paperwork before it is any support, and most people reach us partway through it with a question rather than a decision. Tell us where you are and we will tell you what we know, including the parts we cannot help with."
+>
+  <!-- ===== 1. PAGE INTRO ===== -->
+  <InternalHero
+    eyebrow="DDD Support"
+    title="Support for adults with developmental disabilities."
+    image={heroPhoto}
+    imageAlt="Two people holding hands, one steadying the other"
+  >
+    <p class="lead">
+      Quantum Home Cares is an approved provider with the New Jersey Division of Developmental
+      Disabilities. Support funded through a DDD budget can now be delivered by our caregivers, in a
+      person's own home and out in their community, anywhere in the state.
+    </p>
+    <p class="lead">
+      Most of our work is senior care, and that is not changing. But the job is closer than it
+      sounds. Showing up when we said we would. Learning how one particular person likes their day
+      to run. Making the week easier for the family around them. That is the same work whether
+      somebody is eighty-four or twenty-four.
+    </p>
+    <p class="lead">
+      Everything is on this one page on purpose. Families can start at the top. Support Coordinators
+      looking for what we provide and how to refer can <a href="#coordinators">skip to the end</a>.
+    </p>
+  </InternalHero>
+
+  <Subnav ariaLabel="Sections on this page" items={subnavItems} />
+
+  <!-- ===== 2. WHO QUALIFIES ===== -->
+  <section id="who" class="section" data-reveal>
+    <div class="split split--4-7 split--top">
+      <div class="stack">
+        <span class="eyebrow">Who This Is For</span>
+        <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+          Three things have to be true first.
+        </Heading>
+      </div>
+
+      <div class="stack who__body">
+        <p class="lead">
+          DDD services are for adults with intellectual and developmental disabilities. New Jersey
+          funds them through two Medicaid programs, the Supports Program and the Community Care
+          Program, and both sit behind the same three requirements.
+        </p>
+
+        <dl class="who__list" data-stagger>
+          {
+            requirements.map(item => (
+              <div class="who__item">
+                <dt>
+                  <Icon name="check" aria-hidden="true" />
+                  {item.label}
+                </dt>
+                <dd>{item.copy}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <p>
+          If you are not certain where you stand on any of these, that is the ordinary place to be.
+          It is worth a phone call before trying to work it out on paper.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. THE SERVICES ===== -->
+  <section class="section section--tight" data-reveal>
+    <div class="stack ddd__intro">
+      <span class="eyebrow">What We Provide</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        The services we are approved to deliver.
+      </Heading>
+      <p class="lead">
+        Which of these appear in a particular plan depends on the person's assessed needs and the
+        budget their Support Coordinator is working with. Most people start with one or two.
+      </p>
+    </div>
+  </section>
+
+  {
+    dddServices.map(service => (
+      <section id={service.id} class="ddd-svc" data-reveal>
+        <article class="ddd-svc__card">
+          <div class="ddd-svc__head">
+            <span class="ddd-svc__icon" aria-hidden="true">
+              <Icon name={service.icon} />
+            </span>
+            <div class="stack ddd-svc__title">
+              <Heading tag="h3" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
+                {service.title}
+              </Heading>
+              <p class="ddd-svc__lead">{service.lead}</p>
+            </div>
+          </div>
+
+          <div class="ddd-svc__body">
+            <p>{service.body}</p>
+          </div>
+
+          <ul class="ddd-svc__includes" data-stagger>
+            {service.includes.map(item => (
+              <li>
+                <Icon name="check" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </section>
+    ))
+  }
+
+  <!-- ===== 4. GETTING STARTED ===== -->
+  <section id="getting-started" class="section" data-reveal>
+    <div class="stack ddd__intro">
+      <span class="eyebrow">How Support Starts</span>
+      <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+        Almost everyone arrives through a Support Coordinator.
+      </Heading>
+      <p class="lead">
+        The coordinator holds the plan and the budget, so they are the one who adds a provider.
+        Which route you take depends only on whether you have one yet.
+      </p>
+    </div>
+
+    <div class="paths" data-stagger>
+      {
+        startPaths.map(path => (
+          <article class="paths__card">
+            <Heading tag="h3" size="m" fontFamily="primary" weight="fw400" marginBottom="none">
+              {path.title}
+            </Heading>
+            <p class="paths__copy">{path.copy}</p>
+            <ol class="paths__steps">
+              {path.steps.map(step => (
+                <li>{step}</li>
+              ))}
+            </ol>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ===== 5. FOR SUPPORT COORDINATORS =====
+       The one provider-facing block on the page. Tone shifts to match
+       /for-professionals: efficient and factual, no family warmth. -->
+  <section id="coordinators" class="section" data-reveal>
+    <div class="coord">
+      <div class="stack coord__intro">
+        <span class="eyebrow eyebrow--band">For Support Coordinators</span>
+        <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
+          What you need to know to refer.
+        </Heading>
+        <p class="lead">
+          If you are building a plan and looking for a provider with capacity, here is the short
+          version.
+        </p>
+      </div>
+
+      <dl class="coord__facts" data-stagger>
+        {
+          coordinatorFacts.map(fact => (
+            <div class="coord__fact">
+              <dt>{fact.label}</dt>
+              <dd>{fact.copy}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <div class="coord__cta">
+        <Links variant="primary" href="/for-professionals/#referral">
+          Send a referral
+          <Icon name="arrow-right" aria-hidden="true" />
+        </Links>
+        <Links variant="outline" href={`tel:${baseData.phone.replace(/\D/g, "")}`}>
+          Call {baseData.phone}
+        </Links>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss">
+  /* ----- Shared section intro ----- */
+  .ddd__intro {
+    max-width: 46rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section--tight {
+    padding-bottom: 0;
+  }
+
+  /* ----- Who qualifies ----- */
+  .who {
+    &__body {
+      --gap: 1.25rem;
+    }
+
+    &__list {
+      display: grid;
+      gap: 1rem;
+      margin: 0.5rem 0 0;
+    }
+
+    &__item {
+      padding: 1.125rem 1.25rem;
+      background: var(--qhc-navy-050);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius);
+
+      dt {
+        display: flex;
+        gap: 0.625rem;
+        align-items: center;
+        font-weight: 600;
+        color: var(--qhc-ink-900);
+
+        [data-icon] {
+          flex: none;
+          width: 1.125rem;
+          height: 1.125rem;
+          color: var(--qhc-navy-700);
+        }
+      }
+
+      dd {
+        margin: 0.375rem 0 0 1.75rem;
+        color: var(--qhc-slate-600);
+      }
+    }
+  }
+
+  /* ----- One service ----- */
+  .ddd-svc {
+    padding-block: 1rem;
+    scroll-margin-top: 12rem;
+
+    &__card {
+      display: grid;
+      gap: 1.5rem;
+      max-width: 66rem;
+      margin-inline: auto;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline-strong);
+      border-radius: var(--qhc-radius-lg);
+    }
+
+    &__head {
+      display: flex;
+      gap: 1.125rem;
+      align-items: flex-start;
+    }
+
+    &__icon {
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 3.25rem;
+      height: 3.25rem;
+      background: var(--qhc-navy-050);
+      border: 1px solid var(--qhc-navy-300);
+      border-radius: var(--qhc-radius);
+
+      [data-icon] {
+        width: 1.625rem;
+        height: 1.625rem;
+        color: var(--qhc-navy-700);
+      }
+    }
+
+    &__title {
+      --gap: 0.375rem;
+    }
+
+    &__lead {
+      margin: 0;
+      font-size: var(--qhc-size-body-l);
+      color: var(--qhc-navy-700);
+    }
+
+    &__body p {
+      margin: 0;
+    }
+
+    &__includes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: 0.625rem 1.5rem;
+      margin: 0;
+      padding: 1.25rem 0 0;
+      list-style: none;
+      border-top: 1px solid var(--qhc-hairline);
+
+      li {
+        display: flex;
+        gap: 0.5rem;
+        align-items: flex-start;
+        font-size: var(--qhc-size-body-s);
+        color: var(--qhc-slate-600);
+      }
+
+      [data-icon] {
+        flex: none;
+        width: 1rem;
+        height: 1rem;
+        margin-top: 0.25rem;
+        color: var(--qhc-navy-700);
+      }
+    }
+  }
+
+  /* ----- Getting started ----- */
+  .paths {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.5rem;
+    max-width: 66rem;
+    margin: 2.5rem auto 0;
+
+    &__card {
+      padding: clamp(1.5rem, 3vw, 2rem);
+      background: var(--qhc-white);
+      border: 1px solid var(--qhc-hairline-strong);
+      border-radius: var(--qhc-radius-lg);
+    }
+
+    &__copy {
+      margin: 0.75rem 0 0;
+      color: var(--qhc-slate-600);
+    }
+
+    &__steps {
+      margin: 1.25rem 0 0;
+      padding-left: 1.125rem;
+      display: grid;
+      gap: 0.625rem;
+
+      li {
+        padding-left: 0.25rem;
+        font-size: var(--qhc-size-body-s);
+      }
+
+      &::marker {
+        color: var(--qhc-navy-700);
+      }
+    }
+  }
+
+  /* ----- Coordinator block ----- */
+  .coord {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    background: var(--qhc-navy-050);
+    border: 1px solid var(--qhc-navy-300);
+    border-radius: var(--qhc-radius-lg);
+
+    &__intro {
+      max-width: 40rem;
+    }
+
+    /* Four facts, so auto-fit is wrong here: it lands 3+1 and orphans the
+       last one. Same reasoning as .auto-grid--four in global.scss — four
+       across, then pairs, then stacked. */
+    &__facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0 0;
+
+      @media (max-width: 1078px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @media (max-width: 560px) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    &__fact {
+      padding-top: 1rem;
+      border-top: 2px solid var(--qhc-navy-300);
+
+      dt {
+        font-weight: 600;
+        color: var(--qhc-ink-900);
+      }
+
+      dd {
+        margin: 0.375rem 0 0;
+        font-size: var(--qhc-size-body-s);
+        color: var(--qhc-slate-600);
+      }
+    }
+
+    &__cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ddd-svc__head {
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+  }
+</style>
