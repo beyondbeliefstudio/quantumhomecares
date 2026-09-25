@@ -15,7 +15,11 @@ const source = Astro.url.pathname;
 // The value is sent verbatim to AxisCare, where it becomes the email subject
 // line and the first line of the lead note — free text would put a paragraph
 // in both.
-const helpTypes = [...serviceDetails.map(service => service.title), "Not sure yet"];
+// DDD is appended by hand rather than pulled from dddData: the seven approved
+// services would double the length of this list, and the useful distinction for
+// triage is DDD or not — that answer routes the inquiry through a Support
+// Coordinator instead of straight to a consultation.
+const helpTypes = [...serviceDetails.map(service => service.title), "DDD Support", "Not sure yet"];
 ---
 
 <form
