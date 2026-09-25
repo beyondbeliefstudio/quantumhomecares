@@ -1,4 +1,13 @@
 ---
+/**
+ * Press and podcast coverage — one card per entry in `press`, newest first.
+ *
+ * Each card is a whole link out to the source. The two things that vary by
+ * entry are the cue verb (read an article, listen to an episode) and whether
+ * the media half holds photography or cover art; everything else is the same
+ * object however long the list gets.
+ */
+
 // COMPONENTS
 import Heading from "@/components/Heading.astro";
 
@@ -9,60 +18,63 @@ import { Icon } from "astro-icon/components";
 // DATA
 import { press } from "@/data/approachData";
 
-// IMAGES
-import coverImg from "@/assets/photos/news-caregiver.jpg";
+// Article or episode — the card says which, in the chip's verb and the cue.
+const cue = { article: "Read the article", podcast: "Listen to the episode" };
+const verb = { article: "read on", podcast: "listen on" };
 ---
 
 <section id="news" class="section" data-reveal>
   <div class="section-header news__header">
     <span class="eyebrow">In the News</span>
     <Heading tag="h2" size="l" fontFamily="primary" weight="fw400" marginBottom="none">
-      Coverage of our New Jersey launch
+      Where we've been featured.
     </Heading>
   </div>
 
   <!-- The whole card is the link. Hover reads through the photo and headline
        rather than the card shell — see the note above the styles below. -->
-  <a
-    href={press.url}
-    target="_blank"
-    rel="noopener"
-    class="card news__card"
-    aria-label={`${press.headline} — read on ${press.source}`}
-  >
-    <div class="news__media">
-      <Image
-        src={coverImg}
-        alt="Caregiver walking with a senior client"
-        width={900}
-        widths={[450, 900]}
-      />
-    </div>
+  <div class="news__list">
+    {
+      press.map(item => (
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener"
+          class="card news__card"
+          aria-label={`${item.headline} — ${verb[item.kind]} ${item.source}`}
+          data-stagger
+        >
+          <div class:list={["news__media", item.isLogo && "news__media--logo"]}>
+            <Image src={item.image} alt={item.imageAlt} width={900} widths={[450, 900]} />
+          </div>
 
-    <div class="news__body">
-      <!-- .eyebrow is width: fit-content, so it does not stretch in this
-           flex column without a wrapper around it. -->
-      <span class="eyebrow eyebrow--info">{press.source}</span>
+          <div class="news__body">
+            {/* .eyebrow is width: fit-content, so it does not stretch in this
+                flex column without a wrapper around it. */}
+            <span class="eyebrow eyebrow--info">{item.source}</span>
 
-      <Heading
-        tag="h3"
-        size="m"
-        fontFamily="primary"
-        weight="fw400"
-        marginBottom="none"
-        class="news__headline"
-      >
-        {press.headline}
-      </Heading>
+            <Heading
+              tag="h3"
+              size="m"
+              fontFamily="primary"
+              weight="fw400"
+              marginBottom="none"
+              class="news__headline"
+            >
+              {item.headline}
+            </Heading>
 
-      <p class="news__dek">{press.dek}</p>
+            <p class="news__dek">{item.dek}</p>
 
-      <span class="btn inline news__cue">
-        Read the article
-        <Icon name="arrow-right" aria-hidden="true" />
-      </span>
-    </div>
-  </a>
+            <span class="btn inline news__cue">
+              {cue[item.kind]}
+              <Icon name="arrow-right" aria-hidden="true" />
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
 </section>
 
 <style lang="scss">
@@ -70,6 +82,11 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
     &__header {
       --w: 62ch;
       --mb: 2.75rem;
+    }
+
+    &__list {
+      display: grid;
+      gap: 1.5rem;
     }
 
     /* Reuses .card for the chrome, then overrides the flow to a 5/7 split */
@@ -104,6 +121,29 @@ import coverImg from "@/assets/photos/news-caregiver.jpg";
 
       @media (max-width: 836px) {
         min-height: 16.25rem;
+      }
+    }
+
+    /*
+      Cover art, not photography. A square logo cropped to fill loses its own
+      edges — worse on mobile, where this half goes wide and short — so it is
+      contained on a plate instead. The plate is white like the card, so a
+      hairline carries the division the photo edge carries on the other card.
+    */
+    &__media--logo {
+      background: var(--qhc-white);
+      border-right: 1px solid var(--qhc-rule);
+
+      img {
+        position: absolute;
+        inset: 0;
+        padding: clamp(1.75rem, 4vw, 3rem);
+        object-fit: contain;
+      }
+
+      @media (max-width: 836px) {
+        border-right: 0;
+        border-bottom: 1px solid var(--qhc-rule);
       }
     }
 

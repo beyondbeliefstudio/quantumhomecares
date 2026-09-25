@@ -15,6 +15,12 @@
  * history and 03-our-approach.md if it is ever revived.
  */
 
+import type { ImageMetadata } from "astro";
+
+// IMAGES — press cover art and photography
+import pressPodcastArt from "@/assets/photos/press-voice-to-success.jpg";
+import pressArticlePhoto from "@/assets/photos/news-caregiver.jpg";
+
 export interface ComparisonRow {
   topic: string;
   them: string;
@@ -152,13 +158,57 @@ export const credentials: Credential[] = [
 
 // ==========================================
 // 9. IN THE NEWS
+//
+// A list, newest first. It was a single hardcoded object until the Voice To
+// Success episode landed (2026-09-24) — InTheNews renders one card per entry
+// now, so adding coverage is an entry here and nothing else.
+//
+// ACCURACY: every field is either quoted from the source or checkable against
+// it. The podcast dek quotes the episode title verbatim rather than describing
+// what was discussed, because Spotify publishes no episode description and
+// nobody here has listened to all 32 minutes. Do not summarise an episode from
+// its title.
 // ==========================================
-export const press = {
-  source: "HomeCare Magazine",
-  headline: "Quantum Home Cares Opens New Jersey Location",
-  dek: "HomeCare Magazine covered our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.",
-  url: "https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location",
-};
+export interface PressItem {
+  /** Drives the cue label and the link verb in the card's aria-label. */
+  kind: "article" | "podcast";
+  /** Publication or show name — renders as the chip above the headline. */
+  source: string;
+  headline: string;
+  dek: string;
+  url: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  /**
+   * Cover art rather than photography: contained on a white plate instead of
+   * cropped to fill, because a square logo loses its edges under object-fit:
+   * cover at either breakpoint.
+   */
+  isLogo?: boolean;
+}
+
+export const press: PressItem[] = [
+  {
+    kind: "podcast",
+    source: "Voice To Success",
+    headline:
+      "\u201cWe treat everyone the way we want to treat a cherished member of our family.\u201d",
+    dek: "Marvalyn Ellis joined the Voice To Success podcast for a 32-minute conversation about Quantum Home Cares and the standard she holds it to.",
+    url: "https://open.spotify.com/episode/2g2Mm8WfWarIRy4xSVCYFX",
+    image: pressPodcastArt,
+    imageAlt: "Cover art for the Voice To Success podcast",
+    isLogo: true,
+  },
+  {
+    kind: "article",
+    source: "HomeCare Magazine",
+    headline: "Quantum Home Cares Opens New Jersey Location",
+    dek: "HomeCare Magazine covered our launch and the model behind it: personalized, advocacy-led care for New Jersey seniors, built around one family at a time rather than a national playbook.",
+    url: "https://www.homecaremag.com/news/quantum-home-cares-opens-new-jersey-location",
+    image: pressArticlePhoto,
+    imageAlt: "Caregiver walking with a senior client",
+  },
+];
 
 // ==========================================
 // 10. CAREERS — added 2026-08-29. No handoff note covers this section, so
