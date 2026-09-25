@@ -1,0 +1,305 @@
+---
+/**
+ * Announcement modal — ported from the fd-cigar-co project (2026-09-24).
+ *
+ * Same object and the same behaviour: it opens itself 800ms after load on
+ * whatever page renders it, and closes on the button, the backdrop or Escape.
+ * Two things changed in the port:
+ *
+ *   · The chrome follows this site's house rules — a light plane, hairline
+ *     border, no drop shadow — rather than fd-cigar's dark card.
+ *   · It takes an optional CTA. fd-cigar announced closures, which need no
+ *     action; announcements here point somewhere.
+ *
+ * Focus is moved into the dialog on open, trapped while it is open, and handed
+ * back to wherever it was when the dialog closes.
+ *
+ * USAGE — one announcement at a time, on the page it belongs to. When the
+ * announcement is over, comment the tag out rather than deleting it, so the
+ * next one is a copy-and-edit:
+ *
+ *   <AlertPopup
+ *     eyebrow="In the News"
+ *     title="..."
+ *     body={["First paragraph.", "Second paragraph."]}
+ *     ctaLabel="Listen to the episode"
+ *     ctaHref="https://..."
+ *   />
+ *
+ * `body` strings render as HTML (set:html), so &nbsp; and <strong> work. They
+ * are author-written copy from this repo — never pass user input here.
+ */
+
+// COMPONENTS
+import Heading from "@/components/Heading.astro";
+import Links from "@/components/Links.astro";
+
+// HELPERS
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Each string renders as its own paragraph. */
+  body: string[];
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** Opens the link in a new tab — for anything off this site. */
+  ctaExternal?: boolean;
+}
+
+const { eyebrow = "Notice", title, body, ctaLabel, ctaHref, ctaExternal = false } = Astro.props;
+---
+
+<div
+  class="alert-popup__overlay"
+  id="alert-popup-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="alert-popup-title"
+  aria-hidden="true"
+>
+  <div class="alert-popup__modal">
+    <button class="alert-popup__close" id="alert-popup-close" aria-label="Close announcement">
+      <Icon name="cross" aria-hidden="true" />
+    </button>
+
+    <div class="alert-popup__content">
+      <span class="eyebrow">{eyebrow}</span>
+
+      <Heading
+        tag="h2"
+        size="l"
+        fontFamily="primary"
+        weight="fw400"
+        marginBottom="none"
+        id="alert-popup-title"
+      >
+        {title}
+      </Heading>
+
+      {body.map(paragraph => <p class="alert-popup__desc" set:html={paragraph} />)}
+
+      {
+        ctaLabel && ctaHref && (
+          <div class="alert-popup__cta">
+            <Links
+              variant="primary"
+              href={ctaHref}
+              {...(ctaExternal ? { target: "_blank", rel: "noopener" } : {})}
+            >
+              {ctaLabel}
+            </Links>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById("alert-popup-overlay") as HTMLElement | null;
+  const closeBtn = document.getElementById("alert-popup-close");
+  const lockClass = "alert-popup-open";
+
+  if (overlay) {
+    // Lifted out of the page flow so the scrim covers the fixed header too.
+    if (overlay.parentElement !== document.body) {
+      document.body.appendChild(overlay);
+    }
+
+    // Whatever had focus before the dialog opened, so it can be handed back.
+    let lastFocused: HTMLElement | null = null;
+
+    const focusables = () =>
+      Array.from(
+        overlay.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter(el => !el.hasAttribute("disabled"));
+
+    function openPopup() {
+      if (!overlay) return;
+      lastFocused = document.activeElement as HTMLElement | null;
+      document.documentElement.classList.add(lockClass);
+      document.body.classList.add(lockClass);
+      overlay.classList.remove("alert-popup--hidden");
+      overlay.classList.add("alert-popup--visible");
+      overlay.removeAttribute("aria-hidden");
+      focusables()[0]?.focus();
+    }
+
+    function closePopup() {
+      if (!overlay) return;
+      document.documentElement.classList.remove(lockClass);
+      document.body.classList.remove(lockClass);
+      overlay.classList.remove("alert-popup--visible");
+      overlay.classList.add("alert-popup--hidden");
+      overlay.setAttribute("aria-hidden", "true");
+      lastFocused?.focus();
+    }
+
+    // Always shows on load — this is an announcement, not a nag, and it is
+    // only on the page for as long as the announcement is current.
+    setTimeout(openPopup, 800);
+
+    closeBtn?.addEventListener("click", closePopup);
+
+    // Close on backdrop click
+    overlay.addEventListener("click", e => {
+      if (e.target === overlay) closePopup();
+    });
+
+    document.addEventListener("keydown", e => {
+      if (!overlay.classList.contains("alert-popup--visible")) return;
+
+      if (e.key === "Escape") {
+        closePopup();
+        return;
+      }
+
+      // Keep tabbing inside the dialog while it owns the screen.
+      if (e.key === "Tab") {
+        const items = focusables();
+        if (!items.length) return;
+
+        const first = items[0];
+        const last = items[items.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+</script>
+
+<style lang="scss">
+  :global(html.alert-popup-open),
+  :global(body.alert-popup-open) {
+    overflow: hidden;
+  }
+
+  .alert-popup__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    /* navy-900 rather than black — the scrim is part of the palette */
+    background-color: rgba(10, 44, 76, 0.62);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.35s var(--qhc-ease-out),
+      visibility 0.35s var(--qhc-ease-out);
+
+    &.alert-popup--visible {
+      opacity: 1;
+      visibility: visible;
+
+      .alert-popup__modal {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    &.alert-popup--hidden {
+      display: none;
+    }
+  }
+
+  /* A light plane with a hairline edge — no dark card, no drop shadow. */
+  .alert-popup__modal {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 30rem;
+    background: var(--qhc-surface-raised);
+    border: 1px solid var(--qhc-navy-300);
+    border-radius: var(--qhc-radius-lg);
+    transform: translateY(1.5rem);
+    opacity: 0;
+    transition:
+      transform 0.4s var(--qhc-ease-out),
+      opacity 0.4s var(--qhc-ease-out);
+  }
+
+  .alert-popup__close {
+    position: absolute;
+    top: 0.875rem;
+    right: 0.875rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background: var(--qhc-navy-050);
+    border: 1px solid transparent;
+    border-radius: var(--qhc-radius-circle);
+    color: var(--qhc-navy-800);
+    cursor: pointer;
+    transition:
+      background var(--qhc-duration-base) var(--qhc-ease-out),
+      border-color var(--qhc-duration-base) var(--qhc-ease-out);
+
+    [data-icon] {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &:hover {
+      background: var(--qhc-navy-100);
+      border-color: var(--qhc-navy-300);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--qhc-focus-ring);
+    }
+  }
+
+  .alert-popup__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    /* Right padding clears the close button on the first line. */
+    padding: 2.25rem 2rem 2rem;
+  }
+
+  .alert-popup__desc {
+    margin: 0;
+    font-size: var(--qhc-size-body-s);
+    color: var(--qhc-slate-600);
+  }
+
+  .alert-popup__cta {
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 616px) {
+    .alert-popup__content {
+      padding: 2rem 1.5rem 1.75rem;
+    }
+  }
+
+  /* The dialog still appears, it just stops sliding and fading in. */
+  @media (prefers-reduced-motion: reduce) {
+    .alert-popup__overlay,
+    .alert-popup__modal {
+      transition: none;
+    }
+
+    .alert-popup__modal {
+      transform: none;
+    }
+  }
+</style>
