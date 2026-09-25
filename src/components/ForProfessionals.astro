@@ -87,7 +87,9 @@ import photo from "@/assets/photos/strip-medical.jpg";
       --gap: 1.25rem;
       align-content: center;
       padding: 3rem 3.25rem;
-      max-width: 58ch;
+      /* No measure cap — the 7fr column and this padding already hold the copy
+         to about 67 characters. The 58ch cap on top of them left a strip of the
+         panel unused and pushed the headings an extra line down. */
     }
 
     @media (max-width: 836px) {

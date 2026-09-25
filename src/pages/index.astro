@@ -8,6 +8,7 @@ import Layout from "@/layouts/Layout.astro";
 //   WhoWeHelp, Culture, Coverage, InTheNews  → /our-approach
 //   PhotoStrip                               → distributed across interior pages
 // Those components still exist and still have their data in homeData.ts.
+import AlertPopup from "@/components/AlertPopup.astro";
 import Hero from "@/components/Hero.astro";
 import CredentialBand from "@/components/CredentialBand.astro";
 import WhyFamilies from "@/components/WhyFamilies.astro";
@@ -42,16 +43,31 @@ const faqSchema = {
   description="Advocacy-led in-home senior care across New Jersey: daily living support, meals, transportation, respite, and an advocate in the room at medical appointments."
   schemaNodes={[faqSchema]}
 >
+  <!-- Announcement modal. One at a time, and when this one is over comment the
+       tag out rather than deleting it — the next announcement is an edit of
+       these props. See the usage note in AlertPopup.astro. -->
+  <AlertPopup
+    eyebrow="In the News"
+    title="Marvalyn is on the Voice To Success podcast."
+    body={[
+      "Our founder joined the Voice To Success podcast for a 32-minute conversation about Quantum Home Cares and the standard she holds it to.",
+    ]}
+    ctaLabel="Listen to the episode"
+    ctaHref="https://open.spotify.com/episode/2g2Mm8WfWarIRy4xSVCYFX"
+    ctaExternal
+  />
+
   <Hero />
   <CredentialBand />
   <WhyFamilies />
   <Services />
-  <!-- The smaller service line, deliberately after the senior services block -->
-  <DddCallout />
   <Approach />
   <QuoteBanner />
   <HowItWorks />
+  <!-- Two framed panels of the same grammar, inverted against each other and
+       spaced as a pair — the two audiences that route off this page. -->
   <ForProfessionals />
+  <DddCallout />
   <Resources />
   <FAQ />
   <!-- Last before the contact band Layout appends — the proof sits directly

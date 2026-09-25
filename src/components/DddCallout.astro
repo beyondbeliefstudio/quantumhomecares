@@ -5,13 +5,18 @@
  * Marvalyn was approved as a DDD provider in September 2026 and nothing on the
  * site said so. This is the one place the homepage acknowledges it.
  *
- * Deliberately restrained. Senior care is the business for the next several
- * years and DDD is a smaller line beside it, so this reads as a door rather
- * than a second headline: no photo, no stacked CTAs, and it sits after the
- * senior services block rather than competing with it.
+ * Same object as ForProfessionals directly above it, inverted — copy left,
+ * photo right — and the two sit close enough to read as one pair of doors
+ * rather than two unrelated panels (Chris, 2026-09-24). Keep them together: if
+ * one of these frames moves or changes grammar, the other has to follow.
  *
- * The chips are pulled from dddData so the homepage cannot advertise a service
- * the page itself has stopped listing.
+ * The photo is the /ddd-support hero, so the teaser previews the page it routes
+ * to — the same rule the professionals panel follows.
+ *
+ * COPY RULE — the same one the DDD page runs on (see dddData.ts): nothing here
+ * mentions a budget, funding, Medicaid or eligibility. This panel used to open
+ * "Support funded through a Division of Developmental Disabilities budget",
+ * which is exactly what that rule was written to stop. Say what the care is.
  */
 
 // COMPONENTS
@@ -19,86 +24,101 @@ import Heading from "@/components/Heading.astro";
 import Links from "@/components/Links.astro";
 
 // HELPERS
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
-// DATA
-import { dddServices } from "@/data/dddData";
-
-// Four is what fits on one line at desktop without the panel growing a second
-// row — the page itself carries the full list.
-const chips = dddServices.slice(0, 4).map(service => service.title);
+// IMAGES
+import photo from "@/assets/photos/newStock/pexels-cliff-booth-4058413.jpg";
 ---
 
-<section id="ddd" class="section" data-reveal>
+<section id="ddd" class="section ddd-call__section" data-reveal>
   <div class="ddd-call">
     <div class="stack ddd-call__body">
       <span class="eyebrow eyebrow--band">DDD Support</span>
-
       <Heading tag="h2" size="xl" fontFamily="primary" weight="fw400" marginBottom="none">
-        Now an approved New Jersey DDD provider.
+        We're an approved New Jersey DDD provider.
       </Heading>
-
       <p class="lead">
-        Support funded through a Division of Developmental Disabilities budget can be delivered by
-        our caregivers, in the home and out in the community, anywhere in the state. Families and
-        Support Coordinators can see what we provide and how referrals work.
+        Our caregivers support adults with intellectual and developmental disabilities at home and
+        out in the community, anywhere in the state. Families and Support Coordinators can see what
+        we provide and how to ask for us.
       </p>
-
-      <ul class="ddd-call__chips" data-stagger>
-        {
-          chips.map(chip => (
-            <li>
-              <Icon name="check" aria-hidden="true" />
-              <span>{chip}</span>
-            </li>
-          ))
-        }
-      </ul>
-
       <Links variant="inline" href="/ddd-support/">
         See our DDD services
         <Icon name="arrow-right" aria-hidden="true" />
       </Links>
     </div>
+
+    <div class="ddd-call__media" data-drift="5">
+      <Image
+        src={photo}
+        alt="A boxing coach and a young woman with Down syndrome talking together at a community gym"
+        width={1200}
+        widths={[600, 1200]}
+        sizes="(max-width: 836px) 92vw, 34vw"
+      />
+    </div>
   </div>
 </section>
 
 <style lang="scss">
+  /* Half the usual section gap: the full one between two frames of the same
+     grammar read as a break rather than a pair. */
+  .ddd-call__section {
+    padding-top: clamp(1.25rem, 2.75vw, 2rem);
+  }
+
+  /* The professionals panel mirrored — photo owning the right half. */
   .ddd-call {
-    max-width: 72rem;
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    align-items: stretch;
+    overflow: hidden;
+    max-width: 78rem;
     margin-inline: auto;
-    padding: clamp(1.75rem, 4vw, 3rem);
-    background: var(--qhc-white);
+    background: var(--qhc-navy-050);
     border: 1px solid var(--qhc-navy-300);
     border-radius: var(--qhc-radius-lg);
 
     &__body {
-      max-width: 46rem;
-      --gap: 1rem;
+      --gap: 1.25rem;
+      align-content: center;
+      padding: 3rem 3.25rem;
+      /* No measure cap — the 7fr column and this padding already hold the copy
+         to about 67 characters. The 58ch cap on top of them left a strip of the
+         panel unused and pushed the headings an extra line down. */
     }
 
-    &__chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.25rem;
-      margin: 0.25rem 0 0;
-      padding: 0;
-      list-style: none;
+    &__media {
+      position: relative;
+      /* Clips the overscaled data-drift image to this half of the panel —
+         the panel's own overflow only clips at the rounded outer edge. */
+      overflow: hidden;
+      min-height: 21.25rem;
 
-      li {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        font-size: var(--qhc-size-body-s);
-        font-weight: 600;
-        color: var(--qhc-slate-600);
+      :global(img) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    @media (max-width: 836px) {
+      grid-template-columns: minmax(0, 1fr);
+
+      &__body {
+        padding: 2rem 1.75rem;
       }
 
-      [data-icon] {
-        flex: none;
-        width: 1rem;
-        height: 1rem;
-        color: var(--qhc-navy-700);
+      /* Photo first once the columns collapse, so this panel stacks the same
+         way the professionals panel above it does. Order, not DOM order — the
+         copy still leads for a screen reader, and on desktop the photo holds
+         the right half. */
+      &__media {
+        order: -1;
+        min-height: 15rem;
       }
     }
   }
