@@ -99,6 +99,12 @@ const helpTypes = [...serviceDetails.map(service => service.title), "DDD Support
     <textarea id="notes" name="notes" rows="3"></textarea>
   </div>
 
+  <!-- Netlify-managed reCAPTCHA v2. Enabled per-site under Site configuration ->
+       Forms -> Spam filters; no API keys or client code required here — Netlify
+       injects the widget at build time and rejects failed submissions before
+       submission-created ever fires. -->
+  <div data-netlify-recaptcha="true"></div>
+
   <Buttons variant="primary" classes="full">Send Request</Buttons>
 
   <p class="meta">

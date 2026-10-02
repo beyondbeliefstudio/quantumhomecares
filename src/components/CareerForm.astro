@@ -111,6 +111,9 @@ const source = Astro.url.pathname;
     <textarea id="job-notes" name="notes" rows="4"></textarea>
   </div>
 
+  <!-- Netlify-managed reCAPTCHA v2 — see ContactForm.astro for the full note. -->
+  <div data-netlify-recaptcha="true"></div>
+
   <Buttons variant="primary" classes="full">Send Application</Buttons>
 
   <p class="meta">
