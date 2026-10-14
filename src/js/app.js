@@ -104,8 +104,9 @@ function initMobileMenu() {
   // Resizing past the breakpoint hides the drawer — reset state so
   // the toggle's ARIA never disagrees with what is on screen.
   // MUST stay 1px above the drawer's `max-width` in Nav.astro. That value was
-  // 1020px before the site was scaled up 10%; both moved together to 1122px.
-  window.matchMedia("(min-width: 1123px)").addEventListener("change", e => {
+  // 1020px before the site was scaled up 10%; both moved together to 1122px,
+  // then to 1240px when Careers joined the bar and the links needed ~1215px.
+  window.matchMedia("(min-width: 1241px)").addEventListener("change", e => {
     if (e.matches) setOpen(false);
   });
 }
